@@ -1,0 +1,175 @@
+{
+ "id": "animado3d_m",
+ "label": "3D animated day",
+ "hint": "A feature-film day: puddles, a paper-plane flight, a cosy kitchen, the stars",
+ "genero": "m",
+ "modelo": "marcus",
+ "estilo": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin",
+ "estilo_cierre": "3D animated film render, stylised, not a photograph.",
+ "vestuario": "a yellow raincoat, striped sweater and red rubber boots",
+ "ilustrado": true,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "full",
+   "camara": "wide low angle",
+   "desc": "jumping into a puddle, laughing",
+   "lugar": "on a rainy cobblestone street",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. wide low angle, the subject jumping into a puddle, laughing, on a rainy cobblestone street, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Cobblestone alleyway, rain-slicked streets, brick buildings flank narrow path",
+    "wear": "Yellow hooded trench coat, striped beige-and-red sweater, dark trousers, red rubber boots",
+    "pose": "Leaping mid-air, fists clenched, eyes wide, framed from low ground level",
+    "expression": "Broad open-mouthed grin, pure joy radiating from ecstatic expression",
+    "light": "Warm golden light from streetlamp glows behind, casting soft reflections on wet stones"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. wide low angle, the subject jumping into a puddle, laughing, on a rainy cobblestone street, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph, Broad open-mouthed grin, pure joy radiating from ecstatic expression.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed grin, pure joy radiating from ecstatic expression, lit by warm golden light from streetlamp glows behind, casting soft reflections on wet stones exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "holding an umbrella for a soaked puppy, tender",
+   "lugar": "under a bakery awning in the rain",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. three-quarter view, the subject holding an umbrella for a soaked puppy, tender, under a bakery awning in the rain, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Beneath a bakery awning, rain falls gently",
+    "wear": "Yellow raincoat, navy striped sweater, red boots",
+    "pose": "Hand holds umbrella, other pets dog’s head",
+    "expression": "Gentle smile, eyes warm, looking down kindly",
+    "light": "Soft golden light glows from shop windows behind"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. three-quarter view, the subject holding an umbrella for a soaked puppy, tender, under a bakery awning in the rain, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph, Gentle smile, eyes warm, looking down kindly.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with gentle smile, eyes warm, looking down kindly, lit by soft golden light glows from shop windows behind exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "closeup",
+   "camara": "close-up",
+   "desc": "big joyful smile, eyes sparkling",
+   "lugar": "with warm bokeh fairy lights",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. close-up, the subject big joyful smile, eyes sparkling, with warm bokeh fairy lights, wearing a yellow raincoat, striped sweater and red rubber boots. Extreme close-up, the face filling the frame. 3D animated film render, stylised, not a photograph.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "",
+    "wear": "navy-and-white striped Breton top, yellow hooded raincoat, red rubber boots",
+    "pose": "leaning forward, hands slightly curled, eyes wide and upward, framed close-up",
+    "expression": "wide-eyed, beaming open-mouthed grin, sparkling with joy",
+    "light": "soft, golden, diffused from above, casting gentle highlights and warm glow"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. close-up, the subject big joyful smile, eyes sparkling, with warm bokeh fairy lights, wearing a yellow raincoat, striped sweater and red rubber boots. Extreme close-up, the face filling the frame. 3D animated film render, stylised, not a photograph, wide-eyed, beaming open-mouthed grin, sparkling with joy.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with wide-eyed, beaming open-mouthed grin, sparkling with joy, lit by soft, golden, diffused from above, casting gentle highlights and warm glow exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "full",
+   "camara": "three-quarter view",
+   "desc": "sitting astride a giant paper airplane, holding its edge, hair blowing, delighted",
+   "lugar": "above a toy-like city in the clouds",
+   "ratio": "2:3",
+   "seed": 5103,
+   "foto": "04.jpg",
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. three-quarter view, the subject sitting astride a giant paper airplane, holding its edge, hair blowing, delighted, above a toy-like city in the clouds, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph.",
+   "lectura": {
+    "place": "Above a toy-like cityscape, soaring through fluffy clouds",
+    "wear": "Yellow hooded jacket, striped navy sweater, dark trousers, red rain boots",
+    "pose": "Sitting atop paper plane, hands gripping wings, eyes wide upward",
+    "expression": "Joyful, open-mouthed grin, beaming with wonder and delight",
+    "light": "Soft golden sunlight from above, casting gentle highlights on the scene"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. three-quarter view, the subject sitting astride a giant paper airplane, holding its edge, hair blowing, delighted, above a toy-like city in the clouds, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph, Joyful, open-mouthed grin, beaming with wonder and delight.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed grin, beaming with wonder and delight, lit by soft golden sunlight from above, casting gentle highlights on the scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "baking, flour on the cheek, grinning",
+   "lugar": "in a cosy cluttered kitchen",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. eye level, the subject baking, flour on the cheek, grinning, in a cosy cluttered kitchen, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "",
+    "wear": "yellow hooded raincoat, navy-and-white striped sweater, red rubber boots",
+    "pose": "standing, rolling pin in hands, eyes wide, framed from chest up, smiling broadly",
+    "expression": "joyful, open-mouthed grin, eyes sparkling with delight, flour dusted on cheeks",
+    "light": "soft golden overhead, warm and diffused, highlighting flour dust and kitchen textures"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. eye level, the subject baking, flour on the cheek, grinning, in a cosy cluttered kitchen, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph, joyful, open-mouthed grin, eyes sparkling with delight, flour dusted on cheeks.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed grin, eyes sparkling with delight, flour dusted on cheeks, lit by soft golden overhead, warm and diffused, highlighting flour dust and kitchen textures exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "dancing in a living room with the puppy",
+   "lugar": "in a warm lamp-lit living room",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. wide, the subject dancing in a living room with the puppy, in a warm lamp-lit living room, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Living room, warm ambient glow from floor lamp and window",
+    "wear": "Striped navy-and-beige sweater, yellow hooded raincoat, dark trousers, red rubber boots",
+    "pose": "Dancing stance, one fist raised, other hand gesturing, eyes wide toward viewer",
+    "expression": "Joyful, animated grin with open mouth, conveying pure delight",
+    "light": "Soft golden light from left, casting gentle shadows, enhancing cozy indoor atmosphere"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. wide, the subject dancing in a living room with the puppy, in a warm lamp-lit living room, wearing a yellow raincoat, striped sweater and red rubber boots. Full-length shot, the whole body visible from head to feet. 3D animated film render, stylised, not a photograph, Joyful, animated grin with open mouth, conveying pure delight.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, animated grin with open mouth, conveying pure delight, lit by soft golden light from left, casting gentle shadows, enhancing cozy indoor atmosphere exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "half",
+   "camara": "window light",
+   "desc": "reading a book by the window, the puppy asleep on the lap",
+   "lugar": "on a window seat, rain outside",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. window light, the subject reading a book by the window, the puppy asleep on the lap, on a window seat, rain outside, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Rainy window ledge, cozy indoor nook",
+    "wear": "Yellow hooded jacket, striped navy sweater, red rain boots",
+    "pose": "Sitting cross-legged, holding open book, eyes wide at window",
+    "expression": "Surprised, startled expression, mouth slightly agape",
+    "light": "Warm golden light from left, soft and diffused, illuminating scene"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. window light, the subject reading a book by the window, the puppy asleep on the lap, on a window seat, rain outside, wearing a yellow raincoat, striped sweater and red rubber boots. Waist-up shot. 3D animated film render, stylised, not a photograph, Surprised, startled expression, mouth slightly agape.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with surprised, startled expression, mouth slightly agape, lit by warm golden light from left, soft and diffused, illuminating scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "closeup",
+   "camara": "close-up, rim light",
+   "desc": "thoughtful, looking up at the stars",
+   "lugar": "on a rooftop at night",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. close-up, rim light, the subject thoughtful, looking up at the stars, on a rooftop at night, wearing a yellow raincoat, striped sweater and red rubber boots. Extreme close-up, the face filling the frame. 3D animated film render, stylised, not a photograph.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "",
+    "wear": "navy-and-white striped sweater, yellow hooded raincoat, red rubber boots",
+    "pose": "crouching, hands resting on knees, eyes gazing upward at stars, framed close-up",
+    "expression": "wide-eyed wonder, mouth slightly open, as if awestruck by celestial view",
+    "light": "soft, warm glow from above, illuminating face gently against cool night backdrop"
+   },
+   "receta": "A 3D animated feature film still, stylised characters, soft global illumination, rich colour, subsurface skin. close-up, rim light, the subject thoughtful, looking up at the stars, on a rooftop at night, wearing a yellow raincoat, striped sweater and red rubber boots. Extreme close-up, the face filling the frame. 3D animated film render, stylised, not a photograph, wide-eyed wonder, mouth slightly open, as if awestruck by celestial view.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with wide-eyed wonder, mouth slightly open, as if awestruck by celestial view, lit by soft, warm glow from above, illuminating face gently against cool night backdrop exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

@@ -1,0 +1,62 @@
+{
+ "fb_look_back": {
+  "encuadre": "full",
+  "quien": "a woman in a white shirt and black trousers",
+  "desc": "walking away from the camera and looking back over her shoulder toward the camera",
+  "label": "Looking back"
+ },
+ "fb_three_q": {
+  "encuadre": "full",
+  "quien": "a man in a grey sweater and dark trousers",
+  "desc": "standing turned three quarters to the side with his hands loosely clasped in front, looking at the camera",
+  "label": "Three-quarter turn"
+ },
+ "fb_step_sit": {
+  "encuadre": "full",
+  "quien": "a woman in a beige sweater and jeans",
+  "desc": "sitting on a low wooden block with elbows resting on her knees and hands loosely clasped, looking at the camera",
+  "label": "Seated on a step"
+ },
+ "fb_jacket_shoulder": {
+  "encuadre": "full",
+  "quien": "a man in a white t-shirt and chinos",
+  "desc": "standing with a jacket hooked on one finger slung over his shoulder, the other hand in his pocket",
+  "label": "Jacket over shoulder"
+ },
+ "fb_ankles_crossed": {
+  "encuadre": "full",
+  "quien": "a woman in a black turtleneck and trousers",
+  "desc": "standing with her legs crossed at the ankles and her arms loosely folded, smiling",
+  "label": "Ankles crossed"
+ },
+ "hb_hair_touch": {
+  "encuadre": "half",
+  "quien": "a woman in a cream sweater",
+  "desc": "one hand running through her hair, looking slightly away from the camera",
+  "label": "Hand in hair"
+ },
+ "hb_collar": {
+  "encuadre": "half",
+  "quien": "a man in a blazer",
+  "desc": "both hands adjusting the lapels of his blazer, looking at the camera",
+  "label": "Adjusting lapels"
+ },
+ "hb_laugh": {
+  "encuadre": "half",
+  "quien": "a woman in a denim shirt",
+  "desc": "laughing naturally and looking off to the side, hands relaxed at her sides",
+  "label": "Laughing"
+ },
+ "hb_over_shoulder": {
+  "encuadre": "half",
+  "quien": "a man in a black t-shirt",
+  "desc": "body turned away, looking back over his shoulder at the camera",
+  "label": "Over the shoulder"
+ },
+ "hb_hands_pockets": {
+  "encuadre": "half",
+  "quien": "a woman in a camel coat",
+  "desc": "both hands in her coat pockets, relaxed shoulders, soft smile at the camera",
+  "label": "Hands in coat pockets"
+ }
+}

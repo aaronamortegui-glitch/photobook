@@ -1,0 +1,178 @@
+{
+ "id": "manga_m",
+ "label": "Manga summer",
+ "hint": "A summer in a Japanese town: the train, the festival, fireworks — as manga pages",
+ "genero": "m",
+ "modelo": "marcus",
+ "estilo": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines",
+ "estilo_cierre": "Manga art, black and white ink with screentones, not a photograph.",
+ "vestuario": "a white t-shirt, loose trousers and canvas sneakers",
+ "ilustrado": true,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "full",
+   "camara": "low angle, speed lines",
+   "desc": "sprinting to catch a train, bag swinging",
+   "lugar": "on a small countryside station platform",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. low angle, speed lines, the subject sprinting to catch a train, bag swinging, on a small countryside station platform, wearing a white t-shirt, loose trousers and canvas sneakers. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Train station platform, rural tracks beside modest houses under open sky",
+    "wear": "White plain t-shirt, dark loose trousers, black sneakers with white soles",
+    "pose": "Running forward, one hand grips bag, other steadies self, eyes locked ahead",
+    "expression": "Focused determination, mouth slightly open, brows neutral, intent on motion",
+    "light": "Harsh overhead sunlight casts sharp shadows, high contrast, dramatic motion lines"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. low angle, speed lines, the subject sprinting to catch a train, bag swinging, on a small countryside station platform, wearing a white t-shirt, loose trousers and canvas sneakers. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph, Focused determination, mouth slightly open, brows neutral, intent on motion.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with focused determination, mouth slightly open, brows neutral, intent on motion, lit by harsh overhead sunlight casts sharp shadows, high contrast, dramatic motion lines exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "half",
+   "camara": "through the window",
+   "desc": "looking out at the sea, peaceful",
+   "lugar": "inside a local train by the coast",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. through the window, the subject looking out at the sea, peaceful, inside a local train by the coast, wearing a white t-shirt, loose trousers and canvas sneakers. Waist-up shot. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "On a coastal ferry, sea visible through windows",
+    "wear": "Plain white t-shirt, cream wide trousers, white Converse sneakers",
+    "pose": "Sitting, hands resting on lap, gazing out right",
+    "expression": "Contemplative, serene, slightly distant expression",
+    "light": "Soft natural light from side, bright and even"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. through the window, the subject looking out at the sea, peaceful, inside a local train by the coast, wearing a white t-shirt, loose trousers and canvas sneakers. Waist-up shot. Manga art, black and white ink with screentones, not a photograph, Contemplative, serene, slightly distant expression.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with contemplative, serene, slightly distant expression, lit by soft natural light from side, bright and even exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "closeup",
+   "camara": "extreme close-up",
+   "desc": "eyes wide with excitement, sweat drop",
+   "lugar": "with sparkling screentone background",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. extreme close-up, the subject eyes wide with excitement, sweat drop, with sparkling screentone background, wearing a white t-shirt, loose trousers and canvas sneakers. Extreme close-up, the face filling the frame. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Cosmic starfield backdrop, comic-book style",
+    "wear": "Plain white t-shirt, loose white trousers, white sneakers",
+    "pose": "Crouched, fists clenched, eyes wide upward, framed tightly",
+    "expression": "Shock expression, mouth agape, single tear falling",
+    "light": "Dramatic spotlight from above, high-contrast black-and-white"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. extreme close-up, the subject eyes wide with excitement, sweat drop, with sparkling screentone background, wearing a white t-shirt, loose trousers and canvas sneakers. Extreme close-up, the face filling the frame. Manga art, black and white ink with screentones, not a photograph, Shock expression, mouth agape, single tear falling.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with shock expression, mouth agape, single tear falling, lit by dramatic spotlight from above, high-contrast black-and-white exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "riding a bicycle down a hill, arms out",
+   "lugar": "on a seaside road with cicada-summer clouds",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. wide, the subject riding a bicycle down a hill, arms out, on a seaside road with cicada-summer clouds, wearing a white t-shirt, loose trousers and canvas sneakers. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Coastal cliffside road beside ocean, winding path with guardrail and grassy slopes",
+    "wear": "Plain white t-shirt, dark trousers, white sneakers with black laces",
+    "pose": "Arms wide open, hands open-palmed, eyes forward, framed by sky and sea",
+    "expression": "Serene, calm, contented expression, slight smile, peaceful gaze",
+    "light": "Soft, diffused daylight from above, casting long shadow on road surface"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. wide, the subject riding a bicycle down a hill, arms out, on a seaside road with cicada-summer clouds, wearing a white t-shirt, loose trousers and canvas sneakers. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph, Serene, calm, contented expression, slight smile, peaceful gaze.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, calm, contented expression, slight smile, peaceful gaze, lit by soft, diffused daylight from above, casting long shadow on road surface exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "eating shaved ice, brain freeze face",
+   "lugar": "at a small shop with hanging wind chimes",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. three-quarter view, the subject eating shaved ice, brain freeze face, at a small shop with hanging wind chimes, wearing a white t-shirt, loose trousers and canvas sneakers. Waist-up shot. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Under a Japanese shrine’s wooden eaves, wind chimes sway gently above",
+    "wear": "White t-shirt, loose cream trousers, white sneakers with laces tied neatly",
+    "pose": "Seated, spoon lifts ice cream to mouth, eyes closed in blissful focus",
+    "expression": "Pure, satisfied enjoyment, cheeks slightly puffed from sweet indulgence",
+    "light": "Soft, diffused daylight filters through slats, casting gentle shadows across the scene"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. three-quarter view, the subject eating shaved ice, brain freeze face, at a small shop with hanging wind chimes, wearing a white t-shirt, loose trousers and canvas sneakers. Waist-up shot. Manga art, black and white ink with screentones, not a photograph, Pure, satisfied enjoyment, cheeks slightly puffed from sweet indulgence.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with pure, satisfied enjoyment, cheeks slightly puffed from sweet indulgence, lit by soft, diffused daylight filters through slats, casting gentle shadows across the scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "holding a paper lantern, smiling shyly",
+   "lugar": "at a summer festival with stalls",
+   "vestuario": "a dark striped yukata",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. eye level, the subject holding a paper lantern, smiling shyly, at a summer festival with stalls, wearing a dark striped yukata. Waist-up shot. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Nihonbashi lantern festival, bustling streets with banners and paper lanterns",
+    "wear": "Striped indigo yukata, simple obi, bare feet on wooden floor",
+    "pose": "Hands cradle glowing lantern, eyes meet viewer, framed close-up",
+    "expression": "Warm, gentle smile, eyes twinkling with joy and wonder",
+    "light": "Soft, diffused daylight from above, casting gentle shadows on lantern and robe"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. eye level, the subject holding a paper lantern, smiling shyly, at a summer festival with stalls, wearing a dark striped yukata. Waist-up shot. Manga art, black and white ink with screentones, not a photograph, Warm, gentle smile, eyes twinkling with joy and wonder.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, gentle smile, eyes twinkling with joy and wonder, lit by soft, diffused daylight from above, casting gentle shadows on lantern and robe exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "wide, night",
+   "desc": "looking up at huge fireworks",
+   "lugar": "on a riverbank crowded with people",
+   "vestuario": "a dark striped yukata",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. wide, night, the subject looking up at huge fireworks, on a riverbank crowded with people, wearing a dark striped yukata. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Riverbank under Kyoto’s fireworks, crowd gathered beside stone embankment, bridge visible in distance",
+    "wear": "Striped yukata, dark with thin white lines, tied at waist, worn with simple sandals",
+    "pose": "Standing alone, hands clasped behind back, head tilted up, eyes fixed on sky",
+    "expression": "Contemplative gaze, serene and absorbed, lips slightly parted in quiet awe",
+    "light": "Bright white fireworks illuminate from above, casting sharp shadows and glowing highlights"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. wide, night, the subject looking up at huge fireworks, on a riverbank crowded with people, wearing a dark striped yukata. Full-length shot, the whole body visible from head to feet. Manga art, black and white ink with screentones, not a photograph, Contemplative gaze, serene and absorbed, lips slightly parted in quiet awe.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with contemplative gaze, serene and absorbed, lips slightly parted in quiet awe, lit by bright white fireworks illuminate from above, casting sharp shadows and glowing highlights exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "closeup",
+   "camara": "close-up, fireworks light",
+   "desc": "tears of joy, big smile",
+   "lugar": "with fireworks bursting behind",
+   "vestuario": "a dark striped yukata",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. close-up, fireworks light, the subject tears of joy, big smile, with fireworks bursting behind, wearing a dark striped yukata. Extreme close-up, the face filling the frame. Manga art, black and white ink with screentones, not a photograph.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "Under fireworks at a city festival, celebrating joyously",
+    "wear": "Wearing a black pinstripe suit jacket, crisp white shirt, no tie, polished black dress shoes",
+    "pose": "Head tilted back, mouth wide open laughing, eyes sparkling, framed tightly",
+    "expression": "Pure, unrestrained euphoria, tears of delight streaming down cheeks",
+    "light": "Bright, explosive light from behind, casting sharp highlights and deep shadows"
+   },
+   "receta": "A Japanese manga illustration, black and white ink, screentone shading, clean expressive linework, speed lines. close-up, fireworks light, the subject tears of joy, big smile, with fireworks bursting behind, wearing a dark striped yukata. Extreme close-up, the face filling the frame. Manga art, black and white ink with screentones, not a photograph, Pure, unrestrained euphoria, tears of delight streaming down cheeks.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with pure, unrestrained euphoria, tears of delight streaming down cheeks, lit by bright, explosive light from behind, casting sharp highlights and deep shadows exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

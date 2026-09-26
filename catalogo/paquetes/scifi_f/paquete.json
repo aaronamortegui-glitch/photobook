@@ -1,0 +1,175 @@
+{
+ "id": "scifi_f",
+ "label": "Sci-fi 2089",
+ "hint": "A day in the future: holograms, a neon megacity, a spaceport and zero gravity",
+ "genero": "f",
+ "modelo": "lucia",
+ "estilo": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value",
+ "estilo_cierre": "Cinematic sci-fi film still, photographic, one strong visual idea.",
+ "vestuario": "a sleek silver-white techwear jacket with a high collar and black fitted trousers",
+ "ilustrado": false,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "closeup",
+   "camara": "tight close-up",
+   "desc": "calm gaze, a glowing holographic interface reflected across the face",
+   "lugar": "in a dark control room",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. tight close-up, the subject calm gaze, a glowing holographic interface reflected across the face, in a dark control room, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Extreme close-up, the face filling the frame. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Neon-lit cyberpunk control room with glowing screens and holographic interfaces",
+    "wear": "Silver metallic zip-up jacket, black inner collar, no visible footwear",
+    "pose": "Facing camera, hands unseen, eyes locked forward, framed close-up",
+    "expression": "Serious, focused, determined expression with slight lip parting",
+    "light": "Pink and cyan neon lights cast sharp, futuristic highlights across the scene"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. tight close-up, the subject calm gaze, a glowing holographic interface reflected across the face, in a dark control room, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Extreme close-up, the face filling the frame. Cinematic sci-fi film still, photographic, one strong visual idea, Serious, focused, determined expression with slight lip parting.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused, determined expression with slight lip parting, lit by pink and cyan neon lights cast sharp, futuristic highlights across the scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "reaching out to touch a floating hologram of a planet",
+   "lugar": "in a minimalist white lab",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. three-quarter view, the subject reaching out to touch a floating hologram of a planet, in a minimalist white lab, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Futuristic lab with glowing teal and pink neon walls, sterile white cabinetry, and floating holographic Earth",
+    "wear": "Shimmering silver metallic bomber jacket, black trousers, no visible footwear",
+    "pose": "Hands open palm-up, gazing intently at hovering Earth hologram, framed mid-body",
+    "expression": "Serious, focused expression, lips slightly parted, eyes locked on the digital globe",
+    "light": "Cool ambient light from ceiling strips, vibrant pink and teal hues reflecting off metallic surfaces"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. three-quarter view, the subject reaching out to touch a floating hologram of a planet, in a minimalist white lab, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea, Serious, focused expression, lips slightly parted, eyes locked on the digital globe.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused expression, lips slightly parted, eyes locked on the digital globe, lit by cool ambient light from ceiling strips, vibrant pink and teal hues reflecting off metallic surfaces exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "wide, low angle",
+   "desc": "walking through the rain under towering neon signs",
+   "lugar": "in a futuristic megacity street at night",
+   "ratio": "2:3",
+   "seed": 5102,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. wide, low angle, the subject walking through the rain under towering neon signs, in a futuristic megacity street at night, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Rain-slicked neon alleyway, glowing signs reflect on wet pavement",
+    "wear": "Shimmering silver bomber jacket, black slim-fit trousers, black combat boots",
+    "pose": "Walking forward, hands relaxed at sides, eyes straight ahead, framed medium shot",
+    "expression": "Serene, focused expression, calm and determined gaze",
+    "light": "Neon glow from above and sides, vibrant cyan and magenta hues cast dramatic reflections"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. wide, low angle, the subject walking through the rain under towering neon signs, in a futuristic megacity street at night, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea, Serene, focused expression, calm and determined gaze.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, focused expression, calm and determined gaze, lit by neon glow from above and sides, vibrant cyan and magenta hues cast dramatic reflections exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "closeup",
+   "camara": "close-up, side light",
+   "desc": "eyes closed, lines of light scanning the face",
+   "lugar": "inside a biometric scanner",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. close-up, side light, the subject eyes closed, lines of light scanning the face, inside a biometric scanner, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Extreme close-up, the face filling the frame. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Futuristic spaceship cockpit with glowing hexagonal holographic interface",
+    "wear": "Silver metallic flight vest over black undershirt, no visible footwear",
+    "pose": "Head tilted slightly down, eyes closed, serene posture, framed by neon panels",
+    "expression": "Peaceful, meditative expression, lips gently parted, calm and focused",
+    "light": "Pink and cyan neon light washes over face, casting soft, futuristic glow"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. close-up, side light, the subject eyes closed, lines of light scanning the face, inside a biometric scanner, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Extreme close-up, the face filling the frame. Cinematic sci-fi film still, photographic, one strong visual idea, Peaceful, meditative expression, lips gently parted, calm and focused.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with peaceful, meditative expression, lips gently parted, calm and focused, lit by pink and cyan neon light washes over face, casting soft, futuristic glow exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "full",
+   "camara": "wide symmetrical",
+   "desc": "standing before a giant window, a starship lifting off behind",
+   "lugar": "in a spaceport terminal",
+   "ratio": "2:3",
+   "seed": 5104,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. wide symmetrical, the subject standing before a giant window, a starship lifting off behind, in a spaceport terminal, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Inside futuristic spaceship hangar, glowing neon panels line walls and floor",
+    "wear": "Silver metallic zip-up jacket, black slim-fit trousers, black ankle boots",
+    "pose": "Stands centered, hands by sides, eyes forward, framed by large viewport",
+    "expression": "Serene, focused expression, calm and determined",
+    "light": "Neon teal and magenta lights cast vibrant reflections, illuminating from above and floor"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. wide symmetrical, the subject standing before a giant window, a starship lifting off behind, in a spaceport terminal, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea, Serene, focused expression, calm and determined.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, focused expression, calm and determined, lit by neon teal and magenta lights cast vibrant reflections, illuminating from above and floor exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "low three-quarter angle",
+   "desc": "leaning on a parked hover-bike, helmet under the arm, confident half smile",
+   "lugar": "above a canyon at dusk",
+   "ratio": "3:4",
+   "seed": 5105,
+   "foto": "06.jpg",
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. low three-quarter angle, the subject leaning on a parked hover-bike, helmet under the arm, confident half smile, above a canyon at dusk, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "lectura": {
+    "place": "Grand Canyon rim at twilight, canyon cliffs bathed in neon hues",
+    "wear": "Shimmering silver metallic jacket, black slim-fit trousers, sleek black boots",
+    "pose": "Leaning on futuristic bike, one hand on handlebar, other holds helmet, eyes meet camera",
+    "expression": "Soft, confident smile, lips slightly parted, serene and poised",
+    "light": "Neon pink and teal glow from bike lights, ambient twilight casting cool blue tones"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. low three-quarter angle, the subject leaning on a parked hover-bike, helmet under the arm, confident half smile, above a canyon at dusk, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea, Soft, confident smile, lips slightly parted, serene and poised.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, confident smile, lips slightly parted, serene and poised, lit by neon pink and teal glow from bike lights, ambient twilight casting cool blue tones exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "three-quarter view",
+   "desc": "floating weightless, reaching for a drifting tablet, laughing",
+   "lugar": "inside a round spaceship module with Earth in the window",
+   "ratio": "2:3",
+   "seed": 5106,
+   "foto": "07.jpg",
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. three-quarter view, the subject floating weightless, reaching for a drifting tablet, laughing, inside a round spaceship module with Earth in the window, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "lectura": {
+    "place": "Inside a space station’s circular viewport, Earth visible behind",
+    "wear": "Shiny silver bomber jacket, black slim-fit trousers, barefoot",
+    "pose": "Floating mid-air, hands reaching upward, eyes gazing at tablet",
+    "expression": "Joyful, open-mouthed grin, eyes sparkling with wonder",
+    "light": "Neon teal and magenta rim lights cast vibrant, glowing illumination"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. three-quarter view, the subject floating weightless, reaching for a drifting tablet, laughing, inside a round spaceship module with Earth in the window, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Full-length shot, the whole body visible from head to feet. Cinematic sci-fi film still, photographic, one strong visual idea, Joyful, open-mouthed grin, eyes sparkling with wonder.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed grin, eyes sparkling with wonder, lit by neon teal and magenta rim lights cast vibrant, glowing illumination exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "half",
+   "camara": "backlit",
+   "desc": "silhouette with a glowing visor pushed up, looking at two moons",
+   "lugar": "on an alien desert ridge at twilight",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. backlit, the subject silhouette with a glowing visor pushed up, looking at two moons, on an alien desert ridge at twilight, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "Desert dunes under twin moons, alien twilight sky",
+    "wear": "Shiny silver bomber jacket, black pants, glowing neon goggles",
+    "pose": "Back turned, gazing skyward, hands by sides, framed mid-shot",
+    "expression": "Serene, contemplative expression, lips slightly parted",
+    "light": "Pink and teal neon light bathes figure from above, casting surreal glow"
+   },
+   "receta": "A cinematic science-fiction film still, anamorphic lens, volumetric light, teal and magenta neon, high production value. backlit, the subject silhouette with a glowing visor pushed up, looking at two moons, on an alien desert ridge at twilight, wearing a sleek silver-white techwear jacket with a high collar and black fitted trousers. Waist-up shot. Cinematic sci-fi film still, photographic, one strong visual idea, Serene, contemplative expression, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative expression, lips slightly parted, lit by pink and teal neon light bathes figure from above, casting surreal glow exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

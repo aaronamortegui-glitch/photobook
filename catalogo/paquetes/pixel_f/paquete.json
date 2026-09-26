@@ -1,0 +1,175 @@
+{
+ "id": "pixel_f",
+ "label": "Pixel quest",
+ "hint": "A 16-bit adventure: the village, the forest, the dungeon, the dragon, the treasure",
+ "genero": "f",
+ "modelo": "lucia",
+ "estilo": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering",
+ "estilo_cierre": "Pixel art, every edge made of square pixels, not a photograph.",
+ "vestuario": "a green adventurer tunic, brown boots and a small backpack",
+ "ilustrado": true,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "full",
+   "camara": "side view, classic platformer",
+   "desc": "walking out of a cottage door, waving to the player",
+   "lugar": "in a cosy pixel village with a fountain",
+   "ratio": "2:3",
+   "seed": 5100,
+   "foto": "01.jpg",
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, classic platformer, the subject walking out of a cottage door, waving to the player, in a cosy pixel village with a fountain, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph.",
+   "lectura": {
+    "place": "Cobblestone courtyard beside a stone fountain, rustic European village house with tiled roof",
+    "wear": "Green sleeveless tunic, brown belt, brown boots, green backpack with brown straps",
+    "pose": "Stepping through open wooden door, right hand raised in wave, eyes looking forward, framed by doorway",
+    "expression": "Soft, welcoming smile, calm and friendly gaze",
+    "light": "Bright, golden morning light from left, casting soft shadows, enhancing warm tones"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, classic platformer, the subject walking out of a cottage door, waving to the player, in a cosy pixel village with a fountain, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph, Soft, welcoming smile, calm and friendly gaze.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, welcoming smile, calm and friendly gaze, lit by bright, golden morning light from left, casting soft shadows, enhancing warm tones exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "closeup",
+   "camara": "dialogue-box portrait",
+   "desc": "winking, cheerful",
+   "lugar": "on a plain retro blue background",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. dialogue-box portrait, the subject winking, cheerful, on a plain retro blue background, wearing a green adventurer tunic, brown boots and a small backpack. Extreme close-up, the face filling the frame. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Under a bright blue sky, standing confidently with hands clasped at waist, eyes winking playfully at viewer",
+    "wear": "Wearing a green sleeveless tunic, brown belt with gold buckle, brown boots, and a grey backpack",
+    "pose": "Framed in a white speech bubble outline against the vivid blue background",
+    "expression": "Soft, even daylight illuminates the figure from front, casting gentle shadows for depth",
+    "light": "Smiling warmly with one eye closed in a cheerful wink, radiating friendly energy"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. dialogue-box portrait, the subject winking, cheerful, on a plain retro blue background, wearing a green adventurer tunic, brown boots and a small backpack. Extreme close-up, the face filling the frame. Pixel art, every edge made of square pixels, not a photograph, Soft, even daylight illuminates the figure from front, casting gentle shadows for depth.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, even daylight illuminates the figure from front, casting gentle shadows for depth, lit by smiling warmly with one eye closed in a cheerful wink, radiating friendly energy exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "side-scroller view",
+   "desc": "jumping between floating platforms, collecting coins",
+   "lugar": "in a colourful forest level",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side-scroller view, the subject jumping between floating platforms, collecting coins, in a colourful forest level, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Forest clearing with floating platforms and vibrant foliage",
+    "wear": "Green sleeveless tunic, brown belt, brown boots",
+    "pose": "Mid-leap, right fist raised, eyes forward, framed by trees",
+    "expression": "Focused determination, mouth slightly open",
+    "light": "Soft, diffused daylight filters through canopy, casting gentle highlights"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side-scroller view, the subject jumping between floating platforms, collecting coins, in a colourful forest level, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph, Focused determination, mouth slightly open.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with focused determination, mouth slightly open, lit by soft, diffused daylight filters through canopy, casting gentle highlights exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "full",
+   "camara": "side view",
+   "desc": "sailing a small boat, looking at the horizon",
+   "lugar": "on a pixel ocean at sunset",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, the subject sailing a small boat, looking at the horizon, on a pixel ocean at sunset, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "On a wooden sailboat deck at sunset over calm ocean waters",
+    "wear": "Wearing a green hooded tunic, brown belt, tan backpack, and brown boots",
+    "pose": "Standing upright, hands gripping rigging, gazing eastward toward horizon",
+    "expression": "Serene, thoughtful expression, lips slightly parted in quiet contemplation",
+    "light": "Golden sunset light glows warmly from right, casting soft shadows across figure"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, the subject sailing a small boat, looking at the horizon, on a pixel ocean at sunset, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph, Serene, thoughtful expression, lips slightly parted in quiet contemplation.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, thoughtful expression, lips slightly parted in quiet contemplation, lit by golden sunset light glows warmly from right, casting soft shadows across figure exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "holding a torch, cautious",
+   "lugar": "in a torch-lit dungeon",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. three-quarter view, the subject holding a torch, cautious, in a torch-lit dungeon, wearing a green adventurer tunic, brown boots and a small backpack. Waist-up shot. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Stone archway dungeon corridor, torch-lit, ancient brick walls",
+    "wear": "Green tunic, brown belt, leather boots, small pouch",
+    "pose": "Crouched forward, torch held high, eyes scanning ahead",
+    "expression": "Alert, focused expression, mouth slightly parted",
+    "light": "Warm torchlight from right, casting shadows, illuminating path ahead"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. three-quarter view, the subject holding a torch, cautious, in a torch-lit dungeon, wearing a green adventurer tunic, brown boots and a small backpack. Waist-up shot. Pixel art, every edge made of square pixels, not a photograph, Alert, focused expression, mouth slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with alert, focused expression, mouth slightly parted, lit by warm torchlight from right, casting shadows, illuminating path ahead exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "full",
+   "camara": "boss-battle view",
+   "desc": "raising a glowing sword",
+   "lugar": "facing a huge pixel dragon",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. boss-battle view, the subject raising a glowing sword, facing a huge pixel dragon, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Stone courtyard, ancient dragon looms behind",
+    "wear": "Green tunic, brown belt, tan backpack, brown boots",
+    "pose": "Stance ready, sword raised, eyes locked on beast",
+    "expression": "Determined frown, jaw set, focused resolve",
+    "light": "Soft daylight from front, casting gentle shadows"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. boss-battle view, the subject raising a glowing sword, facing a huge pixel dragon, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph, Determined frown, jaw set, focused resolve.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with determined frown, jaw set, focused resolve, lit by soft daylight from front, casting gentle shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "half",
+   "camara": "character portrait framing",
+   "desc": "opening a treasure chest, surprised and happy",
+   "lugar": "in the dragon's treasure room",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. character portrait framing, the subject opening a treasure chest, surprised and happy, in the dragon's treasure room, wearing a green adventurer tunic, brown boots and a small backpack. Waist-up shot. Pixel art, every edge made of square pixels, not a photograph.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Under castle’s stone archway, dragon looms above",
+    "wear": "Green tunic, brown belt, boots, backpack",
+    "pose": "Reaching for treasure chest, eyes wide, mouth open",
+    "expression": "Joyful, surprised expression, eyes gleaming",
+    "light": "Warm golden light spills from chest, illuminating scene"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. character portrait framing, the subject opening a treasure chest, surprised and happy, in the dragon's treasure room, wearing a green adventurer tunic, brown boots and a small backpack. Waist-up shot. Pixel art, every edge made of square pixels, not a photograph, Joyful, surprised expression, eyes gleaming.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, surprised expression, eyes gleaming, lit by warm golden light spills from chest, illuminating scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "full",
+   "camara": "side view, festival stage",
+   "desc": "raising a trophy above the head, villagers cheering",
+   "lugar": "back in the village square at night with lanterns",
+   "ratio": "2:3",
+   "seed": 5107,
+   "foto": "08.jpg",
+   "prompt": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, festival stage, the subject raising a trophy above the head, villagers cheering, back in the village square at night with lanterns, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph.",
+   "lectura": {
+    "place": "Medieval town square at night, lanterns glow warmly under starry sky",
+    "wear": "Green tunic with gold trim, brown belt, leather satchel, brown knee-high boots",
+    "pose": "Standing tall, right hand raises golden trophy, left hand by side, eyes gaze upward",
+    "expression": "Serene, proud, calm smile, head slightly tilted back in quiet triumph",
+    "light": "Warm golden light from lanterns and stage, soft shadows cast, ambient glow illuminates figure"
+   },
+   "receta": "A 16-bit pixel art video game scene, crisp visible pixels, limited retro palette, clean dithering. side view, festival stage, the subject raising a trophy above the head, villagers cheering, back in the village square at night with lanterns, wearing a green adventurer tunic, brown boots and a small backpack. Full-length shot, the whole body visible from head to feet. Pixel art, every edge made of square pixels, not a photograph, Serene, proud, calm smile, head slightly tilted back in quiet triumph.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, proud, calm smile, head slightly tilted back in quiet triumph, lit by warm golden light from lanterns and stage, soft shadows cast, ambient glow illuminates figure exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

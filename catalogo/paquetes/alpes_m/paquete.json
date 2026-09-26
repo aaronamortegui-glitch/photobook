@@ -1,0 +1,215 @@
+{
+ "id": "alpes_m",
+ "label": "Alpine adventure",
+ "hint": "A cabin morning, a lake, the summit, a cable car and a campfire night",
+ "genero": "m",
+ "modelo": "marcus",
+ "estilo": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery",
+ "estilo_cierre": "Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+ "vestuario": "a forest-green puffer jacket, grey beanie, hiking trousers and boots",
+ "ilustrado": false,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "half",
+   "camara": "eye level, window light",
+   "desc": "wrapped in a blanket with a steaming mug, smiling",
+   "lugar": "inside a wooden alpine cabin with a mountain view",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. eye level, window light, the subject wrapped in a blanket with a steaming mug, smiling, inside a wooden alpine cabin with a mountain view, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Mountain cabin balcony, snow-capped peaks visible through wooden-framed windows",
+    "wear": "Green quilted puffer jacket, olive trousers, grey knit beanie, brown hiking boots",
+    "pose": "Seated on bench, hands cradle steaming mug, eyes meet camera, framed by wooden railing",
+    "expression": "Warm, soft smile, teeth visible, relaxed and content",
+    "light": "Golden morning light streams in, casting gentle shadows across wooden floor and bench"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. eye level, window light, the subject wrapped in a blanket with a steaming mug, smiling, inside a wooden alpine cabin with a mountain view, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Warm, soft smile, teeth visible, relaxed and content.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, soft smile, teeth visible, relaxed and content, lit by golden morning light streams in, casting gentle shadows across wooden floor and bench exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "full",
+   "camara": "wide from behind",
+   "desc": "hiking up a trail with a backpack, looking at the peaks",
+   "lugar": "on an alpine trail with wildflowers",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide from behind, the subject hiking up a trail with a backpack, looking at the peaks, on an alpine trail with wildflowers, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Alpine meadow trail beneath snow-capped peaks, wildflowers blooming at footpath’s edge",
+    "wear": "Green quilted puffer jacket, olive cargo pants, grey knit beanie, rugged hiking boots",
+    "pose": "Walking away, hands relaxed at sides, gazing upward toward distant mountain ridges",
+    "expression": "Serene, contemplative expression, eyes fixed on majestic peaks ahead",
+    "light": "Soft golden morning light from left, casting gentle shadows across path and clothing"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide from behind, the subject hiking up a trail with a backpack, looking at the peaks, on an alpine trail with wildflowers, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, contemplative expression, eyes fixed on majestic peaks ahead.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative expression, eyes fixed on majestic peaks ahead, lit by soft golden morning light from left, casting gentle shadows across path and clothing exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "wide, reflection",
+   "desc": "sitting on a rock by the water",
+   "lugar": "at a mirror-still turquoise alpine lake",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide, reflection, the subject sitting on a rock by the water, at a mirror-still turquoise alpine lake, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Moraine Lake, Banff National Park, Canada",
+    "wear": "Olive quilted puffer jacket, olive cargo pants, grey knit beanie, brown hiking boots",
+    "pose": "Sitting cross-legged on rock, hands resting on knees, eyes level with camera",
+    "expression": "Serene, contemplative expression, calm and composed",
+    "light": "Bright, direct sunlight illuminates from front, casting sharp shadows, enhancing vivid turquoise reflections"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide, reflection, the subject sitting on a rock by the water, at a mirror-still turquoise alpine lake, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, contemplative expression, calm and composed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative expression, calm and composed, lit by bright, direct sunlight illuminates from front, casting sharp shadows, enhancing vivid turquoise reflections exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "closeup",
+   "camara": "close-up, cold light",
+   "desc": "rosy cheeks, breath visible, bright eyes",
+   "lugar": "with snowy peaks blurred behind",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. close-up, cold light, the subject rosy cheeks, breath visible, bright eyes, with snowy peaks blurred behind, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Snowy Himalayan peak, rugged ridges under clear blue sky",
+    "wear": "Green quilted jacket, grey knit beanie, olive trousers, tan hiking boots",
+    "pose": "Crouching low, one hand on snow, eyes locked on camera, head slightly tilted",
+    "expression": "Serious, focused gaze with slight lip parting, calm determination",
+    "light": "Bright, direct sunlight from front, casting sharp shadows, crisp and cold"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. close-up, cold light, the subject rosy cheeks, breath visible, bright eyes, with snowy peaks blurred behind, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serious, focused gaze with slight lip parting, calm determination.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused gaze with slight lip parting, calm determination, lit by bright, direct sunlight from front, casting sharp shadows, crisp and cold exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "full",
+   "camara": "epic wide, low angle",
+   "desc": "arms raised in triumph",
+   "lugar": "on a summit above a sea of clouds",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. epic wide, low angle, the subject arms raised in triumph, on a summit above a sea of clouds, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "On a snowy mountain peak, clouds drift below",
+    "wear": "Olive quilted jacket, olive trousers, grey beanie, brown hiking boots",
+    "pose": "Arms raised, fists clenched, eyes forward, full-body shot",
+    "expression": "Determined, focused expression, mouth slightly open",
+    "light": "Bright sun from front, casting sharp, crisp shadows"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. epic wide, low angle, the subject arms raised in triumph, on a summit above a sea of clouds, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Determined, focused expression, mouth slightly open.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with determined, focused expression, mouth slightly open, lit by bright sun from front, casting sharp, crisp shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "from inside the cabin, over the shoulder",
+   "desc": "leaning on the window rail, looking out at the valley below, amazed",
+   "lugar": "inside a red cable car above the valley",
+   "ratio": "3:4",
+   "seed": 5105,
+   "foto": "06.jpg",
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. from inside the cabin, over the shoulder, the subject leaning on the window rail, looking out at the valley below, amazed, inside a red cable car above the valley, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "lectura": {
+    "place": "Alpine cable car overlooking snow-capped peaks and valley towns",
+    "wear": "Green quilted puffer jacket, olive trousers, grey knit beanie, rugged hiking boots",
+    "pose": "Seated, leaning forward, hands gripping railing, eyes wide on distant valley",
+    "expression": "Surprised gasp, mouth open mid-exclamation, eyes wide with wonder",
+    "light": "Soft, bright daylight streams through window, illuminating scene and subject evenly"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. from inside the cabin, over the shoulder, the subject leaning on the window rail, looking out at the valley below, amazed, inside a red cable car above the valley, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Surprised gasp, mouth open mid-exclamation, eyes wide with wonder.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with surprised gasp, mouth open mid-exclamation, eyes wide with wonder, lit by soft, bright daylight streams through window, illuminating scene and subject evenly exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "lying in the grass laughing",
+   "lugar": "in a green alpine meadow with cows far behind",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide, the subject lying in the grass laughing, in a green alpine meadow with cows far behind, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Alpine meadow beneath jagged peaks, grassy slopes dotted with grazing cows",
+    "wear": "Green quilted puffer jacket, olive cargo pants, grey knit beanie, rugged hiking boots",
+    "pose": "Lying flat on grass, arms spread wide, hands resting beside torso, eyes gazing upward",
+    "expression": "Broad open-mouthed laugh, head tilted back, radiating pure joy and relaxation",
+    "light": "Sunlight streams down, warm golden glow illuminating the scene, casting soft shadows"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. wide, the subject lying in the grass laughing, in a green alpine meadow with cows far behind, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Broad open-mouthed laugh, head tilted back, radiating pure joy and relaxation.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed laugh, head tilted back, radiating pure joy and relaxation, lit by sunlight streams down, warm golden glow illuminating the scene, casting soft shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "half",
+   "camara": "side view, soft steam light",
+   "desc": "sitting on the edge of the pool with the legs in the steaming water, eyes closed, smiling",
+   "lugar": "in an outdoor hot spring with snow around",
+   "ratio": "3:4",
+   "seed": 5107,
+   "foto": "08.jpg",
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. side view, soft steam light, the subject sitting on the edge of the pool with the legs in the steaming water, eyes closed, smiling, in an outdoor hot spring with snow around, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "lectura": {
+    "place": "Snowy outdoor hot tub beside wooden wall, steam rising gently",
+    "wear": "Green quilted puffer jacket, olive cargo pants, grey knit beanie, dark boots",
+    "pose": "Sitting on wooden edge, feet in water, hands resting on knees, eyes closed",
+    "expression": "Peaceful serene smile, head tilted back, deeply relaxed",
+    "light": "Golden morning light from right, soft and warm, illuminating steam and skin"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. side view, soft steam light, the subject sitting on the edge of the pool with the legs in the steaming water, eyes closed, smiling, in an outdoor hot spring with snow around, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Peaceful serene smile, head tilted back, deeply relaxed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with peaceful serene smile, head tilted back, deeply relaxed, lit by golden morning light from right, soft and warm, illuminating steam and skin exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "09",
+   "encuadre": "full",
+   "camara": "blue hour",
+   "desc": "walking across a wooden suspension bridge",
+   "lugar": "over a deep gorge",
+   "ratio": "3:4",
+   "seed": 5108,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. blue hour, the subject walking across a wooden suspension bridge, over a deep gorge, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "09.jpg",
+   "lectura": {
+    "place": "Suspended wooden bridge over deep canyon, flanked by snow-capped mountains under twilight sky",
+    "wear": "Olive quilted puffer jacket, dark grey trousers, rugged hiking boots, grey knit beanie",
+    "pose": "Walking forward, hands relaxed at sides, eyes gazing ahead into distance, framed by bridge rails",
+    "expression": "Serene, contemplative expression, lips slightly parted, calm and focused",
+    "light": "Soft blue twilight light from above, casting long shadows across wooden planks and canyon walls"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. blue hour, the subject walking across a wooden suspension bridge, over a deep gorge, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, contemplative expression, lips slightly parted, calm and focused.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative expression, lips slightly parted, calm and focused, lit by soft blue twilight light from above, casting long shadows across wooden planks and canyon walls exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "10",
+   "encuadre": "half",
+   "camara": "night, firelight",
+   "desc": "roasting a marshmallow, laughing",
+   "lugar": "by a campfire under the stars",
+   "ratio": "3:4",
+   "seed": 5109,
+   "prompt": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. night, firelight, the subject roasting a marshmallow, laughing, by a campfire under the stars, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "10.jpg",
+   "lectura": {
+    "place": "Snow-capped Matterhorn mountain under starry night sky, alpine meadow campsite",
+    "wear": "Olive green puffer jacket, dark brown trousers, grey knit beanie, beige hiking boots",
+    "pose": "Crouching by fire, roasting marshmallow, hands holding stick, eyes smiling toward camera",
+    "expression": "Warm, contented smile, eyes crinkled with joy, relaxed and happy",
+    "light": "Warm golden fire glow, cool blue starlight from above, soft contrast on face and gear"
+   },
+   "receta": "An outdoor adventure photograph, crisp mountain air, epic alpine scenery. night, firelight, the subject roasting a marshmallow, laughing, by a campfire under the stars, wearing a forest-green puffer jacket, grey beanie, hiking trousers and boots. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Warm, contented smile, eyes crinkled with joy, relaxed and happy.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, contented smile, eyes crinkled with joy, relaxed and happy, lit by warm golden fire glow, cool blue starlight from above, soft contrast on face and gear exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

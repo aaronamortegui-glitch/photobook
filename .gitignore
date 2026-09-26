@@ -1,0 +1,45 @@
+# made on each machine
+.venv/
+.uv/
+modelos/
+checkpoints/
+config.json
+.env
+__pycache__/
+*.pyc
+.claude/
+
+# your shoots and your photos: never in the repository
+sesiones/
+avatares/
+pruebas/
+entradas/
+
+# library masters (4K, local) and caches
+catalogo/_masters/
+**/_mini/
+catalogo/paquetes/u_*/
+
+# SAM 3 scratch output (the script itself is kept)
+sam3/*.jpg
+sam3/*.png
+sam3/t.json
+
+# retired pre-fal library, kept on disk so old shoots still show their samples
+catalogo/paquetes/accion_extrema/
+catalogo/paquetes/accion_extrema_m/
+catalogo/paquetes/paris/
+catalogo/paquetes/paris_accion/
+catalogo/paquetes/prueba_carpeta/
+catalogo/paquetes/retos/
+catalogo/paquetes/retrato_artistico/
+catalogo/paquetes/retrato_artistico_m/
+catalogo/paquetes/weekend_f/
+catalogo/paquetes/weekend_m/
+catalogo/_masters_sunburst/
+
+# the abstract portraits keep their original PNG samples locally (old shoots point at them)
+catalogo/paquetes/arte_abstracto_*/[0-9][0-9].png
+catalogo/paquetes/arte_abstracto_*/[0-9][0-9]_*.png
+!catalogo/paquetes/arte_abstracto_*/*_pose.png
+catalogo/paquetes/*/_modelo.png

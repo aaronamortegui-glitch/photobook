@@ -1,0 +1,217 @@
+{
+ "id": "paris_m",
+ "label": "A day in Paris",
+ "hint": "Croissants, the Seine, Montmartre, the Eiffel Tower sparkling at night",
+ "genero": "m",
+ "modelo": "marcus",
+ "estilo": "A warm editorial travel photograph, soft Parisian light, 35mm look",
+ "estilo_cierre": "Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+ "vestuario": "a camel overcoat over a navy knit sweater, dark chinos and white sneakers",
+ "ilustrado": false,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "half",
+   "camara": "eye level, 50mm",
+   "desc": "sitting at a café terrace with a croissant and coffee, laughing",
+   "lugar": "at a classic Parisian café with rattan chairs, morning",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. eye level, 50mm, the subject sitting at a café terrace with a croissant and coffee, laughing, at a classic Parisian café with rattan chairs, morning, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Parisian café terrace, classic bistro setting with wicker chairs and marble tables",
+    "wear": "Navy crew-neck sweater, camel wool coat, black trousers, white lace-up sneakers",
+    "pose": "Seated, holding croissant, cup on table, eyes gazing right, framed by café glass",
+    "expression": "Broad open-mouthed laugh, eyes crinkled with joy, head slightly tilted",
+    "light": "Soft golden daylight from left, warm and diffused, illuminating face and coat"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. eye level, 50mm, the subject sitting at a café terrace with a croissant and coffee, laughing, at a classic Parisian café with rattan chairs, morning, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Broad open-mouthed laugh, eyes crinkled with joy, head slightly tilted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed laugh, eyes crinkled with joy, head slightly tilted, lit by soft golden daylight from left, warm and diffused, illuminating face and coat exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "full",
+   "camara": "wide, from behind then turning",
+   "desc": "walking along the Seine, looking back over the shoulder",
+   "lugar": "on the quay by the Seine with the bouquinistes' green stalls",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, from behind then turning, the subject walking along the Seine, looking back over the shoulder, on the quay by the Seine with the bouquinistes' green stalls, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Seine Riverbank, Paris, beside historic stone embankment and book stalls under green awnings",
+    "wear": "Camel wool overcoat, navy knit sweater, black slim-fit trousers, white leather sneakers",
+    "pose": "Walking sideways, left hand by side, right hand slightly curled, eyes forward, framed mid-stride",
+    "expression": "Serious, focused gaze, lips neutral, calm and observant, not smiling",
+    "light": "Soft golden morning light from left, casting long shadows, warm and diffused across pavement and coat"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, from behind then turning, the subject walking along the Seine, looking back over the shoulder, on the quay by the Seine with the bouquinistes' green stalls, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serious, focused gaze, lips neutral, calm and observant, not smiling.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused gaze, lips neutral, calm and observant, not smiling, lit by soft golden morning light from left, casting long shadows, warm and diffused across pavement and coat exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "low angle, 24mm",
+   "desc": "arms open wide, joyful",
+   "lugar": "at the Trocadéro with the Eiffel Tower behind, clear morning",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. low angle, 24mm, the subject arms open wide, joyful, at the Trocadéro with the Eiffel Tower behind, clear morning, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Paris, Eiffel Tower plaza, golden hour sunlight",
+    "wear": "navy ribbed sweater, camel wool coat, black trousers, white sneakers",
+    "pose": "arms wide open, standing on tiled ground, eyes meet camera, low-angle shot",
+    "expression": "broad, joyful, open-mouthed smile showing teeth",
+    "light": "warm, soft, golden sunlight from behind, casting long shadows forward"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. low angle, 24mm, the subject arms open wide, joyful, at the Trocadéro with the Eiffel Tower behind, clear morning, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, broad, joyful, open-mouthed smile showing teeth.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad, joyful, open-mouthed smile showing teeth, lit by warm, soft, golden sunlight from behind, casting long shadows forward exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "closeup",
+   "camara": "close-up, 85mm, shallow depth of field",
+   "desc": "soft smile, looking into the lens",
+   "lugar": "with Haussmann buildings blurred behind",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. close-up, 85mm, shallow depth of field, the subject soft smile, looking into the lens, with Haussmann buildings blurred behind, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Parisian street, classic Haussmannian buildings in soft golden afternoon light",
+    "wear": "Navy ribbed knit sweater, camel wool coat, black trousers, white sneakers",
+    "pose": "Crouching low, hands in pockets, eyes meet camera, framed close-up",
+    "expression": "Warm, gentle smile, teeth visible, relaxed and approachable",
+    "light": "Soft, directional sunlight from right, casting gentle shadows, enhancing depth"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. close-up, 85mm, shallow depth of field, the subject soft smile, looking into the lens, with Haussmann buildings blurred behind, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Warm, gentle smile, teeth visible, relaxed and approachable.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, gentle smile, teeth visible, relaxed and approachable, lit by soft, directional sunlight from right, casting gentle shadows, enhancing depth exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "full",
+   "camara": "wide, symmetrical",
+   "desc": "standing in front of the glass pyramid, hands in pockets",
+   "lugar": "at the Louvre courtyard",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, symmetrical, the subject standing in front of the glass pyramid, hands in pockets, at the Louvre courtyard, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Louvre Museum’s glass pyramid, Paris, under soft daylight",
+    "wear": "navy crewneck sweater, camel overcoat, black trousers, white sneakers",
+    "pose": "Hands in pockets, standing straight, eyes forward, full-body framed",
+    "expression": "Neutral, calm, direct gaze, no smile",
+    "light": "Soft, diffused daylight, even illumination, no harsh shadows"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, symmetrical, the subject standing in front of the glass pyramid, hands in pockets, at the Louvre courtyard, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Neutral, calm, direct gaze, no smile.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with neutral, calm, direct gaze, no smile, lit by soft, diffused daylight, even illumination, no harsh shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "browsing a book, candid",
+   "lugar": "inside a cluttered old Paris bookshop",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. three-quarter view, the subject browsing a book, candid, inside a cluttered old Paris bookshop, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Narrow aisle of vintage bookstore, bookshelves lining both sides, warm ambient glow",
+    "wear": "Navy crew-neck sweater, camel wool coat, dark trousers, white canvas sneakers",
+    "pose": "Standing, holding open book, eyes scanning pages, framed by bookshelves",
+    "expression": "Focused, calm concentration, slightly furrowed brow while reading",
+    "light": "Soft overhead fluorescents, warm golden tones, diffused through high ceiling"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. three-quarter view, the subject browsing a book, candid, inside a cluttered old Paris bookshop, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Focused, calm concentration, slightly furrowed brow while reading.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with focused, calm concentration, slightly furrowed brow while reading, lit by soft overhead fluorescents, warm golden tones, diffused through high ceiling exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "high angle, looking down the steps",
+   "desc": "sitting on the steps, eating a crêpe",
+   "lugar": "on the Montmartre steps below the Sacré-Cœur, afternoon",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. high angle, looking down the steps, the subject sitting on the steps, eating a crêpe, on the Montmartre steps below the Sacré-Cœur, afternoon, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Seine River steps before Sacré-Cœur Basilica, Paris, France",
+    "wear": "navy turtleneck, camel wool coat, black trousers, white sneakers",
+    "pose": "seated, eating pastry, hands holding paper, eyes gazing forward, framed by steps",
+    "expression": "calm, focused, slightly amused while savoring food",
+    "light": "golden hour sun, warm, soft, casting long shadows across stone steps"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. high angle, looking down the steps, the subject sitting on the steps, eating a crêpe, on the Montmartre steps below the Sacré-Cœur, afternoon, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, calm, focused, slightly amused while savoring food.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with calm, focused, slightly amused while savoring food, lit by golden hour sun, warm, soft, casting long shadows across stone steps exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "full",
+   "camara": "side view, motion",
+   "desc": "riding a vintage bicycle with a baguette in the basket, smiling",
+   "lugar": "on a tree-lined Paris street",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. side view, motion, the subject riding a vintage bicycle with a baguette in the basket, smiling, on a tree-lined Paris street, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "Parisian tree-lined avenue, classic European architecture, sun-dappled pavement, distant cars",
+    "wear": "Camel wool coat, navy crew-neck sweater, dark trousers, white canvas sneakers",
+    "pose": "Cycling forward, hands on handlebars, eyes smiling toward camera, medium shot",
+    "expression": "Warm, soft smile, relaxed and content, eyes crinkled with joy",
+    "light": "Golden morning light, dappled through leaves, casting long shadows on pavement"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. side view, motion, the subject riding a vintage bicycle with a baguette in the basket, smiling, on a tree-lined Paris street, wearing a camel overcoat over a navy knit sweater, dark chinos and white sneakers. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Warm, soft smile, relaxed and content, eyes crinkled with joy.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, soft smile, relaxed and content, eyes crinkled with joy, lit by golden morning light, dappled through leaves, casting long shadows on pavement exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "09",
+   "encuadre": "half",
+   "camara": "golden hour, backlit",
+   "desc": "leaning on the ornate railing, wind in the face",
+   "lugar": "on Pont Alexandre III at sunset",
+   "vestuario": "a dark blazer over a black shirt",
+   "ratio": "3:4",
+   "seed": 5108,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. golden hour, backlit, the subject leaning on the ornate railing, wind in the face, on Pont Alexandre III at sunset, wearing a dark blazer over a black shirt. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "09.jpg",
+   "lectura": {
+    "place": "ornate bridge railing at golden hour, Parisian landmark with gilded lampposts and statues",
+    "wear": "black blazer over black crew-neck tee, black trousers, no visible footwear",
+    "pose": "leaning on railing, left hand resting, gaze direct, framed by architectural details",
+    "expression": "calm, thoughtful, neutral with slight lip curve",
+    "light": "warm, low sun from behind, casting soft golden glow and long shadows"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. golden hour, backlit, the subject leaning on the ornate railing, wind in the face, on Pont Alexandre III at sunset, wearing a dark blazer over a black shirt. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, calm, thoughtful, neutral with slight lip curve.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with calm, thoughtful, neutral with slight lip curve, lit by warm, low sun from behind, casting soft golden glow and long shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "10",
+   "encuadre": "full",
+   "camara": "wide, night, long lens",
+   "desc": "looking up in wonder, holding a glass of champagne",
+   "lugar": "at night with the Eiffel Tower sparkling behind",
+   "vestuario": "a dark blazer over a black shirt",
+   "ratio": "3:4",
+   "seed": 5109,
+   "prompt": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, night, long lens, the subject looking up in wonder, holding a glass of champagne, at night with the Eiffel Tower sparkling behind, wearing a dark blazer over a black shirt. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "10.jpg",
+   "lectura": {
+    "place": "Paris, Eiffel Tower at night, illuminated against dark sky",
+    "wear": "Black button-up shirt, navy blazer, dark trousers, brown leather oxfords",
+    "pose": "Standing tall, holding champagne flute, gazing upward toward tower, framed from waist up",
+    "expression": "Contemplative, serene, eyes lifted in quiet admiration",
+    "light": "Warm golden glow from tower, soft ambient city lights, gentle spotlight effect"
+   },
+   "receta": "A warm editorial travel photograph, soft Parisian light, 35mm look. wide, night, long lens, the subject looking up in wonder, holding a glass of champagne, at night with the Eiffel Tower sparkling behind, wearing a dark blazer over a black shirt. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Contemplative, serene, eyes lifted in quiet admiration.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with contemplative, serene, eyes lifted in quiet admiration, lit by warm golden glow from tower, soft ambient city lights, gentle spotlight effect exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

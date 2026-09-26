@@ -1,0 +1,28 @@
+{
+  "_note": "Per-category prompt pieces. The category of a photo is decided by how tall the head-and-neck mask is relative to the photo (umbral_cara = mask height / photo height; the first category, in orden, whose threshold is met wins). Any field left out falls back to the built-in default, so an empty category changes nothing. 'encuadre' is appended to the generation prompt of a custom shoot; the 'enhance_*' fields drive Enhance face.",
+  "orden": ["closeup", "half", "full"],
+  "closeup": {
+    "label": "Close-up",
+    "umbral_cara": 0.50,
+    "encuadre": "Close-up portrait, the head and shoulders filling the frame.",
+    "enhance_contexto": 1.5,
+    "enhance_objetivo": 1600,
+    "enhance_extra": "This is a close-up: the face is already large, so refine rather than rebuild -- pores, fine lines, eyelashes, iris detail and individual hair strands, without changing the shape of any feature."
+  },
+  "half": {
+    "label": "Half body",
+    "umbral_cara": 0.24,
+    "encuadre": "Waist-up shot.",
+    "enhance_contexto": 1.9,
+    "enhance_objetivo": 1400,
+    "enhance_extra": "This is a waist-up shot: bring the face to full portrait detail and make sure the eyes, nose and mouth are unmistakably the person in <image2>."
+  },
+  "full": {
+    "label": "Full body",
+    "umbral_cara": 0.0,
+    "encuadre": "Full-length shot, the whole body visible from head to feet.",
+    "enhance_contexto": 2.2,
+    "enhance_objetivo": 1400,
+    "enhance_extra": "This is a full-length shot and the face is small: rebuild it from <image2> so the identity reads at this size, keeping its size in the frame, the head angle and the hairline exactly."
+  }
+}

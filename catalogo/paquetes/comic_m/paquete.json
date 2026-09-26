@@ -1,0 +1,177 @@
+{
+ "id": "comic_m",
+ "label": "Comic book hero",
+ "hint": "One day as the city's hero: the alarm, the leap, the rescue, the rooftop at dawn",
+ "genero": "m",
+ "modelo": "marcus",
+ "estilo": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition",
+ "estilo_cierre": "Comic book art, inked and coloured, not a photograph.",
+ "vestuario": "an original teal and silver hero suit with a glowing star emblem and a long scarf",
+ "ilustrado": true,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "yawning, holding a coffee mug, a phone buzzing with an alert",
+   "lugar": "in a small apartment kitchen, morning",
+   "vestuario": "a denim jacket and a yellow t-shirt",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. eye level, the subject yawning, holding a coffee mug, a phone buzzing with an alert, in a small apartment kitchen, morning, wearing a denim jacket and a yellow t-shirt. Waist-up shot. Comic book art, inked and coloured, not a photograph.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Kitchen with orange cabinets and tiled walls",
+    "wear": "Yellow t-shirt, blue denim jacket, no shoes shown",
+    "pose": "Holding coffee mug, phone glowing, eyes wide, framed chest-up",
+    "expression": "Shocked, mouth wide open, yelling at phone’s sudden flash",
+    "light": "Warm, golden light from window, casting soft shadows on skin"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. eye level, the subject yawning, holding a coffee mug, a phone buzzing with an alert, in a small apartment kitchen, morning, wearing a denim jacket and a yellow t-shirt. Waist-up shot. Comic book art, inked and coloured, not a photograph, Shocked, mouth wide open, yelling at phone’s sudden flash.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with shocked, mouth wide open, yelling at phone’s sudden flash, lit by warm, golden light from window, casting soft shadows on skin exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "full",
+   "camara": "low heroic angle",
+   "desc": "pulling off the jacket, the hero suit showing underneath",
+   "lugar": "in a city alley",
+   "vestuario": "a denim jacket and a yellow t-shirt",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. low heroic angle, the subject pulling off the jacket, the hero suit showing underneath, in a city alley, wearing a denim jacket and a yellow t-shirt. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Urban alleyway between brick and steel buildings, narrow with fire escapes and pipes",
+    "wear": "Yellow t-shirt, blue jeans jacket unbuttoned, dark blue pants with gold trim, black boots",
+    "pose": "Stands wide-legged, hands gripping jacket open, eyes locked forward, framed by towering structures",
+    "expression": "Serious, focused gaze, mouth slightly parted, ready for action or confrontation",
+    "light": "Harsh overhead sunlight casts sharp shadows, highlighting textures and contours dramatically"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. low heroic angle, the subject pulling off the jacket, the hero suit showing underneath, in a city alley, wearing a denim jacket and a yellow t-shirt. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph, Serious, focused gaze, mouth slightly parted, ready for action or confrontation.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused gaze, mouth slightly parted, ready for action or confrontation, lit by harsh overhead sunlight casts sharp shadows, highlighting textures and contours dramatically exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "dynamic low angle",
+   "desc": "leaping between two rooftops, scarf flying",
+   "lugar": "above the city skyline",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. dynamic low angle, the subject leaping between two rooftops, scarf flying, above the city skyline, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "New York City skyline, skyscrapers between brick rooftops",
+    "wear": "Teal star-emblazoned suit, silver armor, grey scarf, silver boots",
+    "pose": "Leaping forward, fists clenched, eyes forward, low-angle shot",
+    "expression": "Serious, determined gaze, focused on unseen threat ahead",
+    "light": "Golden-yellow backlighting, dramatic halo effect, high contrast"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. dynamic low angle, the subject leaping between two rooftops, scarf flying, above the city skyline, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph, Serious, determined gaze, focused on unseen threat ahead.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, determined gaze, focused on unseen threat ahead, lit by golden-yellow backlighting, dramatic halo effect, high contrast exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "catching a falling taxi above the street",
+   "lugar": "in a busy downtown avenue",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. wide, the subject catching a falling taxi above the street, in a busy downtown avenue, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Manhattan’s bustling streets, towering skyscrapers, neon signs, and yellow cabs",
+    "wear": "Teal star-emblazoned suit, silver belt, grey cape, metallic boots",
+    "pose": "Leaping mid-air, right hand lifts taxi, left clenched, eyes upward, framed by city",
+    "expression": "Focused, determined expression, mouth slightly open, brows neutral",
+    "light": "Golden-hour light from above, casting sharp shadows, vibrant and cinematic"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. wide, the subject catching a falling taxi above the street, in a busy downtown avenue, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph, Focused, determined expression, mouth slightly open, brows neutral.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with focused, determined expression, mouth slightly open, brows neutral, lit by golden-hour light from above, casting sharp shadows, vibrant and cinematic exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "closeup",
+   "camara": "tight close-up, strong ink shadows",
+   "desc": "fierce stare into the lens",
+   "lugar": "against a burst of action lines",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. tight close-up, strong ink shadows, the subject fierce stare into the lens, against a burst of action lines, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Extreme close-up, the face filling the frame. Comic book art, inked and coloured, not a photograph.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Stark Tower rooftop, city skyline behind, dramatic comic-book explosion backdrop",
+    "wear": "Teal star-spangled suit, silver armor, flowing cape, metallic boots gleaming under light",
+    "pose": "Chest thrust forward, hands gripping cape, eyes locked ahead, framed tightly for impact",
+    "expression": "Stern, focused intensity, brows furrowed, lips set firm, ready for battle",
+    "light": "Harsh overhead spotlight, casting sharp shadows, glowing star emblem radiates inner luminescence"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. tight close-up, strong ink shadows, the subject fierce stare into the lens, against a burst of action lines, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Extreme close-up, the face filling the frame. Comic book art, inked and coloured, not a photograph, Stern, focused intensity, brows furrowed, lips set firm, ready for battle.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with stern, focused intensity, brows furrowed, lips set firm, ready for battle, lit by harsh overhead spotlight, casting sharp shadows, glowing star emblem radiates inner luminescence exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "high-fiving a smiling kid",
+   "lugar": "in a crowded street after the rescue",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. three-quarter view, the subject high-fiving a smiling kid, in a crowded street after the rescue, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Waist-up shot. Comic book art, inked and coloured, not a photograph.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Urban street, bustling cityscape with storefronts and pedestrians",
+    "wear": "Teal star-emblazoned suit, silver armor, grey scarf, dark trousers, metallic belt",
+    "pose": "Standing, right hand raised for high-five, left hand by side, eyes on child",
+    "expression": "Warm, joyful smile, eyes crinkled with delight, open-mouthed cheer",
+    "light": "Soft daylight from above, casting gentle shadows, vibrant and welcoming"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. three-quarter view, the subject high-fiving a smiling kid, in a crowded street after the rescue, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Waist-up shot. Comic book art, inked and coloured, not a photograph, Warm, joyful smile, eyes crinkled with delight, open-mouthed cheer.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with warm, joyful smile, eyes crinkled with delight, open-mouthed cheer, lit by soft daylight from above, casting gentle shadows, vibrant and welcoming exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "wide, dusk",
+   "desc": "standing on a gargoyle, looking over the city",
+   "lugar": "on a gothic rooftop at dusk",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. wide, dusk, the subject standing on a gargoyle, looking over the city, on a gothic rooftop at dusk, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "On Gothic cathedral rooftop, beside stone dragon gargoyles, against twilight sky",
+    "wear": "Teal armored suit with silver plating, star-emblazoned chest, grey patterned cape, black boots",
+    "pose": "Stands tall, fists clenched, gaze forward, framed by spires and dramatic sky",
+    "expression": "Serious, resolute expression, jaw set, eyes focused, embodying vigilance",
+    "light": "Warm sunset light from behind, casting long shadows, glowing star emblem"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. wide, dusk, the subject standing on a gargoyle, looking over the city, on a gothic rooftop at dusk, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Full-length shot, the whole body visible from head to feet. Comic book art, inked and coloured, not a photograph, Serious, resolute expression, jaw set, eyes focused, embodying vigilance.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, resolute expression, jaw set, eyes focused, embodying vigilance, lit by warm sunset light from behind, casting long shadows, glowing star emblem exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "half",
+   "camara": "sunrise, backlit",
+   "desc": "sitting on the roof edge, tired but smiling",
+   "lugar": "on a rooftop at dawn",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. sunrise, backlit, the subject sitting on the roof edge, tired but smiling, on a rooftop at dawn, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Waist-up shot. Comic book art, inked and coloured, not a photograph.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "On a city rooftop at sunset, overlooking urban skyline",
+    "wear": "Teal star-emblazoned suit, silver armor, flowing cape, matching trousers, boots",
+    "pose": "Sitting cross-legged, hands clasped, eyes gazing forward, framed medium shot",
+    "expression": "Soft, warm smile, eyes crinkled with gentle amusement",
+    "light": "Golden-hour light glows behind, casting long shadows, highlighting costume’s metallic sheen"
+   },
+   "receta": "A bold graphic-novel comic illustration, bold black ink outlines, flat saturated colours, halftone dot shading, dynamic panel composition. sunrise, backlit, the subject sitting on the roof edge, tired but smiling, on a rooftop at dawn, wearing an original teal and silver hero suit with a glowing star emblem and a long scarf. Waist-up shot. Comic book art, inked and coloured, not a photograph, Soft, warm smile, eyes crinkled with gentle amusement.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, warm smile, eyes crinkled with gentle amusement, lit by golden-hour light glows behind, casting long shadows, highlighting costume’s metallic sheen exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

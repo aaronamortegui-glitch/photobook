@@ -1,0 +1,149 @@
+[
+ {
+  "id": "fb_stand",
+  "label": "Standing tall",
+  "framing": "full",
+  "desc": "standing straight, arms relaxed at the sides, whole body visible",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "fb_hand_hip",
+  "label": "Hand on hip",
+  "framing": "full",
+  "desc": "standing with one hand on the hip, weight on one leg, the other foot forward",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "fb_walking",
+  "label": "Walking",
+  "framing": "full",
+  "desc": "mid stride walking toward the camera, arms swinging naturally",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "fb_pockets",
+  "label": "Hands in pockets",
+  "framing": "full",
+  "desc": "standing relaxed with both hands in the trouser pockets",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "fb_lean_wall",
+  "label": "Leaning on a wall",
+  "framing": "full",
+  "desc": "leaning sideways against a wall, ankles crossed, one shoulder touching it",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "st_crossed",
+  "label": "Seated, legs crossed",
+  "framing": "full",
+  "desc": "seated on a stool with one leg crossed over the other, hands on the knee",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "hb_arms_cross",
+  "label": "Arms crossed",
+  "framing": "half",
+  "desc": "waist up, both arms crossed over the chest, facing the camera",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "hb_hand_chin",
+  "label": "Hand to chin",
+  "framing": "half",
+  "desc": "waist up, one hand raised with fingers touching the chin, head tilted",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "hb_holding_cup",
+  "label": "Holding a cup",
+  "framing": "half",
+  "desc": "waist up, holding a cup with both hands at chest height",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "hb_arms_hips",
+  "label": "Hands on hips",
+  "framing": "half",
+  "desc": "waist up, both hands resting on the hips, elbows out",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "st_chair",
+  "label": "Seated, leaning in",
+  "framing": "half",
+  "desc": "seated on a chair, leaning forward, forearms resting on the thighs",
+  "origen": "qwenstudio"
+ },
+ {
+  "id": "fb_look_back",
+  "label": "Looking back",
+  "framing": "full",
+  "desc": "walking away from the camera and looking back over the shoulder toward the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "fb_three_q",
+  "label": "Three-quarter turn",
+  "framing": "full",
+  "desc": "standing turned three quarters to the side with the hands loosely clasped in front, looking at the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "fb_step_sit",
+  "label": "Seated on a step",
+  "framing": "full",
+  "desc": "sitting on a low wooden block with elbows resting on the knees and hands loosely clasped, looking at the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "fb_jacket_shoulder",
+  "label": "Jacket over shoulder",
+  "framing": "full",
+  "desc": "standing with a jacket hooked on one finger slung over the shoulder, the otthe hand in the pocket",
+  "origen": "photobook"
+ },
+ {
+  "id": "fb_ankles_crossed",
+  "label": "Ankles crossed",
+  "framing": "full",
+  "desc": "standing with the legs crossed at the ankles and the arms loosely folded, smiling",
+  "origen": "photobook"
+ },
+ {
+  "id": "hb_hair_touch",
+  "label": "Hand in hair",
+  "framing": "half",
+  "desc": "one hand running through the hair, looking slightly away from the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "hb_collar",
+  "label": "Adjusting lapels",
+  "framing": "half",
+  "desc": "both hands adjusting the lapels of the blazer, looking at the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "hb_laugh",
+  "label": "Laughing",
+  "framing": "half",
+  "desc": "laughing naturally and looking off to the side, hands relaxed at the sides",
+  "origen": "photobook"
+ },
+ {
+  "id": "hb_over_shoulder",
+  "label": "Over the shoulder",
+  "framing": "half",
+  "desc": "body turned away, looking back over the shoulder at the camera",
+  "origen": "photobook"
+ },
+ {
+  "id": "hb_hands_pockets",
+  "label": "Hands in coat pockets",
+  "framing": "half",
+  "desc": "both hands in the coat pockets, relaxed shoulders, soft smile at the camera",
+  "origen": "photobook"
+ }
+]

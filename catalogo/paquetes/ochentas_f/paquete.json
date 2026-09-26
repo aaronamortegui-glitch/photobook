@@ -1,0 +1,175 @@
+{
+ "id": "ochentas_f",
+ "label": "Back to the 80s",
+ "hint": "Film grain, synthwave neon, an arcade, a roller rink, a Polaroid and a sunset drive",
+ "genero": "f",
+ "modelo": "lucia",
+ "estilo": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents",
+ "estilo_cierre": "Authentic 1980s look, film grain, not modern.",
+ "vestuario": "a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings",
+ "ilustrado": false,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "half",
+   "camara": "eye level, neon glow",
+   "desc": "playing an arcade machine, laughing, face lit by the screen",
+   "lugar": "in a crowded 80s arcade",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. eye level, neon glow, the subject playing an arcade machine, laughing, face lit by the screen, in a crowded 80s arcade, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Arcade alley, neon-lit gaming haven with vintage machines and bustling crowd",
+    "wear": "Pastel pink and blue zip-up jacket, cuffed denim jeans, white chunky lace-up boots",
+    "pose": "Leaning forward, hands on joystick and buttons, eyes smiling toward screen, framed mid-action",
+    "expression": "Joyful, open-mouthed grin, eyes sparkling with playful concentration and delight",
+    "light": "Warm pink and blue neon glow from above, casting vibrant reflections on floor and skin"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. eye level, neon glow, the subject playing an arcade machine, laughing, face lit by the screen, in a crowded 80s arcade, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern, Joyful, open-mouthed grin, eyes sparkling with playful concentration and delight.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed grin, eyes sparkling with playful concentration and delight, lit by warm pink and blue neon glow from above, casting vibrant reflections on floor and skin exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "full",
+   "camara": "wide, motion blur",
+   "desc": "roller skating, arms out, joyful",
+   "lugar": "at a roller rink with a disco ball and neon lights",
+   "ratio": "2:3",
+   "seed": 5101,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, motion blur, the subject roller skating, arms out, joyful, at a roller rink with a disco ball and neon lights, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Retro roller rink under spinning disco ball, neon-lit wooden floor",
+    "wear": "Pastel pink windbreaker with teal stripes, white tee, cuffed denim jeans, white quad skates",
+    "pose": "Arms wide, one hand up, smiling at camera, mid-stride on rink",
+    "expression": "Joyful, open-mouthed grin, eyes sparkling with delight",
+    "light": "Warm pink and blue neon glow, disco ball reflections, ambient rink lighting"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, motion blur, the subject roller skating, arms out, joyful, at a roller rink with a disco ball and neon lights, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern, Joyful, open-mouthed grin, eyes sparkling with delight.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed grin, eyes sparkling with delight, lit by warm pink and blue neon glow, disco ball reflections, ambient rink lighting exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "closeup",
+   "camara": "close-up, flash photo",
+   "desc": "blowing a bubblegum bubble, playful look",
+   "lugar": "against a pink and teal backdrop",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. close-up, flash photo, the subject blowing a bubblegum bubble, playful look, against a pink and teal backdrop, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Extreme close-up, the face filling the frame. Authentic 1980s look, film grain, not modern.",
+   "foto": "03.jpg",
+   "lectura": {
+    "place": "Studio with pink-to-teal gradient backdrop, glowing neon rim",
+    "wear": "Pastel pink-and-teal zip-up windbreaker, blue jeans, white sneakers",
+    "pose": "Crouched, hands resting on knees, eyes locked forward, bubble gum mid-puff",
+    "expression": "Playful, focused gaze with slight smirk, lips pursed around bubble",
+    "light": "Golden rim light from above, casting soft shadows, vibrant neon glow"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. close-up, flash photo, the subject blowing a bubblegum bubble, playful look, against a pink and teal backdrop, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Extreme close-up, the face filling the frame. Authentic 1980s look, film grain, not modern, Playful, focused gaze with slight smirk, lips pursed around bubble.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with playful, focused gaze with slight smirk, lips pursed around bubble, lit by golden rim light from above, casting soft shadows, vibrant neon glow exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "holding a boombox on the shoulder, confident grin",
+   "lugar": "on a graffiti-covered city street",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. three-quarter view, the subject holding a boombox on the shoulder, confident grin, on a graffiti-covered city street, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Urban alleyway with graffiti-covered brick walls and neon signs glowing in background",
+    "wear": "Pastel pink and teal windbreaker, white t-shirt, faded blue jeans, white lace-up combat boots",
+    "pose": "Standing casually, one hand holding boombox, other by hip, smiling at camera, framed medium shot",
+    "expression": "Soft, warm smile with visible teeth, eyes bright and engaged, radiating cheerful confidence",
+    "light": "Golden-hour sunlight from right, casting long shadows, enhancing neon hues and street textures"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. three-quarter view, the subject holding a boombox on the shoulder, confident grin, on a graffiti-covered city street, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern, Soft, warm smile with visible teeth, eyes bright and engaged, radiating cheerful confidence.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, warm smile with visible teeth, eyes bright and engaged, radiating cheerful confidence, lit by golden-hour sunlight from right, casting long shadows, enhancing neon hues and street textures exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "sitting on the hood of a red convertible, sunglasses on",
+   "lugar": "on a palm-lined boulevard at sunset",
+   "ratio": "2:3",
+   "seed": 5104,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, the subject sitting on the hood of a red convertible, sunglasses on, on a palm-lined boulevard at sunset, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "On a palm-lined coastal drive at sunset, neon glows reflect off pavement",
+    "wear": "Pastel pink and teal track jacket, white tee, cuffed denim jeans, white lace-up boots",
+    "pose": "Sitting atop red Honda, hands resting on hood, gazing straight ahead, framed by car",
+    "expression": "Serene, neutral expression, eyes calm and direct, unsmiling but composed",
+    "light": "Warm golden sunset behind, casting soft glow, neon streaks illuminate foreground"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, the subject sitting on the hood of a red convertible, sunglasses on, on a palm-lined boulevard at sunset, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern, Serene, neutral expression, eyes calm and direct, unsmiling but composed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, neutral expression, eyes calm and direct, unsmiling but composed, lit by warm golden sunset behind, casting soft glow, neon streaks illuminate foreground exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "closeup",
+   "camara": "close-up, direct flash, candid",
+   "desc": "laughing, taking a selfie with a vintage instant camera held at arm's length",
+   "lugar": "at a neon-lit party",
+   "ratio": "3:4",
+   "seed": 5105,
+   "foto": "06.jpg",
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. close-up, direct flash, candid, the subject laughing, taking a selfie with a vintage instant camera held at arm's length, at a neon-lit party, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Extreme close-up, the face filling the frame. Authentic 1980s look, film grain, not modern.",
+   "lectura": {
+    "place": "Neon-lit retro bar with glowing pink and blue signage, bustling background",
+    "wear": "Pastel pink-and-blue striped bomber jacket, white tee, ripped jeans, white lace-up boots",
+    "pose": "Crouching, holding vintage camera at eye level, smiling directly at lens, framed close-up",
+    "expression": "Broad open-mouthed laugh, eyes sparkling with joy, head slightly tilted",
+    "light": "Warm ambient neon glow from behind, casting soft pink and blue highlights on subject"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. close-up, direct flash, candid, the subject laughing, taking a selfie with a vintage instant camera held at arm's length, at a neon-lit party, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Extreme close-up, the face filling the frame. Authentic 1980s look, film grain, not modern, Broad open-mouthed laugh, eyes sparkling with joy, head slightly tilted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed laugh, eyes sparkling with joy, head slightly tilted, lit by warm ambient neon glow from behind, casting soft pink and blue highlights on subject exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "browsing vinyl records, headphones around the neck",
+   "lugar": "in a small record shop",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. eye level, the subject browsing vinyl records, headphones around the neck, in a small record shop, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Vinyl record store aisle, neon-lit, shelves packed with albums",
+    "wear": "Pastel pink and teal windbreaker, denim jeans, white lace-up boots",
+    "pose": "Hands browse records, head tilted, eyes meet camera, framed close",
+    "expression": "Serious, focused expression, lips slightly parted",
+    "light": "Pink and purple neon glow from above, casting soft, vibrant hues"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. eye level, the subject browsing vinyl records, headphones around the neck, in a small record shop, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Waist-up shot. Authentic 1980s look, film grain, not modern, Serious, focused expression, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused expression, lips slightly parted, lit by pink and purple neon glow from above, casting soft, vibrant hues exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "full",
+   "camara": "wide, synthwave",
+   "desc": "standing on a rooftop, arms raised",
+   "lugar": "under a giant retro sunset with a neon grid skyline",
+   "ratio": "2:3",
+   "seed": 5107,
+   "prompt": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, synthwave, the subject standing on a rooftop, arms raised, under a giant retro sunset with a neon grid skyline, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "On a rooftop overlooking a neon-lit cityscape under a giant glowing sun",
+    "wear": "Pastel pink and blue striped bomber jacket, blue jeans, white lace-up combat boots",
+    "pose": "Arms raised high, fists clenched, eyes meet camera, centered in frame",
+    "expression": "Serene, confident, slightly defiant expression with neutral mouth",
+    "light": "Warm golden light from behind, casting soft glow and long shadows across the scene"
+   },
+   "receta": "A 1980s photograph shot on 35mm film, grain, warm faded colour, synthwave neon accents. wide, synthwave, the subject standing on a rooftop, arms raised, under a giant retro sunset with a neon grid skyline, wearing a pastel windbreaker jacket, high-waisted jeans, white high-top sneakers and big hoop earrings. Full-length shot, the whole body visible from head to feet. Authentic 1980s look, film grain, not modern, Serene, confident, slightly defiant expression with neutral mouth.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, confident, slightly defiant expression with neutral mouth, lit by warm golden light from behind, casting soft glow and long shadows across the scene exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

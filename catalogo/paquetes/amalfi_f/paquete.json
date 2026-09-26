@@ -1,0 +1,219 @@
+{
+ "id": "amalfi_f",
+ "label": "Amalfi summer",
+ "hint": "Positano balconies, a boat day, lemon groves and a night in the piazza",
+ "genero": "f",
+ "modelo": "lucia",
+ "estilo": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones",
+ "estilo_cierre": "Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+ "vestuario": "a flowing white linen dress, straw hat and sandals",
+ "ilustrado": false,
+ "version": "2026-09-26",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "having breakfast on a balcony, holding an espresso, smiling",
+   "lugar": "on a Positano balcony overlooking the colourful cliff village",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. eye level, the subject having breakfast on a balcony, holding an espresso, smiling, on a Positano balcony overlooking the colourful cliff village, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "01.jpg",
+   "lectura": {
+    "place": "Amalfi Coast balcony overlooking cliffside village and turquoise sea",
+    "wear": "White linen dress, wide-brimmed straw hat, beige strappy sandals",
+    "pose": "Seated, holding espresso cup, eyes meet camera, framed by railing",
+    "expression": "Soft, warm smile, relaxed and content",
+    "light": "Golden morning light from left, bright and even, enhancing vibrant backdrop"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. eye level, the subject having breakfast on a balcony, holding an espresso, smiling, on a Positano balcony overlooking the colourful cliff village, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Soft, warm smile, relaxed and content.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with soft, warm smile, relaxed and content, lit by golden morning light from left, bright and even, enhancing vibrant backdrop exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "02",
+   "encuadre": "full",
+   "camara": "wide, from the stairs above",
+   "desc": "walking down narrow stairs lined with bougainvillea",
+   "lugar": "in a Positano alley",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. wide, from the stairs above, the subject walking down narrow stairs lined with bougainvillea, in a Positano alley, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "02.jpg",
+   "lectura": {
+    "place": "Amalfi Coast’s Positano, cliffside stairway flanked by vibrant bougainvillea",
+    "wear": "White linen dress, wide-brimmed straw hat, tan leather sandals",
+    "pose": "Walking down stairs, hands by sides, eyes meeting camera, framed by flowers",
+    "expression": "Serene, neutral expression, calm and composed",
+    "light": "Golden midday sun, warm and bright, casting soft shadows on stone steps"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. wide, from the stairs above, the subject walking down narrow stairs lined with bougainvillea, in a Positano alley, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, neutral expression, calm and composed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, neutral expression, calm and composed, lit by golden midday sun, warm and bright, casting soft shadows on stone steps exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "03",
+   "encuadre": "full",
+   "camara": "three-quarter view from the stern",
+   "desc": "sitting on the bow of a small wooden boat, legs over the side, one hand on the hat, laughing",
+   "lugar": "on turquoise water along the Amalfi coast",
+   "vestuario": "a terracotta swimsuit",
+   "ratio": "2:3",
+   "seed": 5102,
+   "foto": "03.jpg",
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. three-quarter view from the stern, the subject sitting on the bow of a small wooden boat, legs over the side, one hand on the hat, laughing, on turquoise water along the Amalfi coast, wearing a terracotta swimsuit. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "lectura": {
+    "place": "Amalfi Coast cliffs overlook turquoise water, with terraced houses clinging to steep slopes",
+    "wear": "Brown one-piece swimsuit, straw sunhat, barefoot, no shoes",
+    "pose": "Seated boat’s bow, one hand on hat, head tilted, eyes meet camera",
+    "expression": "Broad open-mouthed laugh, joyful and carefree",
+    "light": "Golden midday sun, soft and warm, illuminates from front, casting gentle shadows"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. three-quarter view from the stern, the subject sitting on the bow of a small wooden boat, legs over the side, one hand on the hat, laughing, on turquoise water along the Amalfi coast, wearing a terracotta swimsuit. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Broad open-mouthed laugh, joyful and carefree.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed laugh, joyful and carefree, lit by golden midday sun, soft and warm, illuminates from front, casting gentle shadows exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "04",
+   "encuadre": "full",
+   "camara": "wide",
+   "desc": "diving from the boat into the sea, mid-air",
+   "lugar": "in a turquoise bay",
+   "vestuario": "a terracotta swimsuit",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. wide, the subject diving from the boat into the sea, mid-air, in a turquoise bay, wearing a terracotta swimsuit. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "04.jpg",
+   "lectura": {
+    "place": "Canyon-fringed turquoise bay, sunlit cove with rocky cliffs and calm water",
+    "wear": "Terracotta one-piece swimsuit, sleeveless, smooth fabric, no pattern or embellishment",
+    "pose": "Arms outstretched, feet dangling, gazing forward, framed by boat’s edge and water",
+    "expression": "Serene, focused expression, lips slightly parted, calm and composed",
+    "light": "Golden sunlight from behind, warm glow, soft highlights on skin and water"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. wide, the subject diving from the boat into the sea, mid-air, in a turquoise bay, wearing a terracotta swimsuit. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, focused expression, lips slightly parted, calm and composed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, focused expression, lips slightly parted, calm and composed, lit by golden sunlight from behind, warm glow, soft highlights on skin and water exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "05",
+   "encuadre": "closeup",
+   "camara": "close-up, 85mm",
+   "desc": "squinting into the sun, freckles of salt water, big smile",
+   "lugar": "with the sea sparkling behind",
+   "vestuario": "a terracotta swimsuit",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. close-up, 85mm, the subject squinting into the sun, freckles of salt water, big smile, with the sea sparkling behind, wearing a terracotta swimsuit. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "05.jpg",
+   "lectura": {
+    "place": "Beachside, ocean behind, sun glinting on water",
+    "wear": "Brown halter-neck bikini top, no bottoms shown",
+    "pose": "Head tilted slightly, eyes winking, mouth open in grin",
+    "expression": "Joyful, radiant, teeth showing, cheeks lifted",
+    "light": "Bright, direct sunlight, warm golden tones, high contrast"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. close-up, 85mm, the subject squinting into the sun, freckles of salt water, big smile, with the sea sparkling behind, wearing a terracotta swimsuit. Extreme close-up, the face filling the frame. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Joyful, radiant, teeth showing, cheeks lifted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, radiant, teeth showing, cheeks lifted, lit by bright, direct sunlight, warm golden tones, high contrast exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "06",
+   "encuadre": "half",
+   "camara": "three-quarter view",
+   "desc": "picking a lemon, laughing",
+   "lugar": "in a lemon grove terrace",
+   "ratio": "3:4",
+   "seed": 5105,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. three-quarter view, the subject picking a lemon, laughing, in a lemon grove terrace, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "06.jpg",
+   "lectura": {
+    "place": "Lemon grove terrace with balustrade, sunlit citrus trees, distant hills under clear blue sky",
+    "wear": "White tiered linen maxi dress, tied waist, straw sunhat, tan leather sandals",
+    "pose": "Reaching upward to pluck lemon, eyes smiling toward fruit, framed by foliage",
+    "expression": "Joyful, open-mouthed smile, eyes bright with delight and wonder",
+    "light": "Golden midday sun, warm and direct, casting soft shadows on tiled floor"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. three-quarter view, the subject picking a lemon, laughing, in a lemon grove terrace, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Joyful, open-mouthed smile, eyes bright with delight and wonder.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with joyful, open-mouthed smile, eyes bright with delight and wonder, lit by golden midday sun, warm and direct, casting soft shadows on tiled floor exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "07",
+   "encuadre": "full",
+   "camara": "side view",
+   "desc": "riding a mint-green Vespa along the coast road",
+   "lugar": "on the winding Amalfi coast road",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. side view, the subject riding a mint-green Vespa along the coast road, on the winding Amalfi coast road, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "07.jpg",
+   "lectura": {
+    "place": "Amalfi Coast cliffside road, coastal village backdrop",
+    "wear": "White linen dress, tan woven hat, beige strappy sandals",
+    "pose": "Seated, hands on handlebars, eyes gazing forward",
+    "expression": "Serene, contemplative expression, lips slightly parted",
+    "light": "Bright sunlit, golden-hour glow, soft shadows cast"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. side view, the subject riding a mint-green Vespa along the coast road, on the winding Amalfi coast road, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, contemplative expression, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative expression, lips slightly parted, lit by bright sunlit, golden-hour glow, soft shadows cast exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "08",
+   "encuadre": "half",
+   "camara": "eye level",
+   "desc": "eating a gelato, playful",
+   "lugar": "in a small piazza with a fountain",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. eye level, the subject eating a gelato, playful, in a small piazza with a fountain, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "08.jpg",
+   "lectura": {
+    "place": "Cobblestone plaza beside ornate fountain, historic European town square",
+    "wear": "Flowing white linen dress, straw sunhat, tan strappy sandals",
+    "pose": "Leaning forward, holding ice cream cone, eyes on camera, mid-bite",
+    "expression": "Playful, open-mouthed delight while savoring dessert",
+    "light": "Bright, golden sun from above, casting soft shadows on stone ground"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. eye level, the subject eating a gelato, playful, in a small piazza with a fountain, wearing a flowing white linen dress, straw hat and sandals. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Playful, open-mouthed delight while savoring dessert.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with playful, open-mouthed delight while savoring dessert, lit by bright, golden sun from above, casting soft shadows on stone ground exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "09",
+   "encuadre": "full",
+   "camara": "golden hour, backlit",
+   "desc": "standing at a terrace railing, hair in the wind",
+   "lugar": "above the sea at sunset",
+   "ratio": "3:4",
+   "seed": 5108,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. golden hour, backlit, the subject standing at a terrace railing, hair in the wind, above the sea at sunset, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "09.jpg",
+   "lectura": {
+    "place": "On a coastal cliffside balcony overlooking turquoise ocean at golden sunset",
+    "wear": "White linen tiered dress, wide-brimmed straw hat, beige flat sandals",
+    "pose": "Hand rests on railing, body angled, eyes meet camera, framed by horizon",
+    "expression": "Serene, thoughtful gaze, lips slightly parted, calm and composed",
+    "light": "Warm backlighting glows behind, casting soft shadows, enhancing fabric texture and scene"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. golden hour, backlit, the subject standing at a terrace railing, hair in the wind, above the sea at sunset, wearing a flowing white linen dress, straw hat and sandals. Full-length shot, the whole body visible from head to feet. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Serene, thoughtful gaze, lips slightly parted, calm and composed.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, thoughtful gaze, lips slightly parted, calm and composed, lit by warm backlighting glows behind, casting soft shadows, enhancing fabric texture and scene exactly as the rest of <image1>. Natural skin texture."
+  },
+  {
+   "id": "10",
+   "encuadre": "half",
+   "camara": "night, candle light",
+   "desc": "raising a glass of limoncello, laughing",
+   "lugar": "at a candle-lit restaurant terrace at night",
+   "vestuario": "a silky emerald slip dress",
+   "ratio": "3:4",
+   "seed": 5109,
+   "prompt": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. night, candle light, the subject raising a glass of limoncello, laughing, at a candle-lit restaurant terrace at night, wearing a silky emerald slip dress. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography.",
+   "foto": "10.jpg",
+   "lectura": {
+    "place": "On a coastal balcony overlooking cliffside lights and terraced buildings at twilight",
+    "wear": "Emerald satin slip dress, no shoes visible",
+    "pose": "Seated, right hand raises a lemonade glass, eyes gaze upward, framed medium shot",
+    "expression": "Broad open-mouthed laugh, head tilted back in joy",
+    "light": "Warm candlelight and ambient dusk glow softly illuminate her from front and side"
+   },
+   "receta": "A sun-drenched summer travel photograph, Mediterranean light, vivid turquoise and warm tones. night, candle light, the subject raising a glass of limoncello, laughing, at a candle-lit restaurant terrace at night, wearing a silky emerald slip dress. Waist-up shot. Shot on a full-frame camera, natural skin texture, true-to-life colour, Instagram-worthy travel photography, Broad open-mouthed laugh, head tilted back in joy.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with broad open-mouthed laugh, head tilted back in joy, lit by warm candlelight and ambient dusk glow softly illuminate her from front and side exactly as the rest of <image1>. Natural skin texture."
+  }
+ ],
+ "portada": "01.jpg"
+}

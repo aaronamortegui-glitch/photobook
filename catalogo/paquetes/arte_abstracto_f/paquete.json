@@ -1,0 +1,215 @@
+{
+ "id": "arte_abstracto_f",
+ "label": "Abstract art portraits",
+ "genero": "f",
+ "corte": "f",
+ "hint": "Double exposure, prism light, blinds, smoke, broken mirror, silhouettes, projections",
+ "modelo": "ana",
+ "sujeto": "a 30-year-old woman with shoulder-length dark wavy hair",
+ "estilo": "A fine-art conceptual portrait photograph",
+ "vestuario": "a simple black top",
+ "tomas": [
+  {
+   "id": "01",
+   "encuadre": "closeup",
+   "camara": "double exposure, the face blended with a pine forest silhouette, monochrome with a soft teal tint",
+   "desc": "profile close-up, eyes closed, serene",
+   "lugar": "fine-art double exposure on a white background",
+   "ratio": "3:4",
+   "seed": 5100,
+   "prompt": "double exposure, the face blended with a pine forest silhouette, monochrome with a soft teal tint. A fine-art conceptual portrait photograph of the subject, profile close-up, eyes closed, serene, fine-art double exposure on a white background, wearing a simple black top. Extreme close-up, the face filling the frame. double exposure, the face blended with a pine forest silhouette, monochrome with a soft teal tint.",
+   "lectura": {
+    "place": "",
+    "wear": "black V-neck sweater, no visible pants or shoes",
+    "pose": "head tilted back, eyes closed, serene, framed in profile",
+    "expression": "peaceful, deeply relaxed, inward-focused calm",
+    "light": "soft, cool, diffused from above, casting gentle shadows"
+   },
+   "receta": "double exposure, the face blended with a pine forest silhouette, monochrome with a soft teal tint. A fine-art conceptual portrait photograph of the subject, profile close-up, eyes closed, serene, fine-art double exposure on a white background, wearing a simple black top. Extreme close-up, the face filling the frame. double exposure, the face blended with a pine forest silhouette, monochrome with a soft teal tint, peaceful, deeply relaxed, inward-focused calm.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with peaceful, deeply relaxed, inward-focused calm, lit by soft, cool, diffused from above, casting gentle shadows exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "01.jpg"
+  },
+  {
+   "id": "02",
+   "encuadre": "closeup",
+   "camara": "light refracted through a glass prism, rainbow streaks crossing the face, dark background, 100mm",
+   "desc": "close-up looking into the lens through the rainbow light",
+   "lugar": "in a dark studio",
+   "ratio": "3:4",
+   "seed": 5101,
+   "prompt": "light refracted through a glass prism, rainbow streaks crossing the face, dark background, 100mm. A fine-art conceptual portrait photograph of the subject, close-up looking into the lens through the rainbow light, in a dark studio, wearing a simple black top. Extreme close-up, the face filling the frame. light refracted through a glass prism, rainbow streaks crossing the face, dark background, 100mm.",
+   "lectura": {
+    "place": "Studio with black backdrop, minimalist and dramatic",
+    "wear": "Black plain crew-neck tee, no pattern, no accessories",
+    "pose": "Facing camera, neutral stance, hands resting by sides",
+    "expression": "Serene, contemplative gaze, lips slightly parted",
+    "light": "Diagonal prism light, golden-yellow, soft and ethereal"
+   },
+   "receta": "light refracted through a glass prism, rainbow streaks crossing the face, dark background, 100mm. A fine-art conceptual portrait photograph of the subject, close-up looking into the lens through the rainbow light, in a dark studio, wearing a simple black top. Extreme close-up, the face filling the frame. light refracted through a glass prism, rainbow streaks crossing the face, dark background, 100mm, Serene, contemplative gaze, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative gaze, lips slightly parted, lit by diagonal prism light, golden-yellow, soft and ethereal exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "02.jpg"
+  },
+  {
+   "id": "03",
+   "encuadre": "half",
+   "camara": "hard sunlight through venetian blinds, bold stripes of light and shadow across the face and body, black and white",
+   "desc": "leaning against a wall, face turned to the light, eyes half closed",
+   "lugar": "in an empty room",
+   "ratio": "3:4",
+   "seed": 5102,
+   "prompt": "A fine-art conceptual portrait photograph, hard sunlight through venetian blinds, bold stripes of light and shadow across the face and body, black and white, of the subject, leaning against a wall, face turned to the light, eyes half closed, in an empty room, wearing a simple black top. Waist-up shot.",
+   "lectura": {
+    "place": "Sunlit minimalist studio with large windows casting striped shadows across walls and floor",
+    "wear": "Simple black short-sleeved t-shirt, no visible pants or shoes in frame",
+    "pose": "Leaning against wall, head tilted back, eyes closed, framed from mid-chest up",
+    "expression": "Serene, peaceful, deeply relaxed, almost meditative state",
+    "light": "Strong directional sunlight, high contrast, sharp diagonal shadows across subject and background"
+   },
+   "receta": "A fine-art conceptual portrait photograph, hard sunlight through venetian blinds, bold stripes of light and shadow across the face and body, black and white, of the subject, leaning against a wall, face turned to the light, eyes half closed, in an empty room, wearing a simple black top. Waist-up shot, Serene, peaceful, deeply relaxed, almost meditative state.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, peaceful, deeply relaxed, almost meditative state, lit by strong directional sunlight, high contrast, sharp diagonal shadows across subject and background exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "03.jpg"
+  },
+  {
+   "id": "04",
+   "encuadre": "closeup",
+   "camara": "surrounded by drifting white smoke, low-key, a single hard backlight, deep black background",
+   "desc": "close-up emerging from the smoke, calm intense gaze",
+   "lugar": "in a dark studio",
+   "ratio": "3:4",
+   "seed": 5103,
+   "prompt": "surrounded by drifting white smoke, low-key, a single hard backlight, deep black background. A fine-art conceptual portrait photograph of the subject, close-up emerging from the smoke, calm intense gaze, in a dark studio, wearing a simple black top. Extreme close-up, the face filling the frame. surrounded by drifting white smoke, low-key, a single hard backlight, deep black background.",
+   "lectura": {
+    "place": "",
+    "wear": "",
+    "pose": "upright, hands unseen, eyes level, framed medium close-up",
+    "expression": "neutral, direct gaze, lips slightly parted",
+    "light": "soft frontal, cool-toned, diffused, highlighting contours through smoke"
+   },
+   "receta": "surrounded by drifting white smoke, low-key, a single hard backlight, deep black background. A fine-art conceptual portrait photograph of the subject, close-up emerging from the smoke, calm intense gaze, in a dark studio, wearing a simple black top. Extreme close-up, the face filling the frame. surrounded by drifting white smoke, low-key, a single hard backlight, deep black background, neutral, direct gaze, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with neutral, direct gaze, lips slightly parted, lit by soft frontal, cool-toned, diffused, highlighting contours through smoke exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "04.jpg"
+  },
+  {
+   "id": "05",
+   "encuadre": "closeup",
+   "camara": "reflected in shattered mirror fragments, the face split into several angled pieces, cubist composition",
+   "desc": "close-up, direct gaze, serious",
+   "lugar": "in front of a broken mirror",
+   "ratio": "3:4",
+   "seed": 5104,
+   "prompt": "reflected in shattered mirror fragments, the face split into several angled pieces, cubist composition. A fine-art conceptual portrait photograph of the subject, close-up, direct gaze, serious, in front of a broken mirror, wearing a simple black top. Extreme close-up, the face filling the frame. reflected in shattered mirror fragments, the face split into several angled pieces, cubist composition.",
+   "lectura": {
+    "place": "Behind shattered glass, against neutral beige wall, fragmented reflections visible",
+    "wear": "Plain black crew-neck tee, no accessories, bare feet on cool floor",
+    "pose": "Direct gaze, head centered, hands unseen, framed by broken mirror shards",
+    "expression": "Stern, unwavering, unblinking stare, conveying resolve or defiance",
+    "light": "Soft, diffused, even frontal light, casting minimal shadows, enhancing glass fractures"
+   },
+   "receta": "reflected in shattered mirror fragments, the face split into several angled pieces, cubist composition. A fine-art conceptual portrait photograph of the subject, close-up, direct gaze, serious, in front of a broken mirror, wearing a simple black top. Extreme close-up, the face filling the frame. reflected in shattered mirror fragments, the face split into several angled pieces, cubist composition, Stern, unwavering, unblinking stare, conveying resolve or defiance.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with stern, unwavering, unblinking stare, conveying resolve or defiance, lit by soft, diffused, even frontal light, casting minimal shadows, enhancing glass fractures exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "05.jpg"
+  },
+  {
+   "id": "06",
+   "encuadre": "full",
+   "camara": "pure black silhouette against a huge orange setting sun, wide 24mm, graphic minimalism",
+   "desc": "standing with arms raised, body in profile",
+   "lugar": "on a desert dune at sunset",
+   "ratio": "2:3",
+   "seed": 5105,
+   "prompt": "A fine-art conceptual portrait photograph, pure black silhouette against a huge orange setting sun, wide 24mm, graphic minimalism, of the subject, standing with arms raised, body in profile, on a desert dune at sunset, wearing a simple black top. Full-length shot, the whole body visible from head to feet.",
+   "lectura": {
+    "place": "Desert dune ridge at sunset, vast orange sky behind",
+    "wear": "Black sleeveless tunic, dark shorts, barefoot",
+    "pose": "Arms raised, palms open, head tilted up, framed by sun",
+    "expression": "Serene, peaceful, eyes gazing upward",
+    "light": "Golden backlighting, warm glow, silhouette defined"
+   },
+   "receta": "A fine-art conceptual portrait photograph, pure black silhouette against a huge orange setting sun, wide 24mm, graphic minimalism, of the subject, standing with arms raised, body in profile, on a desert dune at sunset, wearing a simple black top. Full-length shot, the whole body visible from head to feet, Serene, peaceful, eyes gazing upward.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, peaceful, eyes gazing upward, lit by golden backlighting, warm glow, silhouette defined exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "06.jpg"
+  },
+  {
+   "id": "07",
+   "encuadre": "closeup",
+   "camara": "a colourful abstract pattern projected onto the face and shoulders, dark room, 85mm",
+   "desc": "close-up, eyes closed, head tilted back slightly",
+   "lugar": "in a dark studio with a projector",
+   "ratio": "3:4",
+   "seed": 5106,
+   "prompt": "a colourful abstract pattern projected onto the face and shoulders, dark room, 85mm. A fine-art conceptual portrait photograph of the subject, close-up, eyes closed, head tilted back slightly, in a dark studio with a projector, wearing a simple black top. Extreme close-up, the face filling the frame. a colourful abstract pattern projected onto the face and shoulders, dark room, 85mm.",
+   "lectura": {
+    "place": "Studio with black backdrop, no landmark",
+    "wear": "Black off-shoulder top, no pattern, no shoes shown",
+    "pose": "Head tilted back, eyes closed, hands unseen, framed close",
+    "expression": "Serene, peaceful, eyes gently shut, lips slightly parted",
+    "light": "Multi-coloured light washes skin, glowing from above, soft and vivid"
+   },
+   "receta": "a colourful abstract pattern projected onto the face and shoulders, dark room, 85mm. A fine-art conceptual portrait photograph of the subject, close-up, eyes closed, head tilted back slightly, in a dark studio with a projector, wearing a simple black top. Extreme close-up, the face filling the frame. a colourful abstract pattern projected onto the face and shoulders, dark room, 85mm, Serene, peaceful, eyes gently shut, lips slightly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, peaceful, eyes gently shut, lips slightly parted, lit by multi-coloured light washes skin, glowing from above, soft and vivid exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "07.jpg"
+  },
+  {
+   "id": "08",
+   "encuadre": "half",
+   "camara": "long-exposure light painting, swirling neon light trails around the body, the person sharp",
+   "desc": "standing still, arms slightly out, looking into the lens",
+   "lugar": "in a dark warehouse at night",
+   "ratio": "3:4",
+   "seed": 5107,
+   "prompt": "A fine-art conceptual portrait photograph, long-exposure light painting, swirling neon light trails around the body, the person sharp, of the subject, standing still, arms slightly out, looking into the lens, in a dark warehouse at night, wearing a simple black top. Waist-up shot.",
+   "lectura": {
+    "place": "Warehouse with high ceilings and industrial beams, dimly lit background",
+    "wear": "Black plain crew-neck t-shirt, dark jeans, no visible footwear",
+    "pose": "Centered, arms slightly out, hands relaxed, eyes direct gaze, full-body frame",
+    "expression": "Serious, focused, neutral expression, no smile or frown",
+    "light": "Blue and orange light trails swirl around torso, glowing streaks from long exposure"
+   },
+   "receta": "A fine-art conceptual portrait photograph, long-exposure light painting, swirling neon light trails around the body, the person sharp, of the subject, standing still, arms slightly out, looking into the lens, in a dark warehouse at night, wearing a simple black top. Waist-up shot, Serious, focused, neutral expression, no smile or frown.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serious, focused, neutral expression, no smile or frown, lit by blue and orange light trails swirl around torso, glowing streaks from long exposure exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "08.jpg"
+  },
+  {
+   "id": "09",
+   "encuadre": "closeup",
+   "camara": "shot through a rain-covered window with coloured city bokeh, dreamy and painterly",
+   "desc": "close-up behind the glass, looking out, melancholic",
+   "lugar": "at night in the city",
+   "ratio": "3:4",
+   "seed": 5108,
+   "prompt": "shot through a rain-covered window with coloured city bokeh, dreamy and painterly. A fine-art conceptual portrait photograph of the subject, close-up behind the glass, looking out, melancholic, at night in the city, wearing a simple black top. Extreme close-up, the face filling the frame. shot through a rain-covered window with coloured city bokeh, dreamy and painterly.",
+   "lectura": {
+    "place": "Rain-slicked city window at night, neon lights blurred behind glass",
+    "wear": "Black textured knit sweater, no visible pants or shoes",
+    "pose": "Turned shoulder, head angled right, eyes gazing off-frame",
+    "expression": "Serene, pensive, slightly melancholic, lips parted softly",
+    "light": "Warm golden light from left, casting soft glow on cheek and neck"
+   },
+   "receta": "shot through a rain-covered window with coloured city bokeh, dreamy and painterly. A fine-art conceptual portrait photograph of the subject, close-up behind the glass, looking out, melancholic, at night in the city, wearing a simple black top. Extreme close-up, the face filling the frame. shot through a rain-covered window with coloured city bokeh, dreamy and painterly, Serene, pensive, slightly melancholic, lips parted softly.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, pensive, slightly melancholic, lips parted softly, lit by warm golden light from left, casting soft glow on cheek and neck exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "09.jpg"
+  },
+  {
+   "id": "10",
+   "encuadre": "half",
+   "camara": "underwater, floating with hair and fabric drifting, sun rays from above, ethereal blue",
+   "desc": "suspended weightless, eyes open, arms relaxed",
+   "lugar": "underwater in a clear pool",
+   "ratio": "3:4",
+   "seed": 5109,
+   "prompt": "A fine-art conceptual portrait photograph, underwater, floating with hair and fabric drifting, sun rays from above, ethereal blue, of the subject, suspended weightless, eyes open, arms relaxed, underwater in a clear pool, wearing a simple black top. Waist-up shot.",
+   "lectura": {
+    "place": "Underwater pool, sunbeams pierce clear blue water",
+    "wear": "Black sleeveless dress, flowing fabric, no shoes",
+    "pose": "Arms slightly outstretched, eyes gazing upward",
+    "expression": "Serene, contemplative, lips softly parted",
+    "light": "Sunlight filters down, casting cool blue glow"
+   },
+   "receta": "A fine-art conceptual portrait photograph, underwater, floating with hair and fabric drifting, sun rays from above, ethereal blue, of the subject, suspended weightless, eyes open, arms relaxed, underwater in a clear pool, wearing a simple black top. Waist-up shot, Serene, contemplative, lips softly parted.",
+   "cara_prompt": "Redraw the face of the person in <image1> as the subject from <image2>: the same facial structure, eyes, nose, mouth, skin tone and age, with serene, contemplative, lips softly parted, lit by sunlight filters down, casting cool blue glow exactly as the rest of <image1>. Natural skin texture.",
+   "foto": "10.jpg"
+  }
+ ],
+ "portada": "01.jpg",
+ "version": "2026-09-26"
+}

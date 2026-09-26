@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photobook</title>
+<link rel="icon" href="/web/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/web/photobook.ico" sizes="any">
+<link rel="apple-touch-icon" href="/web/apple-touch-icon.png">
+<meta name="theme-color" content="#fcfbff">
+<style>
+:root{
+  /* neon dusk: the magenta -> violet -> cyan of a gelled studio portrait */
+  --bg:#fcfbff; --surface:#ffffff; --surface-2:#f3f0fb; --ink:#171530; --ink-2:#56537a; --ink-3:#8a86a6;
+  --line:#e8e3f5; --accent:#c21fa3; --accent-2:#0a93b8; --violet:#6d3df0; --accent-ink:#ffffff; --accent-soft:#f7e3f3;
+  --grad:linear-gradient(120deg,#d62bb4 0%,#6d3df0 52%,#0a9cc4 100%); --grad-ink:#ffffff;
+  --ok:#1f7a4c; --ok-soft:#dcf1e5; --warn:#9a6200; --warn-soft:#f8ecd3; --bad:#b3261e; --bad-soft:#f8dedb;
+  --shadow:0 1px 2px rgba(60,30,120,.05),0 8px 30px rgba(90,40,160,.08);
+  --halo:radial-gradient(900px 520px at 8% -8%,rgba(255,63,208,.13),transparent 60%),
+         radial-gradient(900px 560px at 100% 0%,rgba(63,200,255,.15),transparent 62%);
+  --r:14px; --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+/* light is the default (white with the brand's magenta and cyan); dark only from the toggle */
+:root[data-theme="dark"]{
+  --bg:#0d0e1a; --surface:#161829; --surface-2:#1f2238; --ink:#f3f1fb; --ink-2:#b6b3d0; --ink-3:#817e9e;
+  --line:#2c2f4a; --accent:#ff4fd6; --accent-2:#3fe0ff; --violet:#8b5cf6; --accent-ink:#120a1f; --accent-soft:#3a1838;
+  --grad:linear-gradient(120deg,#ff3fd0 0%,#8b5cf6 52%,#3fe0ff 100%); --grad-ink:#120a1f;
+  --ok:#5fd394; --ok-soft:#15302a; --warn:#f0c060; --warn-soft:#352c16; --bad:#ff8a8a; --bad-soft:#3d1c24;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 28px rgba(0,0,0,.45);
+  --halo:radial-gradient(900px 520px at 8% -8%,rgba(255,63,208,.10),transparent 60%),
+         radial-gradient(900px 560px at 100% 0%,rgba(63,200,255,.08),transparent 62%);}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--halo),var(--bg);background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px 24px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--serif);font-size:22px;letter-spacing:-.02em}
+.brand b{color:var(--accent);font-weight:500}
+.spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12.5px;background:var(--surface-2);color:var(--ink-2)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-3)}
+.pill.ok .dot{background:var(--ok)} .pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.bad .dot{background:var(--bad)}
+.link{background:none;border:0;color:var(--ink-2);cursor:pointer;padding:6px 8px;border-radius:8px}
+.link:hover{background:var(--surface-2);color:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding:24px}
+.stepper{display:flex;gap:4px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;scrollbar-width:none}
+.stepper button{flex:1 0 auto;display:flex;align-items:center;gap:8px;border:0;background:none;padding:8px 10px;border-radius:10px;
+  color:var(--ink-3);cursor:pointer;white-space:nowrap;font-size:13.5px}
+.stepper button .num{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;border:1.5px solid currentColor}
+.stepper button.done{color:var(--ink-2)} .stepper button.done .num{background:var(--ink-2);color:var(--bg);border-color:var(--ink-2)}
+.stepper button.now{color:var(--ink);background:var(--surface)} .stepper button.now .num{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.stepper button:disabled{cursor:default;opacity:.55}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;align-items:start}
+.head{margin-bottom:18px}
+.head h1{font-size:34px;line-height:1.15}
+.head p{color:var(--ink-2);margin:6px 0 0;max-width:640px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.card{position:relative;background:var(--surface);border:1.5px solid transparent;border-radius:var(--r);overflow:hidden;cursor:pointer;
+  box-shadow:var(--shadow);text-align:left;padding:0;transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-2px)}
+.card:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card.sel{border-color:var(--accent)}
+.card .ph{aspect-ratio:3/4;background:linear-gradient(135deg,var(--surface-2),var(--line));position:relative;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .ph img.alt{position:absolute;inset:0;opacity:0;transition:opacity .2s;object-fit:contain;background:#000}
+.card:hover .ph img.alt{opacity:1}
+.card .meta{padding:10px 12px 12px}
+.card .meta b{display:block;font-weight:600;font-size:14.5px}
+.card .meta span{color:var(--ink-3);font-size:13px;line-height:1.35;display:block;margin-top:2px}
+.card .tick{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+  display:none;place-items:center;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.card.sel .tick{display:grid}
+.badge{position:absolute;top:10px;left:10px;background:rgba(20,18,16,.72);color:#fff;font-size:11.5px;padding:3px 8px;border-radius:99px;backdrop-filter:blur(4px)}
+.summary{position:sticky;top:84px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+.summary h3{font-size:19px;margin-bottom:12px}
+.srow{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);cursor:pointer}
+.srow:first-of-type{border-top:0}
+.srow .th{width:40px;height:40px;border-radius:9px;background:var(--surface-2);overflow:hidden;flex:none}
+.srow .th img{width:100%;height:100%;object-fit:cover}
+.srow small{display:block;color:var(--ink-3);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em}
+.srow div b{font-weight:500;font-size:14px}
+.srow .empty{color:var(--ink-3);font-style:italic;font-weight:400}
+.eta{margin-top:12px;padding:12px;border-radius:10px;background:var(--surface-2);font-size:13.5px;color:var(--ink-2)}
+.nav{display:flex;align-items:center;gap:12px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.btn{border:0;border-radius:11px;padding:11px 20px;font-weight:600;cursor:pointer;background:var(--surface-2);color:var(--ink)}
+.btn:hover{filter:brightness(.97)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:none;border:1.5px solid var(--line)}
+.hint{color:var(--ink-3);font-size:13.5px}
+.uploads{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.drop{position:relative;background:var(--surface);border:2px dashed var(--line);border-radius:var(--r);min-height:360px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:18px;cursor:pointer;transition:border-color .15s,background .15s;overflow:hidden}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop.has{border-style:solid;border-color:transparent;padding:0;box-shadow:var(--shadow)}
+.drop img.prev{width:100%;height:100%;object-fit:contain;background:var(--surface-2);position:absolute;inset:0}
+.drop .guide{width:110px;height:140px;border:2px solid var(--ink-3);border-radius:50% 50% 46% 46%;opacity:.35;margin-bottom:14px}
+.drop .guide.body{width:70px;height:170px;border-radius:40px 40px 12px 12px}
+.drop h3{font-size:20px}
+.drop p{color:var(--ink-3);margin:4px 0 0;font-size:13.5px}
+.drop .chips{position:absolute;left:10px;right:10px;bottom:10px;display:flex;gap:6px;flex-wrap:wrap}
+.drop .change{position:absolute;top:10px;right:10px}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:5px 10px;border-radius:99px;font-size:12.5px;background:var(--surface);box-shadow:var(--shadow)}
+.chip.ok{background:var(--ok-soft);color:var(--ok)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.tip{background:var(--surface);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+.tip b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+.match{margin-top:14px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:11px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:9px;cursor:pointer;color:var(--ink-2);font-size:13.5px}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:18px;max-width:520px}
+.field label{font-size:13px;color:var(--ink-2);font-weight:600}
+.field input{padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.field input:focus{outline:none;border-color:var(--accent)}
+.dist{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.review{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.rv{background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.rv .ph{aspect-ratio:1;background:var(--surface-2)} .rv .ph img{width:100%;height:100%;object-fit:cover}
+.rv div.t{padding:8px 10px} .rv small{color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:block} .rv b{font-weight:500;font-size:14px}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px;max-width:640px}
+.opt{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;text-align:left}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt b{display:block;font-size:15px} .opt span{font-size:13px;color:var(--ink-2)}
+/* studio */
+.studio-head{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:16px}
+.studio-head .grow{flex:1;min-width:260px}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .6s ease}
+.phase{font-size:13.5px;color:var(--ink-2);margin-top:8px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.shot{position:relative;border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);aspect-ratio:2/3;cursor:default;border:0;padding:0}
+.shot.ready{cursor:zoom-in}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.shot .ghost{position:absolute;inset:0;display:grid;place-items:center;background:var(--surface-2)}
+.shot .ghost img{width:60%;height:auto;opacity:.18;filter:grayscale(1)}
+.shot .st{position:absolute;left:8px;bottom:8px;right:8px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.shot .lbl{font-size:11.5px;padding:3px 8px;border-radius:99px;background:rgba(20,18,16,.72);color:#fff}
+.shot .fav{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;border:0;background:rgba(20,18,16,.55);color:#fff;cursor:pointer;font-size:15px}
+.shot .fav.on{background:var(--accent);color:var(--accent-ink)}
+.shot.working .ghost::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);animation:sh 1.6s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.shot.working .ghost::after{animation:none}.card{transition:none}}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(12,10,9,.9);display:none;align-items:center;justify-content:center;padding:24px}
+.lb.on{display:flex}
+.lb .box{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;max-width:1200px;width:100%;max-height:100%}
+.lb .img{position:relative;display:flex;align-items:center;justify-content:center;max-height:calc(100vh - 48px)}
+.lb .img img{max-width:100%;max-height:calc(100vh - 48px);border-radius:10px;display:block}
+.lb .side{background:var(--surface);color:var(--ink);border-radius:14px;padding:18px;align-self:start}
+.lb .side h3{font-size:22px}
+.lb .x{position:absolute;top:14px;right:18px;background:none;border:0;color:#fff;font-size:30px;cursor:pointer}
+.lb .navb{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:0;color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer}
+.lb .prev{left:18px} .lb .next{right:318px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.kv span{color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;
+  opacity:0;transition:all .25s;z-index:60;max-width:90vw;font-size:14px;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(12,10,9,.5);display:none;align-items:flex-start;justify-content:center;padding:80px 16px}
+.sheet.on{display:flex}
+.sheet .panel{background:var(--surface);border-radius:16px;padding:20px;width:min(560px,100%);box-shadow:var(--shadow);max-height:70vh;overflow:auto}
+.srow2{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--line);gap:10px}
+.offline{background:var(--bad-soft);color:var(--bad);padding:12px 16px;border-radius:12px;margin-bottom:16px;display:none}
+@media (max-width:920px){
+  .grid2{grid-template-columns:1fr}.summary{position:static}.uploads{grid-template-columns:1fr}.tips{grid-template-columns:1fr}
+  .lb .box{grid-template-columns:1fr}.lb .next{right:18px}.head h1{font-size:28px}.wrap{padding:16px}.topbar{padding:10px 16px}
+}
+@media (max-width:600px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .card .meta{padding:8px 10px 10px}.card .meta span{display:none}
+  .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .topbar{gap:8px}.link{white-space:nowrap;padding:6px 4px;font-size:14px}.pill span:last-child{display:none}.pill{padding:6px}
+  .review{grid-template-columns:repeat(2,minmax(0,1fr))}.choice{grid-template-columns:1fr}
+  .drop{min-height:300px}.head h1{font-size:25px}
+}
+
+/* brand gradient on the things you press and the things that move */
+.btn.primary{background:var(--grad);color:var(--grad-ink);box-shadow:0 4px 18px color-mix(in srgb,var(--accent) 30%,transparent)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08) saturate(1.1)}
+.btn:focus-visible,.link:focus-visible,.tab:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+.bar i{background:var(--grad)!important}
+.block h2 .n,.csheet .tag.ej,.pk .chk,.toast .undo,.card .tick{background:var(--grad)!important;color:var(--grad-ink)!important}
+.pk.off .chk{background:rgba(0,0,0,.45)!important;color:transparent!important}
+.brand{display:flex;align-items:center;gap:9px}
+.brand img{width:28px;height:28px;border-radius:7px}
+.brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.exp.sel,.card.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 6px 22px color-mix(in srgb,var(--accent) 25%,transparent)}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* in-page dialog (native confirm/prompt are blocked in embedded browsers) */
+.dlg{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(20,16,40,.45);backdrop-filter:blur(3px)}
+.dlg.on{display:flex}
+.dlg .caja{background:var(--surface);color:var(--ink);border-radius:16px;box-shadow:0 20px 60px rgba(30,10,60,.3);padding:22px;max-width:440px;width:100%}
+.dlg h3{font-size:21px;margin:0 0 8px}.dlg p{margin:0 0 16px;color:var(--ink-2);white-space:pre-line}
+.dlg input{font:inherit;width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;margin-bottom:16px;background:var(--surface);color:var(--ink)}
+.dlg input:focus{outline:none;border-color:var(--accent)}
+.dlg .fila{display:flex;gap:10px;justify-content:flex-end}
+.btn.danger-fill{background:#d9304f;color:#fff}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><img src="/web/icon-512.png" alt=""><span>Photo<b>book</b></span></div>
+  <span id="motor" class="pill"><span class="dot"></span><span>Checking studio…</span></span>
+  <div class="spacer"></div>
+  <button class="link" id="btnNueva">New shoot</button>
+  <button class="link" id="btnMis">My shoots</button>
+  <button class="link" id="btnTema" aria-label="Toggle dark mode">◐</button>
+</header>
+
+<main class="wrap">
+  <div class="offline" id="offline"></div>
+  <section id="wizard">
+    <nav class="stepper" id="stepper" aria-label="Steps"></nav>
+    <div class="grid2">
+      <div>
+        <div id="step"></div>
+        <div class="nav">
+          <button class="btn ghost" id="atras">Back</button>
+          <span class="hint" id="porque"></span>
+          <div class="spacer"></div>
+          <button class="btn primary" id="seguir">Continue</button>
+        </div>
+      </div>
+      <aside class="summary" id="summary"></aside>
+    </div>
+  </section>
+
+  <section id="studio" hidden>
+    <div class="studio-head">
+      <div class="grow">
+        <h1 id="stTitulo">Your shoot</h1>
+        <div class="phase" id="stFase"></div>
+        <div class="bar"><i id="stBar"></i></div>
+      </div>
+      <button class="btn ghost" id="stCancel">Stop</button>
+      <a class="btn primary" id="stZip" href="#" download>Download</a>
+    </div>
+    <div class="shots" id="shots"></div>
+  </section>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
+  <button class="x" id="lbX" aria-label="Close">×</button>
+  <button class="navb prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="navb next" id="lbNext" aria-label="Next">›</button>
+  <div class="box">
+    <div class="img"><img id="lbImg" alt=""></div>
+    <div class="side">
+      <h3 id="lbTit"></h3>
+      <div class="seg" style="margin:12px 0" id="lbSeg">
+        <button data-v="final" class="on">Final</button><button data-v="bruto">Before face pass</button><button data-v="muestra">Sample</button>
+      </div>
+      <div id="lbKv"></div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn primary" id="lbMej">✨ Enhance face</button>
+        <button class="btn" id="lbFav">♡ Favourite</button>
+        <a class="btn ghost" id="lbDl" download>Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet"><div class="panel">
+  <div style="display:flex;align-items:center"><h3 style="font-size:22px">My shoots</h3><div class="spacer"></div><button class="link" id="sheetX">Close</button></div>
+  <div id="sheetList"></div>
+</div></div>
+
+<div class="dlg" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgT">
+  <div class="caja"><h3 id="dlgT"></h3><p id="dlgP"></p><input id="dlgI" hidden>
+    <div class="fila"><button class="btn ghost" id="dlgNo">Cancel</button><button class="btn primary" id="dlgSi">OK</button></div></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="file" accept="image/*" hidden>
+
+<script>
+
+// dialogo({titulo, texto, ok, peligro, valor}) -> Promise: true/false, or the typed text / null
+function dialogo(o){
+  return new Promise(res => {
+    const d = document.getElementById('dlg'), i = document.getElementById('dlgI'), si = document.getElementById('dlgSi'), no = document.getElementById('dlgNo');
+    document.getElementById('dlgT').textContent = o.titulo || '';
+    document.getElementById('dlgP').textContent = o.texto || '';
+    document.getElementById('dlgP').hidden = !o.texto;
+    const conTexto = o.valor !== undefined;
+    i.hidden = !conTexto; if (conTexto) i.value = o.valor || '';
+    si.textContent = o.ok || 'OK'; si.className = 'btn ' + (o.peligro ? 'danger-fill' : 'primary');
+    const fin = v => { d.classList.remove('on'); document.removeEventListener('keydown', tecla); res(v); };
+    const tecla = e => { if (e.key === 'Escape') fin(conTexto ? null : false); if (e.key === 'Enter') fin(conTexto ? i.value : true); };
+    si.onclick = () => fin(conTexto ? i.value : true);
+    no.onclick = () => fin(conTexto ? null : false);
+    d.onclick = e => { if (e.target === d) fin(conTexto ? null : false); };
+    document.addEventListener('keydown', tecla);
+    d.classList.add('on'); setTimeout(() => (conTexto ? i : si).focus(), 30);
+  });
+}
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SEG_TOMA = 280;   // seconds per photo at 1.5K / 40 steps, compose + face pass when needed
+const PASOS_PROPIO = [
+  {id:'fotos', t:'Photos'}, {id:'modo', t:'Shoot'}, {id:'concepto', t:'Concept'}, {id:'ambiente', t:'Scene'},
+  {id:'luz', t:'Light'}, {id:'vestuario', t:'Wardrobe'}, {id:'poses', t:'Poses'}, {id:'revisar', t:'Review'}];
+const PASOS_PAQUETE = [{id:'fotos', t:'Photos'}, {id:'modo', t:'Shoot'}, {id:'paquete', t:'Package'}, {id:'revisar', t:'Review'}];
+let STEPS = PASOS_PROPIO;
+function pasos(){ STEPS = E.modo==='paquete' ? PASOS_PAQUETE : PASOS_PROPIO; }
+let FOTO_V = Date.now(), CAT = null, SES = null, paso = 0, timer = null, lbIdx = -1, lbVer = 'final';
+let E = {modo:null, paquete:null, concepto:null, ambiente:null, luz:null, vestuario:null, corte:'n', extra:'', poses:[], total:30, tocado:{}};
+
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('on'),3200); }
+async function api(url, body){
+  const r = await fetch(url, body===undefined ? {} : {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+  const d = await r.json(); if (d && d.error) throw new Error(d.error); return d;
+}
+function guardarLocal(){ try{ if(SES) localStorage.setItem('pb_'+SES.id, JSON.stringify({E, paso})); localStorage.setItem('pb_last', SES ? SES.id : ''); }catch(e){} }
+function leerLocal(id){ try{ return JSON.parse(localStorage.getItem('pb_'+id) || 'null'); }catch(e){ return null; } }
+const thumb = (g,id) => `/catalogo/thumbs/${g}_${id}.jpg`;
+const byId = (list,id) => (list||[]).find(x => x.id===id);
+// cards and grids load cached JPEG thumbnails; only the lightbox loads an original
+function mini(src, w){ return (src && /^\/(catalogo|sesiones)\//.test(src)) ? '/mini' + src.split('?')[0] + '?w=' + (w||480) : src; }
+function img(src, alt, cls){ return `<img src="${src}" alt="${esc(alt||'')}" ${cls?`class="${cls}"`:''} loading="lazy" onerror="this.style.display='none'">`; }
+
+// ---------------------------------------------------------------- engine status
+async function motor(){
+  const el = $('#motor');
+  try{
+    const d = await api('/api/motor');
+    el.className = 'pill ' + (d.ok ? 'ok' : 'bad');
+    el.lastElementChild.textContent = d.ok ? (d.cola && d.cola.activo ? 'Studio busy' : 'Studio ready') : 'Studio offline';
+    $('#offline').style.display = d.ok ? 'none' : 'block';
+    if(!d.ok) $('#offline').textContent = 'The image engine is not running. Start QwenStudio (RUN.bat) and this page will pick it up. ' + (d.error||'');
+  }catch(e){ el.className='pill bad'; el.lastElementChild.textContent='Studio offline'; }
+}
+
+// ---------------------------------------------------------------- validity
+function valido(i){
+  const id = STEPS[i].id;
+  if(id==='fotos') return SES && SES.fotos.cara && SES.fotos.cuerpo ? '' : 'Add both photos to continue';
+  if(id==='modo') return E.modo ? '' : 'Choose how you want your shoot';
+  if(id==='paquete') return E.paquete ? '' : 'Pick a package';
+  if(id==='concepto') return E.concepto ? '' : 'Pick a concept';
+  if(id==='ambiente') return E.ambiente ? '' : 'Pick a scene';
+  if(id==='luz') return E.luz ? '' : 'Pick the light';
+  if(id==='vestuario') return E.vestuario ? '' : 'Pick a wardrobe';
+  if(id==='poses') return E.poses.length >= 2 ? '' : `Pick at least 2 poses (${E.poses.length} so far)`;
+  return '';
+}
+function alcanzable(i){ for(let k=0;k<i;k++) if(valido(k)) return false; return true; }
+
+function renderStepper(){
+  $('#stepper').innerHTML = STEPS.map((s,i)=>{
+    const cls = i===paso ? 'now' : (i<paso || (!valido(i) && alcanzable(i) && i<paso) ? 'done' : '');
+    const done = !valido(i) && i!==paso && alcanzable(i);
+    return `<button class="${i===paso?'now':(done?'done':'')}" ${alcanzable(i)?'':'disabled'} data-i="${i}" ${i===paso?'aria-current="step"':''}>
+      <span class="num">${done?'✓':i+1}</span>${s.t}</button>`;
+  }).join('');
+  $('#stepper').querySelectorAll('button').forEach(b => b.onclick = () => ir(+b.dataset.i));
+}
+
+function ir(i){ paso = Math.max(0, Math.min(STEPS.length-1, i)); render(); guardarLocal(); window.scrollTo({top:0, behavior:'smooth'}); }
+
+// ---------------------------------------------------------------- steps
+function head(t, p){ return `<div class="head"><h1>${t}</h1>${p?`<p>${p}</p>`:''}</div>`; }
+
+function stepFotos(){
+  const ch = (SES && SES.chequeo) || {};
+  const card = (cual, t, p, guia) => {
+    const src = SES && SES.fotos[cual];
+    const c = ch[cual];
+    let chips = '';
+    if (c){
+      chips += c.cara===true ? '<span class="chip ok">✓ Face found</span>' : c.cara===false ? '<span class="chip bad">No face found</span>' : '';
+      (c.avisos||[]).forEach(a => chips += `<span class="chip warn">${esc(a)}</span>`);
+    }
+    return `<div class="drop ${src?'has':''}" data-cual="${cual}" tabindex="0" role="button" aria-label="${t}">
+      ${src ? `<img class="prev" src="${src}?v=${FOTO_V}" alt="${t}"><button class="btn change" data-cual="${cual}">Replace</button>` :
+        `<div class="guide ${guia}"></div><h3>${t}</h3><p>${p}</p><p style="margin-top:10px"><b style="color:var(--accent)">Choose a photo</b> or drop it here</p>`}
+      <div class="chips">${chips}</div></div>`;
+  };
+  let m = '';
+  if (ch.misma_persona !== undefined && ch.misma_persona !== null){
+    const v = ch.misma_persona;
+    m = v >= 0.35 ? `<span class="chip ok">✓ Both photos look like the same person</span>` :
+        `<span class="chip warn">These two photos may not be the same person — check them</span>`;
+  }
+  return head('Start with two photos of you', 'One close-up for your face and one full-length for your build. They stay on this computer and are only used for your shoot.') +
+    `<div class="uploads">${card('cara','Face photo','Head and shoulders, looking at the camera','')}
+     ${card('cuerpo','Full-length photo','Standing, head to feet in the frame','body')}</div>
+     <div class="match">${m}</div>
+     <div class="tips">
+       <div class="tip"><b>Even light, eyes visible</b>Daylight from a window is perfect. No sunglasses.</div>
+       <div class="tip"><b>Nothing covering the face</b>No hats, masks or hands over the face.</div>
+       <div class="tip"><b>Whole body, fitted clothes</b>Your build carries into every photo.</div>
+     </div>`;
+}
+
+function grid(grupo, lista, sel, opts={}){
+  return `<div class="cards">${lista.map(e => {
+    const src = opts.thumb ? opts.thumb(e) : thumb(grupo, e.id);
+    const sug = opts.sugerido && opts.sugerido===e.id ? `<span class="badge">Suggested</span>` : '';
+    return `<button class="card ${sel===e.id?'sel':''}" data-id="${e.id}" aria-pressed="${sel===e.id}">
+      <div class="ph">${src?img(src,e.label):''}${sug}</div><span class="tick">✓</span>
+      <div class="meta"><b>${esc(e.label)}</b>${e.hint?`<span>${esc(e.hint)}</span>`:''}</div></button>`;
+  }).join('')}</div>`;
+}
+
+function stepModo(){
+  const o = (v, t, p, im) => `<button class="card ${E.modo===v?'sel':''}" data-modo="${v}" aria-pressed="${E.modo===v}">
+    <div class="ph" style="aspect-ratio:16/10">${im?img(im,''):''}</div><span class="tick">✓</span>
+    <div class="meta"><b style="font-size:17px">${t}</b><span>${p}</span></div></button>`;
+  const pk = (CAT.paquetes||[])[0];
+  return head('How would you like your shoot?', 'Design every detail yourself, or step into a trip we have already planned and photographed.') +
+    `<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      ${o('propio','Design my own shoot','Choose the concept, place, light, wardrobe and poses. Up to 30 photos.', thumb('conceptos','editorial'))}
+      ${o('paquete','A ready-made trip','A curated set of places and moments. We recreate you in every photo.', pk && mini(pk.portada))}
+    </div>`;
+}
+function stepPaquete(){
+  const L = CAT.paquetes || [];
+  if(!L.length) return head('Ready-made trips', 'No package is prepared yet.');
+  const sel = L.find(p=>p.id===E.paquete);
+  return head('Pick your trip', 'Each photo is recreated with you in it: the place, the light and the moment stay; the face, the hair and the build are yours.') +
+    `<div class="cards">${L.map(p => `<button class="card ${E.paquete===p.id?'sel':''}" data-paq="${p.id}" aria-pressed="${E.paquete===p.id}">
+      <div class="ph">${img(mini(p.portada), p.label)}<span class="badge">${p.n} photos</span></div><span class="tick">✓</span>
+      <div class="meta"><b>${esc(p.label)}</b><span>${esc(p.hint)}</span></div></button>`).join('')}</div>` +
+    (sel ? `<h3 style="margin:22px 0 10px;font-size:20px">In this trip</h3><div class="review">${sel.fotos.map(f => `<div class="rv"><div class="ph" style="aspect-ratio:3/4">${img(mini(f,240),'')}</div></div>`).join('')}</div>` : '');
+}
+function stepConcepto(){
+  return head('What kind of shoot?', 'The concept sets the mood. We will suggest a scene, light and wardrobe to match — you can change any of them.') +
+    grid('conceptos', CAT.conceptos, E.concepto);
+}
+function sugerido(k){ const c = byId(CAT.conceptos, E.concepto); return c && c.defaults ? c.defaults[k] : null; }
+function stepAmbiente(){ return head('Where are we shooting?', 'Every photo of the shoot happens here, from different angles.') + grid('ambientes', CAT.ambientes, E.ambiente, {sugerido:sugerido('ambiente')}); }
+function stepLuz(){ return head('How is it lit?', 'Light changes the whole feeling of a photograph. Shown on a plaster bust so you can see it clearly.') + grid('luces', CAT.luces, E.luz, {sugerido:sugerido('luz')}); }
+function stepVestuario(){
+  const corte = [['f','Womenswear'],['m','Menswear'],['n','Unisex']].map(([v,t]) => `<button class="${E.corte===v?'on':''}" data-corte="${v}">${t}</button>`).join('');
+  return head('What are you wearing?', 'The same outfit in all photos, so the book feels like one shoot.') +
+    `<div class="toolbar"><span class="hint">Cut</span><div class="seg" id="corte">${corte}</div></div>` +
+    grid('vestuarios', CAT.vestuarios, E.vestuario, {sugerido:sugerido('vestuario'),
+      thumb: e => e.id==='own' ? (SES && SES.fotos.cuerpo) : thumb('vestuarios', e.id)}) +
+    `<div class="field"><label for="extra">A detail to add (optional)</label>
+     <input id="extra" maxlength="60" placeholder="e.g. gold hoop earrings, a red scarf" value="${esc(E.extra)}"></div>`;
+}
+let filtroPose = 'full';
+function stepPoses(){
+  const full = CAT.poses.filter(p=>p.framing==='full'), half = CAT.poses.filter(p=>p.framing!=='full');
+  const lista = filtroPose==='full' ? full : half;
+  const nF = E.poses.filter(id => (byId(CAT.poses,id)||{}).framing==='full').length, nH = E.poses.length - nF;
+  const cards = `<div class="cards">${lista.map(p => {
+    const on = E.poses.includes(p.id);
+    return `<button class="card ${on?'sel':''}" data-pose="${p.id}" aria-pressed="${on}" title="${esc(p.desc)}">
+      <div class="ph">${img('/catalogo/poses/thumbs/'+p.id+'.jpg', p.label)}${img('/catalogo/poses/'+p.id+'.png', 'skeleton', 'alt')}</div><span class="tick">✓</span>
+      <div class="meta"><b>${esc(p.label)}</b><span>${esc(p.desc)}</span></div></button>`;
+  }).join('')}</div>`;
+  return head('Choose your poses', 'Pick a mix. We spread the shoot across them, and each repeat is a different photograph.') +
+    `<div class="toolbar"><div class="seg" id="fpose"><button class="${filtroPose==='full'?'on':''}" data-f="full">Full body · ${nF}/${full.length}</button><button class="${filtroPose!=='full'?'on':''}" data-f="half">Half body · ${nH}/${half.length}</button></div>
+     <button class="btn ghost" id="mezcla">Suggested mix</button><button class="link" id="limpiar">Clear</button></div>` + cards + `<div class="dist">${distribucion()}</div>`;
+}
+function distribucion(){
+  if(!E.poses.length) return '';
+  const n = E.total, k = E.poses.length, base = Math.floor(n/k), resto = n % k;
+  return `<span class="chip">${n} photos · ${k} poses · ${resto ? `${base}–${base+1}` : base} of each</span>`;
+}
+function stepRevisar(){
+  if (E.modo==='paquete'){
+    const p = (CAT.paquetes||[]).find(x=>x.id===E.paquete) || {fotos:[], n:0, label:''};
+    E.total = p.n || 0;
+    return head('Ready when you are', `We will recreate you in all ${p.n} photos of ${esc(p.label)}. About ${Math.round(p.n*SEG_TOMA/60)} minutes.`) +
+      `<div class="review"><div class="rv"><div class="ph">${img(SES.fotos.cara,'')}</div><div class="t"><small>Face</small><b>Your face photo</b></div></div>
+       <div class="rv"><div class="ph">${img(SES.fotos.cuerpo,'')}</div><div class="t"><small>Build</small><b>Your full-length photo</b></div></div>
+       ${p.fotos.map(f => `<div class="rv"><div class="ph">${img(mini(f,240),'')}</div><div class="t"><small>Sample</small><b>${esc(p.label)}</b></div></div>`).join('')}</div>`;
+  }
+  const it = (small, lbl, src) => `<div class="rv"><div class="ph">${src?img(src,lbl):''}</div><div class="t"><small>${small}</small><b>${esc(lbl||'—')}</b></div></div>`;
+  const v = byId(CAT.vestuarios, E.vestuario) || {};
+  const mins = Math.round(E.total * SEG_TOMA / 60);
+  return head('Ready when you are', 'Check your choices. You can start with a short preview to see the look before the full shoot.') +
+    `<div class="review">
+      ${it('Face', 'Your face photo', SES.fotos.cara)}${it('Build', 'Your full-length photo', SES.fotos.cuerpo)}
+      ${it('Concept', (byId(CAT.conceptos,E.concepto)||{}).label, thumb('conceptos',E.concepto))}
+      ${it('Scene', (byId(CAT.ambientes,E.ambiente)||{}).label, thumb('ambientes',E.ambiente))}
+      ${it('Light', (byId(CAT.luces,E.luz)||{}).label, thumb('luces',E.luz))}
+      ${it('Wardrobe', v.label + (E.extra?' + '+E.extra:''), E.vestuario==='own'?SES.fotos.cuerpo:thumb('vestuarios',E.vestuario))}
+      ${it('Poses', E.poses.length+' selected', '/catalogo/poses/thumbs/'+E.poses[0]+'.jpg')}
+    </div>
+    <div class="choice" id="total">
+      <button class="opt ${E.total===6?'on':''}" data-t="6"><b>Preview · 6 photos</b><span>About ${Math.round(6*SEG_TOMA/60)} minutes. See the look first.</span></button>
+      <button class="opt ${E.total===30?'on':''}" data-t="30"><b>Full shoot · 30 photos</b><span>About ${Math.round(30*SEG_TOMA/60)} minutes. Every photo with the face pass.</span></button>
+    </div>`;
+}
+
+function renderSummary(){
+  if (E.modo==='paquete'){
+    const p = (CAT.paquetes||[]).find(x=>x.id===E.paquete);
+    const r = (i, small, lbl, src) => `<div class="srow" data-i="${i}"><div class="th">${src?img(src,''):''}</div><div><small>${small}</small><b class="${lbl?'':'empty'}">${esc(lbl||'Not chosen yet')}</b></div></div>`;
+    $('#summary').innerHTML = `<h3>Your trip</h3>${r(0,'Photos', SES && SES.fotos.cara && SES.fotos.cuerpo ? 'Face + full-length' : '', SES && SES.fotos.cara)}
+      ${r(1,'Shoot','Ready-made trip','')}${r(2,'Package', p && p.label, p && p.portada)}
+      <div class="eta">${p ? p.n+' photos · about '+Math.round(p.n*SEG_TOMA/60)+' min.' : 'Pick a package.'} Each one is recreated with you, not pasted.</div>`;
+    $('#summary').querySelectorAll('.srow').forEach(x => x.onclick = () => { const i=+x.dataset.i; if(alcanzable(i)) ir(i); });
+    return;
+  }
+  const row = (i, small, lbl, src) => `<div class="srow" data-i="${i}"><div class="th">${src?img(src,''):''}</div><div><small>${small}</small><b class="${lbl?'':'empty'}">${esc(lbl||'Not chosen yet')}</b></div></div>`;
+  const v = byId(CAT.vestuarios, E.vestuario);
+  const mins = Math.round(E.total * SEG_TOMA / 60);
+  $('#summary').innerHTML = `<h3>Your shoot</h3>
+    ${row(0,'Photos', SES && SES.fotos.cara && SES.fotos.cuerpo ? 'Face + full-length' : (SES && (SES.fotos.cara||SES.fotos.cuerpo) ? '1 of 2 added' : ''), SES && SES.fotos.cara)}
+    ${row(1,'Concept', (byId(CAT.conceptos,E.concepto)||{}).label, E.concepto && thumb('conceptos',E.concepto))}
+    ${row(2,'Scene', (byId(CAT.ambientes,E.ambiente)||{}).label, E.ambiente && thumb('ambientes',E.ambiente))}
+    ${row(3,'Light', (byId(CAT.luces,E.luz)||{}).label, E.luz && thumb('luces',E.luz))}
+    ${row(4,'Wardrobe', v && v.label, E.vestuario && (E.vestuario==='own' ? SES && SES.fotos.cuerpo : thumb('vestuarios',E.vestuario)))}
+    ${row(5,'Poses', E.poses.length ? E.poses.length+' poses' : '', E.poses[0] && '/catalogo/poses/thumbs/'+E.poses[0]+'.jpg')}
+    <div class="eta">${E.total} photos · about ${mins} min on this computer. The face in every photo is rebuilt from your close-up.</div>`;
+  $('#summary').querySelectorAll('.srow').forEach(r => r.onclick = () => { const i=+r.dataset.i; if(alcanzable(i)) ir(i); });
+}
+
+function render(){
+  pasos(); if (paso >= STEPS.length) paso = STEPS.length-1;
+  renderStepper();
+  const id = STEPS[paso].id;
+  const f = {fotos:stepFotos, modo:stepModo, paquete:stepPaquete, concepto:stepConcepto, ambiente:stepAmbiente, luz:stepLuz, vestuario:stepVestuario, poses:stepPoses, revisar:stepRevisar}[id];
+  $('#step').innerHTML = f();
+  const why = valido(paso);
+  $('#porque').textContent = why;
+  $('#seguir').disabled = !!why;
+  $('#seguir').textContent = id==='revisar' ? (E.modo==='paquete' ? 'Start my trip' : E.total===6 ? 'Start the preview' : 'Start the shoot') : 'Continue';
+  $('#atras').style.visibility = paso ? 'visible' : 'hidden';
+  renderSummary();
+  enlazar(id);
+}
+
+function elegir(k, v){
+  E[k] = v; E.tocado[k] = true;
+  if (k==='concepto'){
+    const c = byId(CAT.conceptos, v); const cambiados = [];
+    for (const kk of ['ambiente','luz','vestuario']) if (!E.tocado[kk] && c.defaults[kk]){ E[kk] = c.defaults[kk]; cambiados.push(kk); }
+    if (cambiados.length) toast('Matching scene, light and wardrobe pre-selected. Change them in the next steps.');
+  }
+  render(); guardarLocal();
+}
+
+function enlazar(id){
+  if(id==='fotos'){
+    document.querySelectorAll('.drop').forEach(d => {
+      const cual = d.dataset.cual;
+      const abrir = () => { $('#file').dataset.cual = cual; $('#file').value=''; $('#file').click(); };
+      d.onclick = e => { if(!d.classList.contains('has') || e.target.classList.contains('change')) abrir(); };
+      d.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrir(); } };
+      d.ondragover = e => { e.preventDefault(); d.classList.add('over'); };
+      d.ondragleave = () => d.classList.remove('over');
+      d.ondrop = e => { e.preventDefault(); d.classList.remove('over'); const f=e.dataTransfer.files[0]; if(f) subir(cual, f); };
+    });
+  }
+  if(id==='modo') document.querySelectorAll('.card[data-modo]').forEach(c => c.onclick = () => { E.modo = c.dataset.modo; render(); guardarLocal(); });
+  if(id==='paquete') document.querySelectorAll('.card[data-paq]').forEach(c => c.onclick = () => { E.paquete = c.dataset.paq; render(); guardarLocal(); });
+  const mapa = {concepto:'concepto', ambiente:'ambiente', luz:'luz', vestuario:'vestuario'};
+  if(mapa[id]) document.querySelectorAll('.card[data-id]').forEach(c => c.onclick = () => elegir(mapa[id], c.dataset.id));
+  if(id==='vestuario'){
+    document.querySelectorAll('#corte button').forEach(b => b.onclick = () => { E.corte=b.dataset.corte; render(); guardarLocal(); });
+    $('#extra').oninput = e => { E.extra = e.target.value; guardarLocal(); };
+  }
+  if(id==='poses'){
+    document.querySelectorAll('.card[data-pose]').forEach(c => c.onclick = () => {
+      const p = c.dataset.pose; E.poses = E.poses.includes(p) ? E.poses.filter(x=>x!==p) : [...E.poses, p]; render(); guardarLocal(); });
+    document.querySelectorAll('#fpose button').forEach(b => b.onclick = () => { filtroPose=b.dataset.f; render(); });
+    $('#mezcla').onclick = () => {
+      // a varied set: movement, stillness, seated, turned away, hands busy
+      const pref = ['fb_walking','fb_hand_hip','fb_look_back','fb_lean_wall','fb_step_sit','hb_arms_cross','hb_laugh','hb_hair_touch','hb_over_shoulder','hb_holding_cup'];
+      E.poses = pref.filter(id => byId(CAT.poses, id)); render(); guardarLocal(); toast('Five full-body and five half-body poses selected.'); };
+    $('#limpiar').onclick = () => { E.poses = []; render(); guardarLocal(); };
+  }
+  if(id==='revisar') document.querySelectorAll('#total .opt').forEach(o => o.onclick = () => { E.total=+o.dataset.t; render(); guardarLocal(); });
+}
+
+$('#file').onchange = e => { const f = e.target.files[0]; if(f) subir(e.target.dataset.cual, f); };
+// Long side capped at 2048 and JPEG 92% before the upload: the server caps at the
+// same size, so anything bigger would only be bytes on the wire. createImageBitmap
+// with imageOrientation applies the phone's EXIF rotation.
+async function reducir(f, lado){
+  try{
+    const bmp = await createImageBitmap(f, {imageOrientation:'from-image'});
+    const k = Math.min(1, lado / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas'); c.width = Math.round(bmp.width*k); c.height = Math.round(bmp.height*k);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    return c.toDataURL('image/jpeg', 0.92);
+  }catch(e){
+    return await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(f); });
+  }
+}
+async function subir(cual, f){
+  if(!f.type.startsWith('image/')) return toast('That file is not an image.');
+  const url = await reducir(f, 2048);
+  toast('Checking your photo…');
+  try{
+    if(!SES) SES = await api('/api/sesion', {});
+    SES = await api(`/api/sesion/${SES.id}/foto`, {cual, imagen:url}); FOTO_V = Date.now();
+    const c = SES.chequeo[cual];
+    toast(c && c.cara===false ? 'We could not find a face in that photo.' : 'Photo added.');
+    guardarLocal(); render();
+  }catch(err){ toast('Could not add the photo: ' + err.message); }
+}
+
+$('#atras').onclick = () => ir(paso-1);
+$('#seguir').onclick = async () => {
+  if (valido(paso)) return;
+  if (STEPS[paso].id !== 'revisar') return ir(paso+1);
+  $('#seguir').disabled = true;
+  try{
+    const eleccion = E.modo==='paquete' ? {paquete:E.paquete} :
+      {concepto:E.concepto, ambiente:E.ambiente, luz:E.luz, vestuario:E.vestuario, corte:E.corte, poses:E.poses};
+    if (E.modo!=='paquete' && E.extra.trim() && E.vestuario!=='own'){
+      const v = byId(CAT.vestuarios, E.vestuario); const p = v.prompt[E.corte] || v.prompt.n;
+      eleccion.vestuario_texto = p + ', ' + E.extra.trim();
+    }
+    SES = await api(`/api/sesion/${SES.id}/generar`, {eleccion, total:E.total});
+    guardarLocal(); abrirEstudio();
+  }catch(err){ toast(err.message); $('#seguir').disabled = false; }
+};
+
+// ---------------------------------------------------------------- studio
+const ETIQ = {pendiente:'Waiting', componiendo:'Composing…', compuesta:'Composed', buscando_cara:'Finding the face…', cola_cara:'Face pass next', reforzando:'Refining the face…', puntuando:'Checking likeness…', en_cola_mejora:'Enhance queued', mejorando:'Enhancing the face…', lista:'Ready', fallida:'Failed'};
+function abrirEstudio(){
+  $('#wizard').hidden = true; $('#studio').hidden = false; location.hash = 's=' + SES.id;
+  pintarEstudio(); clearInterval(timer); timer = setInterval(sondear, 3000);
+}
+async function sondear(){
+  try{ SES = await api('/api/sesion/' + SES.id); pintarEstudio(); }catch(e){}
+  if (SES && ['lista','error','cancelada'].includes(SES.fase) &&
+      !SES.tomas.some(t => ['en_cola_mejora','mejorando'].includes(t.estado))) clearInterval(timer);
+  if (lbIdx >= 0) pintarLb();
+}
+function likeness(v){ if(v==null) return ''; return v>=0.55?'Strong likeness':v>=0.40?'Good likeness':'Check likeness'; }
+function pintarEstudio(){
+  const T = SES.tomas || [], listas = T.filter(t=>['lista','en_cola_mejora','mejorando'].includes(t.estado)).length;
+  const faltan = T.length - listas;
+  const fase = {en_cola:(SES.cola && SES.cola.activo && SES.cola.activo!==SES.id ? 'In the queue — another shoot is running first.' : 'Starting…'), preparando:'Getting ready…', trabajando:'', lista:'Done. Your photos are ready.', cancelada:'Stopped.', error:'Something went wrong: '+esc(SES.error)}[SES.fase] ?? '';
+  const act = T.find(t=>['componiendo','reforzando','buscando_cara'].includes(t.estado));
+  $('#stTitulo').textContent = SES.fase==='lista' ? `Your ${T.length} photos` : `Shooting ${T.length} photos`;
+  $('#stFase').innerHTML = (fase || (act ? `Photo ${act.n}: ${ETIQ[act.estado].toLowerCase()} · ` : '')) +
+    (SES.fase==='trabajando' ? `${listas} of ${T.length} ready · about ${Math.max(1,Math.round(faltan*SEG_TOMA/60))} min left` : '');
+  $('#stBar').style.width = (T.length ? 100*listas/T.length : 0) + '%';
+  $('#stCancel').style.display = ['lista','cancelada','error'].includes(SES.fase) ? 'none' : '';
+  $('#stZip').href = `/api/sesion/${SES.id}/zip`;
+  $('#stZip').textContent = T.some(t=>t.favorita) ? 'Download favourites' : 'Download all';
+  $('#stZip').style.pointerEvents = listas ? '' : 'none'; $('#stZip').style.opacity = listas ? '' : .45;
+  $('#shots').innerHTML = T.map((t,i) => {
+    const src = t.final || null;
+    const working = ['componiendo','buscando_cara','reforzando','puntuando','mejorando','en_cola_mejora'].includes(t.estado);
+    const lbl = t.estado==='lista' ? (t.mejorada ? '✨ Face enhanced' : t.reforzada ? '✓ Face refined' : 'Ready') : ETIQ[t.estado] || t.estado;
+    return `<div class="shot ${t.estado==='lista'?'ready':''} ${working?'working':''}" data-i="${i}" style="aspect-ratio:${t.ratio==='2:3'?'2/3':'3/4'}">
+      ${src ? `<img src="${mini(src)}${t.mejorada ? '&v=e' : ''}" alt="Photo ${t.n}" loading="lazy">` : `<div class="ghost">${t.muestra ? `<img src="${t.muestra}" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.22">` : img('/catalogo/poses/'+t.pose+'.png','')}</div>`}
+      ${t.estado==='lista' ? `<button class="fav ${t.favorita?'on':''}" data-n="${t.n}" aria-label="Favourite">${t.favorita?'♥':'♡'}</button>` : ''}
+      <div class="st"><span class="lbl">${esc(lbl)}</span><span class="lbl">${t.n}</span></div></div>`;
+  }).join('');
+  document.querySelectorAll('.shot.ready').forEach(s => s.onclick = e => { if(!e.target.classList.contains('fav')) abrirLb(+s.dataset.i); });
+  document.querySelectorAll('.shot .fav').forEach(b => b.onclick = e => { e.stopPropagation(); favorita(+b.dataset.n); });
+}
+async function favorita(n){
+  const t = SES.tomas.find(x=>x.n===n); t.favorita = !t.favorita;
+  await api(`/api/sesion/${SES.id}/favorita`, {n, valor:t.favorita}); pintarEstudio(); if(lbIdx>=0) pintarLb();
+}
+$('#stCancel').onclick = async () => { if(await dialogo({titulo:'Stop this shoot?', texto:'The photos already made are kept.', ok:'Stop', peligro:true})){ await api(`/api/sesion/${SES.id}/cancelar`, {}); toast('Stopping after the current photo…'); } };
+
+function listasIdx(){ return SES.tomas.map((t,i)=>[t,i]).filter(([t])=>t.estado==='lista').map(([,i])=>i); }
+function abrirLb(i){ lbIdx=i; lbVer='final'; $('#lb').classList.add('on'); pintarLb(); }
+function pintarLb(){
+  const t = SES.tomas[lbIdx]; if(!t) return;
+  const src = lbVer==='bruto' ? t.bruto : lbVer==='muestra' ? t.muestra : t.final;
+  $('#lbImg').src = src; $('#lbDl').href = src;
+  const pose = byId(CAT.poses, t.pose) || {};
+  $('#lbTit').textContent = `Photo ${t.n}`;
+  $('#lbSeg').style.display = (t.reforzada || t.muestra) ? '' : 'none';
+  $('#lbSeg').querySelector('[data-v="bruto"]').textContent = t.mejorada ? 'Before enhance' : 'Before face pass';
+  $('#lbSeg').querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.v===lbVer);
+    b.style.display = (b.dataset.v==='bruto' && !t.reforzada) || (b.dataset.v==='muestra' && !t.muestra) ? 'none' : ''; });
+  const kv = (k,v) => v==null||v==='' ? '' : `<div class="kv"><span>${k}</span><b>${esc(v)}</b></div>`;
+  $('#lbKv').innerHTML = kv('Pose', pose.label || (t.muestra ? 'From the package' : '')) + kv('Face pass', t.reforzada ? 'Applied' : (t.nota || 'Kept the original')) +
+    kv('Likeness', t.id_final!=null ? `${likeness(t.id_final)} · ${t.id_final.toFixed(2)}` : '') +
+    (t.reforzada && t.id_bruto!=null ? kv('Before face pass', t.id_bruto.toFixed(2)) : '') + kv('Size', t.tam);
+  $('#lbFav').textContent = t.favorita ? '♥ Favourite' : '♡ Favourite';
+  const ocupada = ['en_cola_mejora','mejorando'].includes(t.estado);
+  $('#lbMej').disabled = ocupada || t.estado !== 'lista';
+  $('#lbMej').textContent = ocupada ? (t.estado==='mejorando' ? 'Enhancing…' : 'Enhance queued') : t.mejorada ? '✨ Enhance again' : '✨ Enhance face';
+  $('#lbMej').title = 'Redraws the whole photo with your close-up as the reference, then enlarges it to 2K. Same pose and expression. About 5 minutes.';
+}
+$('#lbSeg').querySelectorAll('button').forEach(b => b.onclick = () => { lbVer=b.dataset.v; pintarLb(); });
+$('#lbX').onclick = () => { $('#lb').classList.remove('on'); lbIdx=-1; };
+$('#lb').onclick = e => { if(e.target.id==='lb') $('#lbX').onclick(); };
+function mover(d){ const L = listasIdx(); if(!L.length) return; let k = L.indexOf(lbIdx); k = (k + d + L.length) % L.length; lbIdx = L[k]; lbVer='final'; pintarLb(); }
+$('#lbPrev').onclick = () => mover(-1); $('#lbNext').onclick = () => mover(1);
+$('#lbFav').onclick = () => favorita(SES.tomas[lbIdx].n);
+$('#lbMej').onclick = async () => {
+  const t = SES.tomas[lbIdx];
+  try{ SES = await api(`/api/sesion/${SES.id}/mejorar`, {n:t.n}); pintarEstudio(); pintarLb();
+       toast('Enhancing the face of photo ' + t.n + '. It will update here when it is ready.');
+       clearInterval(timer); timer = setInterval(sondear, 3000); }
+  catch(err){ toast(err.message); }
+};
+document.addEventListener('keydown', e => {
+  if(!$('#lb').classList.contains('on')) return;
+  if(e.key==='Escape') $('#lbX').onclick(); if(e.key==='ArrowLeft') mover(-1); if(e.key==='ArrowRight') mover(1);
+  if(e.key===' ' && SES.tomas[lbIdx].reforzada){ e.preventDefault(); lbVer = lbVer==='final'?'bruto':'final'; pintarLb(); }
+});
+
+// ---------------------------------------------------------------- sessions
+$('#btnMis').onclick = async () => {
+  const L = await api('/api/sesiones');
+  const nom = {nueva:'Draft', en_cola:'Queued', preparando:'Starting', trabajando:'In progress', lista:'Done', cancelada:'Stopped', error:'Error'};
+  $('#sheetList').innerHTML = L.length ? L.map(s => `<div class="srow2"><div><b>${new Date(s.creada*1000).toLocaleString()}</b><div class="hint">${nom[s.fase]||s.fase}${s.n?` · ${s.listas}/${s.n} photos`:''}</div></div>
+    <button class="btn" data-id="${s.id}">Open</button></div>`).join('') : '<p class="hint">No shoots yet.</p>';
+  $('#sheetList').querySelectorAll('button').forEach(b => b.onclick = () => { $('#sheet').classList.remove('on'); abrirSesion(b.dataset.id); });
+  $('#sheet').classList.add('on');
+};
+$('#sheetX').onclick = () => $('#sheet').classList.remove('on');
+$('#sheet').onclick = e => { if(e.target.id==='sheet') $('#sheet').classList.remove('on'); };
+$('#btnNueva').onclick = () => { SES=null; E={modo:null,paquete:null,concepto:null,ambiente:null,luz:null,vestuario:null,corte:'n',extra:'',poses:[],total:30,tocado:{}}; paso=0; clearInterval(timer);
+  location.hash=''; try{localStorage.setItem('pb_last','');}catch(e){} $('#studio').hidden=true; $('#wizard').hidden=false; render(); };
+$('#btnTema').onclick = () => { const r=document.documentElement; const dark = r.dataset.theme === 'dark';
+  r.dataset.theme = dark ? 'light' : 'dark'; try{localStorage.setItem('pb_theme', r.dataset.theme);}catch(e){} };
+
+async function abrirSesion(id){
+  try{ SES = await api('/api/sesion/' + id); }catch(e){ return toast('That shoot could not be opened.'); }
+  const loc = leerLocal(id); if(loc){ E = Object.assign(E, loc.E); paso = loc.paso || 0; }
+  if (SES.fase !== 'nueva'){ abrirEstudio(); } else { $('#studio').hidden=true; $('#wizard').hidden=false; location.hash='s='+id; render(); }
+}
+
+(async function(){
+  try{ const t = localStorage.getItem('pb_theme'); if(t) document.documentElement.dataset.theme = t; }catch(e){}
+  CAT = await api('/api/catalogo');
+  motor(); setInterval(motor, 15000);
+  const m = location.hash.match(/s=([\w-]+)/); let id = m ? m[1] : null;
+  if(!id){ try{ id = localStorage.getItem('pb_last') || null; }catch(e){} }
+  if(id) await abrirSesion(id); else render();
+})();
+</script>
+</body>
+</html>
