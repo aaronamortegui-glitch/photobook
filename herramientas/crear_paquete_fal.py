@@ -47,6 +47,9 @@ def dibujar(prompt, refs, ancho, alto, destino, calidad="high", motor=None):
         # as large as it allows (each side <= 4096) with the SAME proportions -- clipping
         # one side alone gave 3520x4096 for a 3:4 (fixed afterwards by recortar_muestras.py)
         k = 4096 / max(ancho, alto)
+        if os.environ.get("PHOTOBOOK_RES_LIBRERIA") == "2k":
+            # 2K: the smallest Seedream allows (2560x1440 worth of pixels), same proportions
+            k = (2560 * 1440 * 1.03 / (ancho * alto)) ** 0.5
         args = {"prompt": prompt, "image_urls": urls, "num_images": 1,
                 "image_size": {"width": int(ancho * k) // 16 * 16, "height": int(alto * k) // 16 * 16}}
     else:

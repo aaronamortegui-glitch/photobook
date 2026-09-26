@@ -44,7 +44,11 @@ def main(pid):
             base = t["prompt"].rstrip(".")
             t["receta"] = base if lec.get("expression", "") in base else f"{base}, {lec['expression']}."
         else:
-            t["receta"] = L.prompt_regenerar(lec)
+            # a real photo, read: the package's own style when it has one (a boudoir set is not
+            # "a candid travel photograph"), and its closing line
+            t["receta"] = L.prompt_regenerar(lec, estilo=pk.get("estilo") or "A candid travel photograph")
+            if pk.get("estilo_cierre"):
+                t["receta"] = t["receta"].rstrip() + " " + pk["estilo_cierre"]
         t["cara_prompt"] = L.prompt_cara(lec)
         t["ratio"] = t.get("ratio") or ratio_de(ruta)
         t["seed"] = t.get("seed") or 5100 + k

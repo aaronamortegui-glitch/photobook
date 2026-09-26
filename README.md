@@ -21,7 +21,10 @@ same place, same light, same moment, your face and your build.</p>
 3. **You pick a story** from the Experience library — *A day in Paris*, *Amalfi summer*,
    *Alpine adventure*; conceptual ones — *Abstract art portraits*, *Sci-fi 2089*, *Back to the
    80s*; or illustrated ones — *Comic book hero*, *Manga summer*, *Pixel quest*, *3D animated day*.
-   Each comes in a women's and a men's version. Preview every photo and
+   Each comes in a women's and a men's version.
+   A package can be marked 18+ (`"adulto": true`): the page then asks the client to confirm the
+   photos are of themselves and that they are 18 or older (the server refuses without it), and
+   its photos show blurred in the gallery until opened. Preview every photo and
    leave out the ones you don't want. Or **bring your own photos** of any situation: drop a
    folder and you are put in each one.
 4. **Generate.** Every photo is regenerated with you in it (not a face swap): the sample's
@@ -55,7 +58,7 @@ flowchart LR
 - **Enhance** (on demand) re-draws the whole photo at 1 MP with your close-up as reference,
   then upscales it to 2K — no mask, so no seams.
 - **Libraries are drawn on fal** (ByteDance Seedream 4.5, 4K masters, $0.04 an image — the whole
-  library's 156 new photos cost about $6.50) so building them never uses your GPU. Clients' photos are always made locally.
+  library's new photos cost about $6.50) so building them never uses your GPU. Clients' photos are always made locally.
 
 The reasoning behind every default — resolutions, steps, what was tried and dropped — is in
 [docs/DECISIONS.md](docs/DECISIONS.md).

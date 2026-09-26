@@ -43,3 +43,10 @@ catalogo/paquetes/arte_abstracto_*/[0-9][0-9].png
 catalogo/paquetes/arte_abstracto_*/[0-9][0-9]_*.png
 !catalogo/paquetes/arte_abstracto_*/*_pose.png
 catalogo/paquetes/*/_modelo.png
+
+# boudoir: kept on this machine only, never in the repository
+catalogo/paquetes/boudoir_*/
+herramientas/leer_referencias.py
+herramientas/variar_referencias.py
+herramientas/paquetes_boudoir.py
+herramientas/paquetes_boudoir_i2i.py

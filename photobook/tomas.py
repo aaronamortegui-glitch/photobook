@@ -68,9 +68,12 @@ def paquetes() -> list[dict]:
                     "genero": pk.get("genero") or ("f" if pk.get("corte") == "f" else "m" if pk.get("corte") == "m" else "u"),
                     "n": len(tomas), "portada": url + pk.get("portada", tomas[0]["foto"]),
                     "fotos": [url + t["foto"] for t in tomas], "ids": [t["id"] for t in tomas],
+                    "adulto": bool(pk.get("adulto")),
                     "lecturas": [(t.get("lectura") or {}).get("place", "") for t in tomas]})
     # the photographic stories first, then the illustrated ones, in the story order
-    orden = ["paris", "amalfi", "alpes", "arte_abstracto", "scifi", "ochentas", "comic", "manga", "pixel", "animado3d"]
+    orden = ["paris", "amalfi", "alpes", "arte_abstracto", "scifi", "ochentas", "comic", "manga", "pixel", "animado3d",
+             "boudoir_noir", "boudoir_velvet", "boudoir_blush", "boudoir_soft",
+             "boudoir_classic", "boudoir_dark", "boudoir_bridal", "boudoir_playful"]
     out.sort(key=lambda p: (orden.index(p["id"].rsplit("_", 1)[0]) if p["id"].rsplit("_", 1)[0] in orden else 99, p["id"]))
     return out
 

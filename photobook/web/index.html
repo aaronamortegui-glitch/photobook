@@ -40,6 +40,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .brand{font-family:var(--serif);font-size:22px;letter-spacing:-.02em}
 .brand b{color:var(--accent);font-weight:500}
 .spacer{flex:1}
+.discreta img,img.discreta{filter:blur(18px) saturate(.6);transition:filter .25s}
+.it.discreta:hover img,.it.discreta:focus img{filter:none}
+.exp .badge.b18{left:auto;right:8px;background:#d9304f;color:#fff}
 a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .volver{margin:0 0 10px -8px;font-weight:600}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12.5px;background:var(--surface-2);color:var(--ink-2)}
@@ -536,7 +539,7 @@ function panelLibreria(){
   const L = libreria();
   return `<div class="tabs" id="genero">${g}</div>` + (L.length ? `<div class="exps">${L.map(p => `
     <button class="exp ${E.paquete===p.id?'sel':''}" data-p="${p.id}" aria-pressed="${E.paquete===p.id}">
-      <div class="ph">${img(mini(p.portada), p.label)}<span class="badge">${p.n} photos</span>
+      <div class="ph">${img(mini(p.portada), p.label)}<span class="badge">${p.n} photos</span>${p.adulto ? '<span class="badge b18">18+</span>' : ''}
         <div class="strip">${p.fotos.slice(1,5).map(f => `<img src="${mini(f,240)}" alt="">`).join('')}</div></div>
       <div class="meta"><b>${esc(p.label)}</b><span>${esc(p.hint||'')}</span></div></button>`).join('')}</div>` + panelPick()
     : '<p class="hint">No experiences here yet.</p>');
@@ -728,6 +731,12 @@ $('#lanzar').onclick = async () => {
     await guardarPerfil();
     const pk = byId(CAT.paquetes, E.paquete);
     const eleccion = E.fuente==='propias' ? {escenas_propias:true} : {paquete:E.paquete, tomas: elegidas(pk)};
+    if (E.fuente !== 'propias' && pk && pk.adulto){
+      const ok = await dialogo({titulo:'Your boudoir session', ok:'Yes, these are me',
+        texto:'Intimate photos of you — for yourself, or to share with your partner. They are made and kept only on this computer.\n\nPlease confirm:\n• the two photos you added are of yourself\n• you are 18 or older'});
+      if (!ok){ $('#lanzar').disabled = false; return; }
+      eleccion.consentimiento = true;
+    }
     SES = await api(`/api/sesion/${SES.id}/generar`, {eleccion}); guardarLocal(); VOLVER = null; pintarVolver(); abrirEstudio();
   }catch(err){ toast(err.message); $('#lanzar').disabled = false; }
 };
@@ -837,7 +846,7 @@ function pintarGaleria(){
   $('#galInfo').innerHTML = `<button class="link" id="galTodos">← All characters</button> · <b>${esc((P && P.nombre) || 'Character ' + (PERS.indexOf(P)+1))}</b> · ${L.length} photos from ${ses} shoot${ses===1?'':'s'}` +
     (P && P.descripcion ? `<br><span class="hint">${esc(P.descripcion)}</span>` : '');
   $('#galTodos').onclick = () => { galPers = null; galFiltro = 'all'; pintarGaleria(); };
-  $('#galGrid').innerHTML = L.length ? L.map((g,i) => `<button class="it" data-i="${GAL.indexOf(g)}">
+  $('#galGrid').innerHTML = L.length ? L.map((g,i) => `<button class="it${g.adulto?' discreta':''}" data-i="${GAL.indexOf(g)}">
       <img src="${mini(g.archivo, 480)}" alt="" loading="lazy">
       ${g.cliente ? `<span class="quien"><img src="${mini(g.cliente, 240)}" alt=""></span>` : ''}
       <span class="pie"><span>${esc(g.origen)}</span>${g.mejorada?'<span>✨ Enhanced</span>':''}${g.favorita?'<span>♥</span>':''}</span>
@@ -888,7 +897,7 @@ function pintarPersonajes(){
   $('#galInfo').textContent = PERS.length ? `${PERS.length} characters · ${n} photos, made on this computer.` : 'Nothing here yet.';
   $('#galGrid').className = 'personajes';
   $('#galGrid').innerHTML = PERS.map(p => `<button class="pj" data-id="${p.id}">
-      <div class="mosaico">${p.portadas.map(f => `<img src="${mini(f,240)}" alt="">`).join('')}</div>
+      <div class="mosaico">${p.portadas.map((f,k) => `<img src="${mini(f,240)}" alt=""${(p.portadas_adulto||[])[k]?' class="discreta"':''}>`).join('')}</div>
       <div class="pj-meta">${p.cara ? `<img class="cara" src="${mini(p.cara,240)}" alt="">` : ''}
         <div class="pj-n"><b>${esc(p.nombre || 'Character ' + (PERS.indexOf(p)+1))} <span class="ren" role="button" tabindex="0" data-id="${p.id}" title="Rename" aria-label="Rename">✎</span><span class="del" role="button" tabindex="0" data-id="${p.id}" title="Delete this character and all its shoots" aria-label="Delete character">🗑</span></b>
         <span>${p.fotos} photos · ${p.sesiones} shoot${p.sesiones===1?'':'s'}${p.mejoradas?` · ${p.mejoradas} enhanced`:''}</span></div></div>

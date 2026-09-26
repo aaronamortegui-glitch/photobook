@@ -384,7 +384,8 @@ def galeria(limite: int = 400) -> list[dict]:
     out = []
     if not os.path.isdir(SESIONES):
         return out
-    paquetes = {p["id"]: p["label"] for p in T.paquetes()}
+    info = {p["id"]: p for p in T.paquetes()}
+    paquetes = {k: p["label"] for k, p in info.items()}
     for sid in sorted(os.listdir(SESIONES), reverse=True):
         if sid.startswith("_"):
             continue
@@ -404,6 +405,8 @@ def galeria(limite: int = 400) -> list[dict]:
                          "personaje": _personaje(sid, e), "descripcion": e.get("caption_persona") or "",
                          "mejorada": bool(t.get("mejorada")), "favorita": bool(t.get("favorita")),
                          "origen": origen, "fecha": e.get("fin") or e.get("creada"),
+                         # boudoir: shown blurred in the gallery until opened (a shared computer)
+                         "adulto": bool((info.get(el.get("paquete")) or {}).get("adulto")),
                          "cliente": f"/sesiones/{sid}/{e['fotos'].get('cara')}" if e.get("fotos", {}).get("cara") else None})
             if len(out) >= limite:
                 return out
@@ -534,6 +537,7 @@ def personajes() -> list[dict]:
         c["descripcion"] = c["descripcion"] or g["descripcion"]
         if len(c["portadas"]) < 4:
             c["portadas"].append(g["archivo"])
+            c.setdefault("portadas_adulto", []).append(g["adulto"])
     out = []
     nombres = _nombres()
     for c in grupos.values():
@@ -555,6 +559,13 @@ def encolar(sid: str, eleccion: dict, total: int = 30) -> dict:
         if not leer(sid).get("escenas"):
             raise ValueError("add your scene photos first")
     elif eleccion.get("paquete"):
+        pk_info = next((p for p in T.paquetes() if p["id"] == eleccion["paquete"]), {})
+        if pk_info.get("adulto"):
+            # boudoir: only for photos of yourself, 18 or older -- the page asks, the
+            # server insists, and the session keeps when it was confirmed
+            if not eleccion.get("consentimiento"):
+                raise ValueError("this experience needs your confirmation: photos of yourself, 18 or older")
+            eleccion = dict(eleccion, consentimiento=time.time())
         tomas = T.planificar_paquete(eleccion["paquete"])
         if eleccion.get("tomas"):
             # the client left some photos out in the preview
