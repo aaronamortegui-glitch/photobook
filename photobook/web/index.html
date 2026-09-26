@@ -40,6 +40,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .brand{font-family:var(--serif);font-size:22px;letter-spacing:-.02em}
 .brand b{color:var(--accent);font-weight:500}
 .spacer{flex:1}
+a.brand{color:inherit;text-decoration:none;cursor:pointer}
+.volver{margin:0 0 10px -8px;font-weight:600}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12.5px;background:var(--surface-2);color:var(--ink-2)}
 .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-3)}
 .pill.ok .dot{background:var(--ok)} .pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.bad .dot{background:var(--bad)}
@@ -311,7 +313,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><img src="/web/icon-512.png" alt=""><span>Photo<b>book</b></span></div>
+  <a class="brand" id="brand" href="#" title="New shoot" aria-label="Photobook — new shoot"><img src="/web/icon-512.png" alt=""><span>Photo<b>book</b></span></a>
   <span id="motor" class="pill"><span class="dot"></span><span>Checking studio…</span></span>
   <div class="spacer"></div>
   <button class="link" id="btnNueva">New shoot</button>
@@ -375,6 +377,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
   </section>
 
   <section id="studio" hidden>
+    <button class="link volver" id="stVolver" type="button">← Back</button>
     <div class="studio-head">
       <div class="grow">
         <h1 id="stTitulo">Your shoot</h1>
@@ -725,7 +728,7 @@ $('#lanzar').onclick = async () => {
     await guardarPerfil();
     const pk = byId(CAT.paquetes, E.paquete);
     const eleccion = E.fuente==='propias' ? {escenas_propias:true} : {paquete:E.paquete, tomas: elegidas(pk)};
-    SES = await api(`/api/sesion/${SES.id}/generar`, {eleccion}); guardarLocal(); abrirEstudio();
+    SES = await api(`/api/sesion/${SES.id}/generar`, {eleccion}); guardarLocal(); VOLVER = null; pintarVolver(); abrirEstudio();
   }catch(err){ toast(err.message); $('#lanzar').disabled = false; }
 };
 // ---------------------------------------------------------------- studio
@@ -846,7 +849,7 @@ function pintarGaleria(){
   });
   document.querySelectorAll('#galGrid .it').forEach(b => b.onclick = async () => {
     const g = GAL[+b.dataset.i];
-    $('#galeria').hidden = true; await abrirSesion(g.sesion);
+    $('#galeria').hidden = true; await abrirSesion(g.sesion, {a:'galeria', pers:galPers});
     const i = SES.tomas.findIndex(t => t.n === g.n); if (i >= 0) abrirLb(i);
   });
 }
@@ -925,7 +928,16 @@ $('#btnTema').onclick = () => { const r=document.documentElement; const dark = r
   r.dataset.theme = dark ? 'light' : 'dark'; try{localStorage.setItem('pb_theme', r.dataset.theme);}catch(e){} };
 
 
-async function abrirSesion(id){
+// where the studio's Back button returns to: the gallery (and the character open there) or home
+let VOLVER = null;
+function pintarVolver(){ $('#stVolver').textContent = VOLVER && VOLVER.a === 'galeria' ? '← Back to the gallery' : '← New shoot'; }
+$('#stVolver').onclick = async () => {
+  if (VOLVER && VOLVER.a === 'galeria'){ clearInterval(timer); $('#studio').hidden = true; galPers = VOLVER.pers || null; await abrirGaleria(); window.scrollTo({top:0}); }
+  else $('#btnNueva').onclick();
+};
+$('#brand').onclick = e => { e.preventDefault(); $('#btnNueva').onclick(); };
+async function abrirSesion(id, desde){
+  VOLVER = desde || null; pintarVolver();
   $('#galeria').hidden = true;
   try{ SES = await api('/api/sesion/' + id); }catch(e){ return toast('That shoot could not be opened.'); }
   const loc = leerLocal(id); if(loc && loc.E){ E = Object.assign(E, loc.E); }
