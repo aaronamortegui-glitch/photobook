@@ -660,7 +660,7 @@ async function favorita(n){
   const t = SES.tomas.find(x=>x.n===n); t.favorita = !t.favorita;
   await api(`/api/sesion/${SES.id}/favorita`, {n, valor:t.favorita}); pintarEstudio(); if(lbIdx>=0) pintarLb();
 }
-$('#stCancel').onclick = async () => { if(await dialogo({titulo:'Stop this shoot?', texto:'The photos already made are kept.', ok:'Stop', peligro:true})){ await api(`/api/sesion/${SES.id}/cancelar`, {}); toast('Stopping after the current photo…'); } };
+$('#stCancel').onclick = async () => { if(await dialogo({titulo:'Stop this shoot?', texto:'The photos already made are kept.', ok:'Stop', peligro:true})){ await api(`/api/sesion/${SES.id}/cancelar`, {}); toast('Stopping now…'); } };
 
 function listasIdx(){ return SES.tomas.map((t,i)=>[t,i]).filter(([t])=>t.estado==='lista').map(([,i])=>i); }
 function abrirLb(i){ lbIdx=i; lbVer='final'; $('#lb').classList.add('on'); pintarLb(); }

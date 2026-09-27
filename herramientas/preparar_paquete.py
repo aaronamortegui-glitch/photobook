@@ -18,6 +18,14 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, RAIZ)
 from photobook import motor_qwen as Q, lectura as L
 
+PREGUNTA_DETALLE = (
+    "Describe this photograph so it can be recreated with a DIFFERENT woman, in one paragraph of "
+    "at most 90 words, as a photographer would: the camera angle and lens; the light (direction, "
+    "hardness, colour, what is lit and what falls into shadow); colour or black and white, the colour "
+    "grade, film grain and contrast; the set and props; the garment in exact detail (colour, lace, "
+    "cut); the body pose; where the head turns and where the eyes look. Say 'the woman'. Never "
+    "describe her hair, face, skin, tattoos, age or body type.")
+
 RATIOS = {"2:3": 2 / 3, "3:4": 3 / 4, "1:1": 1.0, "4:3": 4 / 3, "3:2": 3 / 2, "16:9": 16 / 9, "9:16": 9 / 16}
 
 
@@ -40,7 +48,16 @@ def main(pid):
         if not t.get("lectura"):
             t["lectura"] = {k2: v for k2, v in L.leer(ruta).items() if not k2.startswith("_")}
         lec = t["lectura"]
-        if t.get("prompt"):
+        if pk.get("receta_detallada"):
+            # the scene in full detail (the user, 2026-09-26): with a depth map the
+            # geometry comes from the sample, so the words must carry everything a depth
+            # map cannot -- light, colour or black and white, grain, lens, garment, set,
+            # where the head turns -- and never the sample model's own looks
+            if not t.get("escena_detallada"):
+                t["escena_detallada"] = " ".join(Q.describir(ruta, PREGUNTA_DETALLE, max_tokens=260).split())
+            t["receta"] = (f"{pk.get('estilo', 'A photograph')}. {t['escena_detallada'].rstrip('.')}. "
+                           f"{lec.get('expression', '')}. {pk.get('estilo_cierre', '')}").replace(" . ", " ").strip()
+        elif t.get("prompt"):
             base = t["prompt"].rstrip(".")
             t["receta"] = base if lec.get("expression", "") in base else f"{base}, {lec['expression']}."
         else:

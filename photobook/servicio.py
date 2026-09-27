@@ -504,8 +504,13 @@ def borrar_personaje(pid: str) -> dict:
     Refused while one of its shoots is still running."""
     sids = sesiones_de(pid)
     ocupadas = [s for s in sids if s == _activo["id"] or leer(s).get("fase") in ACTIVAS]
-    if ocupadas:
-        raise ValueError("this character has a shoot in progress -- stop it first")
+    for s in ocupadas:                    # stop them first (the user could not delete)
+        cancelar(s)
+    t0 = time.time()
+    while any(s == _activo["id"] for s in ocupadas) and time.time() - t0 < 45:
+        time.sleep(1)
+    if any(s == _activo["id"] for s in ocupadas):
+        raise ValueError("the shoot is still stopping -- try again in a few seconds")
     dest = os.path.join(SESIONES, "_papelera")
     os.makedirs(dest, exist_ok=True)
     with _lock:
@@ -595,7 +600,19 @@ def encolar(sid: str, eleccion: dict, total: int = 30) -> dict:
 
 
 def cancelar(sid: str) -> None:
+    """Stop a shoot NOW (the user: "stop did not stop"): QwenStudio aborts the photo in
+    progress, and the session is marked on disk so a server restart does not resume it."""
     _cancelar.add(sid)
+    try:
+        mutar(sid, lambda e: e.update({"cancelada_en": time.time(),
+                                       "fase": "cancelada" if e.get("fase") == "en_cola" else e.get("fase")}))
+    except Exception:
+        pass
+    if _activo["id"] == sid:
+        try:
+            Q.cancelar()
+        except Exception:
+            pass
 
 
 def reanudar_pendientes() -> None:
@@ -606,6 +623,10 @@ def reanudar_pendientes() -> None:
         try:
             est = leer(sid)
         except Exception:
+            continue
+        if est.get("cancelada_en"):
+            if est.get("fase") in ("en_cola", "preparando", "trabajando"):
+                mutar(sid, lambda e: e.update({"fase": "cancelada"}))
             continue
         if est.get("fase") in ("en_cola", "preparando", "trabajando"):
             _cola.put(sid)
@@ -638,10 +659,11 @@ def _sin_pelo(prompt: str) -> str:
 
 PREGUNTA_PERSONA = (
     "This character sheet shows one subject twice: a close-up and a full-length view. Describe the "
-    "subject in ONE sentence of at most 30 words, for an image generator: what it is (a person, or "
-    "e.g. a 3D mannequin), apparent age and gender if a person, hair (colour, length, style, or bald), "
-    "facial hair, skin tone, and body build. Never mention clothing, pose, background or light. "
-    "Start with 'The subject is'.")
+    "subject in ONE sentence of at most 45 words, for an image generator: what it is (a person, or "
+    "e.g. a 3D mannequin), apparent age and gender if a person; the hair in detail -- colour, length "
+    "(e.g. past the shoulders), texture (straight, wavy, curly), parting and style, or bald; facial "
+    "hair; skin tone; body build and figure (e.g. slim, athletic, curvy, full-figured). Never mention "
+    "clothing, pose, background or light. Start with 'The subject is'.")
 
 
 def _caption_persona(sid: str) -> str:
@@ -757,7 +779,13 @@ def _procesar(sid: str) -> None:
                     # the sheet shows the client twice (close-up + full body); a package shot
                     # once came back with both (manga, pruebas/exp29)
                     prompt += " The subject appears once."
+                if t.get("tipo_control", "openpose") != "openpose" and caption:
+                    # with a depth control the sample's shape pulls hard: say, last, that the
+                    # hair and the body are the client's own (a client got the sample's bob)
+                    prompt += (" She keeps her own hair exactly -- its colour, length and style -- and her "
+                               "own face, figure and build; nothing of the sample model's hair or body.")
                 r = Q.generar(dest, prompt=prompt, personas=[hoja], pose=esq,
+                              tipo_pose=t.get("tipo_control", "openpose") if esq else "openpose",
                               ratio=t["ratio"], steps=CALIDAD["pasos"], seed=t["seed"],
                               megapixeles=CALIDAD["mp_esqueleto"] if esq else CALIDAD["mp_texto"])
                 mutar(sid, lambda e: _toma(e, n).update({
@@ -765,7 +793,9 @@ def _procesar(sid: str) -> None:
                     "final": f"fotos/{n:02d}_raw.png", "s_componer": r["segundos"],
                     "tam": r["tam"]}))
             except Exception as ex:
-                mutar(sid, lambda e: _toma(e, n).update({"estado": "fallida", "error": str(ex)[:300]}))
+                # aborted by Stop: not a failure
+                est_ = "cancelada" if sid in _cancelar else "fallida"
+                mutar(sid, lambda e: _toma(e, n).update({"estado": est_, "error": str(ex)[:300]}))
 
         # 2. score what was composed; the strong ones are finished already
         hechas = [x for x in leer(sid)["tomas"] if x["n"] in bloque and x["estado"] == "compuesta"]
@@ -902,6 +932,25 @@ def _mejorar(sid: str, n: int) -> None:
         "s_reforzar": round(time.time() - t0, 1), "metodo_mejora": "W2"}))
 
 
+def _parar_pendientes(sid):
+    """After Stop, the shots never started read "Stopped", not "Waiting"."""
+    def f(e):
+        for t in e.get("tomas", []):
+            if t.get("estado") in ("pendiente", "componiendo", "compuesta"):
+                t["estado"] = "cancelada"
+    try:
+        mutar(sid, f)
+    except Exception:
+        pass
+
+
+def _mutar_seguro(sid, cambios):
+    try:
+        mutar(sid, lambda e: e.update(cambios))
+    except Exception:
+        pass                              # the session folder is gone (deleted meanwhile)
+
+
 def _bucle():
     while True:
         item = _cola.get()
@@ -921,14 +970,24 @@ def _bucle():
                 _activo["id"] = None
             continue
         sid = item
+        try:
+            if leer(sid).get("fase") == "cancelada":
+                continue
+        except Exception:
+            continue                      # deleted while it waited in the queue
         _activo["id"] = sid
         try:
             _procesar(sid)
         except InterruptedError:
-            mutar(sid, lambda e: e.update({"fase": "cancelada"}))
+            _mutar_seguro(sid, {"fase": "cancelada"})
+            _parar_pendientes(sid)
         except Exception as ex:
-            traceback.print_exc()
-            mutar(sid, lambda e: e.update({"fase": "error", "error": str(ex)[:500]}))
+            if sid in _cancelar:          # the photo was aborted by Stop, not a failure
+                _mutar_seguro(sid, {"fase": "cancelada"})
+                _parar_pendientes(sid)
+            else:
+                traceback.print_exc()
+                _mutar_seguro(sid, {"fase": "error", "error": str(ex)[:500]})
         finally:
             _cancelar.discard(sid)
             _activo["id"] = None

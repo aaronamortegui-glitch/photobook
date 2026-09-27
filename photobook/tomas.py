@@ -94,7 +94,17 @@ def planificar_paquete(pid: str) -> list[dict]:
                           and os.path.exists(os.path.join(D, x["foto"]))):
         r = t["ratio"]
         sk = os.path.join(CATALOGO, "paquetes", pid, t["foto"].rsplit(".", 1)[0] + "_pose.png")
-        tomas.append({"n": k + 1, "id_muestra": t["id"], "pose": None, "ilustrado": bool(pk.get("ilustrado")), "framing": t.get("encuadre") if t.get("encuadre") in ("full", "half", "closeup")
+        control = "openpose"
+        if pk.get("control") in ("depth", "depthpose", "depthsoft"):
+            # depth: the map with the sample's head taken out (pruebas/exp33);
+            # depthpose: the full map with the skeleton drawn over it (pruebas/exp35, the
+            # user's pick) -- the head turns and the hands land as in the sample
+            suf = {"depthpose": "_depthpose.png", "depthsoft": "_depthsoft.png"}.get(pk["control"], "_depthnc.png")
+            dp = os.path.join(CATALOGO, "paquetes", pid, t["foto"].rsplit(".", 1)[0] + suf)
+            if os.path.exists(dp):
+                sk, control = dp, pk["control"]
+        tomas.append({"n": k + 1, "id_muestra": t["id"], "pose": None, "ilustrado": bool(pk.get("ilustrado")),
+                      "tipo_control": control, "framing": t.get("encuadre") if t.get("encuadre") in ("full", "half", "closeup")
                       else "full" if r in ("2:3", "9:16") else "half",
                       "prompt": t["receta"], "ratio": r, "seed": t["seed"],
                       "cara_prompt": t.get("cara_prompt"),

@@ -86,7 +86,7 @@ BASE = {"turbo": False, "resumen": False, "muestreo": "base", "vae": "hdr"}
 
 
 def generar(destino: str, *, prompt: str, personas=(), pose_lib: str | None = None,
-            pose: str | None = None,
+            pose: str | None = None, tipo_pose: str = "openpose",
             ratio: str = "3:4", megapixeles: float = 1.0, steps: int = 28,
             seed: int = 0, cfg: float = 1.0, negativo: str = "",
             describir_escena: bool = False, escena=None) -> dict:
@@ -96,6 +96,7 @@ def generar(destino: str, *, prompt: str, personas=(), pose_lib: str | None = No
                   describir_escena=describir_escena, caso="photobook")
     if pose:
         cuerpo["pose"] = data_url(pose)
+        cuerpo["tipo_pose"] = tipo_pose      # "depth": a depth map instead of a skeleton
     elif pose_lib:
         cuerpo["pose_lib"] = pose_lib
     if escena is not None:
@@ -187,3 +188,8 @@ def reescalar(destino: str, *, imagen, objetivo: int = 1331, seed: int = 0, step
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "segundos": round(time.time() - t0, 1)}
+
+
+def cancelar() -> None:
+    """Abort the generation in progress (QwenStudio checks between steps)."""
+    _post("/api/cancelar", {}, timeout=30)
