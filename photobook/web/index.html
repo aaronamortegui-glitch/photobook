@@ -622,16 +622,19 @@ function pintarPerfil(){
   if (!hay) return;
   const p = SES.perfil || {}, est = SES.perfil_estado, ta = $('#pfDesc'), n = $('#pfNombre');
   if (!PF_SUCIO.nombre && document.activeElement !== n) n.value = p.nombre || '';
-  const describiendo = est === 'describiendo';
-  ta.classList.toggle('cargando', describiendo);
-  ta.disabled = describiendo;
-  if (describiendo) ta.value = 'Describing you… (a few seconds, or after the photo in progress)';
-  else if (!PF_SUCIO.descripcion && document.activeElement !== ta) ta.value = SES.caption_persona || p.descripcion || '';
+  // never locked: while the AI description is pending (it is written between two photos
+  // when a shoot is running) the client can type their own -- and theirs wins
+  const describiendo = est === 'describiendo' && !PF_SUCIO.descripcion && !ta.value.trim();
+  ta.classList.toggle('cargando', false);
+  ta.disabled = false;
+  ta.placeholder = est === 'describiendo' ? 'Writing a description of you… or type your own here' : 'The subject is…';
+  if (!PF_SUCIO.descripcion && document.activeElement !== ta && est !== 'describiendo') ta.value = SES.caption_persona || p.descripcion || '';
   $('#pfHint').textContent = est === 'fallo' ? 'The description could not be written — type one, or try again.' :
+    est === 'describiendo' ? 'The AI is writing it — during a running shoot that takes until the current photo is done. You can type your own instead.' :
     'Written by AI from your sheet — fix anything it got wrong. It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.';
-  $('#pfOtra').disabled = describiendo;
+  $('#pfOtra').disabled = est === 'describiendo';
   clearTimeout(pfTimer);
-  if (describiendo) pfTimer = setTimeout(async () => {
+  if (est === 'describiendo') pfTimer = setTimeout(async () => {
     try{ const e = await api('/api/sesion/' + SES.id); if (!$('#home').hidden){ SES = e; guardarLocal(); pintarPerfil(); } }catch(err){ pintarPerfil(); }
   }, 3000);
 }
@@ -639,7 +642,7 @@ async function guardarPerfil(){
   if (!SES || (!PF_SUCIO.nombre && !PF_SUCIO.descripcion)) return;
   const b = {};
   if (PF_SUCIO.nombre) b.nombre = $('#pfNombre').value;
-  if (PF_SUCIO.descripcion && !$('#pfDesc').disabled) b.descripcion = $('#pfDesc').value;
+  if (PF_SUCIO.descripcion && $('#pfDesc').value.trim()) b.descripcion = $('#pfDesc').value;
   PF_SUCIO = {nombre:false, descripcion:false};
   try{ SES = await api(`/api/sesion/${SES.id}/perfil`, b); guardarLocal(); }catch(err){ toast('Could not save the profile: ' + err.message); }
 }
