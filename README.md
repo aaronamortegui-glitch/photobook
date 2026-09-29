@@ -42,7 +42,8 @@ flowchart LR
   L[Story package<br/>sample photos] --> K[Per shot:<br/>DWPose skeleton + recipe]
   P --> G
   K --> G[QwenStudio<br/>Qwen-Image 2.1<br/>sheet + skeleton + recipe]
-  G --> R[Your photo<br/>+ likeness score]
+  G --> H[Face swap<br/>BFS head + your close-up]
+  H --> R[Your photo<br/>+ likeness score]
   R -->|on demand| E[Enhance<br/>identity pass + 2K upscale]
 ```
 
@@ -54,6 +55,13 @@ flowchart LR
   the sample's **DWPose skeleton**. Your photo is generated from your sheet + that skeleton +
   that recipe + your profile line. The sample image itself is never fed to the model, so no
   one else's face can leak into yours.
+- **Face swap on every photo**: right after a photo is composed, the
+  [BFS](https://huggingface.co/Alissonerdx/BFS-Best-Face-Swap) head-swap LoRA puts the head from your
+  close-up on it, keeping the scene, the outfit, the pose and the expression — also in comic and 3D
+  styles. The composed photo stays as *Before*. The installer downloads and converts it into
+  QwenStudio's `loras/`; without it, photos come out as composed. Far shots (a tiny face) gain little.
+- **A personal likeness model (optional)**: a person can also have a LoRA trained on them, set up
+  behind the scenes; it is used at a low weight while composing and inside the face swap.
 - **Likeness** is measured with ArcFace against your close-up and shown on each photo.
 - **Enhance** (on demand) re-draws the whole photo at 1 MP with your close-up as reference,
   then upscales it to 2K — no mask, so no seams.
@@ -93,19 +101,23 @@ The reasoning behind every default — resolutions, steps, what was tried and dr
 - **Windows:** the desktop shortcut, or `RUN.bat`
 - **macOS:** `run.command`
 
-It starts QwenStudio if it is not running yet, waits for it, starts Photobook and opens
-**http://127.0.0.1:7870** in your browser. The pill at the top says *Studio ready* when the
-engine answers.
+It starts the image engine (QwenStudio) **in the background** if it is not running yet — no
+window, no console of its own; its output goes to `logs/qwenstudio.log` — waits for it, starts
+Photobook and opens **http://127.0.0.1:7870** in your browser. Closing Photobook closes the
+engine it started. The pill at the top says *Studio ready* when the engine answers.
 
 ## Using it
 
 | Step | Where | Notes |
 |---|---|---|
+| Someone saved | *1 · Character sheet* | Everyone photographed before is listed above the two slots (and has **＋ New shoot** in the Gallery): one click brings back their photos, sheet, description and LoRA — nothing to upload again. |
 | Two photos | *1 · Character sheet* | Face: even light, eyes visible, nothing covering it. Body: head to feet, fitted clothes. Any size or distance — they are cropped and scaled to the same layout. |
-| Profile | under the sheet | The description is written for you — fix anything wrong. Describe the person, never the clothes. |
+| Profile | under the sheet | The description is written for you — fix anything wrong, **in any language**: it is translated to English locally (the model reads English best). Describe the person, never the clothes. You can type while the AI one is still being written. |
+| Likeness model | the profile | Shown only as *active* or *not set up*: it is set up behind the scenes (`herramientas/asignar_lora.py`), never chosen by the client. When active, every shoot of that person uses it with the face photo (`docs/DECISIONS.md`). |
 | Scenes | *2 · Scenes* | *Experience library* (Women / Men) or *My own images* (drop a folder, up to 30). Click a sample to preview; the ✓ leaves it out. |
 | Generate | bottom bar | About 100 s per photo on an RTX 5090. The first two arrive within minutes. |
-| Enhance · Favourite · Save · Delete | click a photo | Enhance is best on full and half-body shots. Deleting goes to a trash with **Undo**. |
+| Stop | the shoot's page | Stops **now**: the photo in progress is aborted within seconds, and a restart never resumes a stopped shoot. |
+| Enhance · Favourite · Save · Delete | click a photo | The photo opens at once (a light version first, the full one right after); Esc, × or the back button close it. Enhance is best on full and half-body shots. Deleting goes to a trash with **Undo**. |
 | Gallery | top bar | One card per character: rename ✎, delete 🗑 (with Undo), filter by enhanced, favourites or story. |
 
 Where things are saved: `sesiones/<id>/` — `entrada/` (your sheet), `fotos/` (`NN_raw.png`,
@@ -188,5 +200,7 @@ Not in the repository (made on your machine): `.venv/`, `.uv/`, `modelos/`, `ses
   commercial service, replace the likeness score with a model licensed for it.
 - **DWPose** ([IDEA-Research/DWPose](https://github.com/IDEA-Research/DWPose), Apache-2.0), run through
   [easy-dwpose](https://pypi.org/project/easy-dwpose/) on onnxruntime.
+- **BFS — Best Face Swap** head v1.1 for Qwen-Image 2.1 ([Alissonerdx](https://huggingface.co/Alissonerdx/BFS-Best-Face-Swap), MIT):
+  downloaded by the installer. Use it only with photos of people who have given consent.
 - **fal / Seedream 4.5** (ByteDance): a paid API, used only to draw library samples.
 - Library samples show generated house models, not real people.

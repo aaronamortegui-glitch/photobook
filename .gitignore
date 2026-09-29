@@ -50,3 +50,5 @@ herramientas/leer_referencias.py
 herramientas/variar_referencias.py
 herramientas/paquetes_boudoir.py
 herramientas/paquetes_boudoir_i2i.py
+logs/
+logs_lanzar.txt

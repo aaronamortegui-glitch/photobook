@@ -176,6 +176,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .lb{overflow-y:auto}
 .lb .box{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;max-width:1200px;width:100%;max-height:100%}
 .lb .img{position:relative;display:flex;align-items:center;justify-content:center;max-height:calc(100vh - 48px)}
+.lb .img{background:radial-gradient(circle,rgba(255,255,255,.06),transparent 60%)}
 .lb .img img{max-width:100%;max-height:calc(100vh - 48px);border-radius:10px;display:block}
 .lb .side{background:var(--surface);color:var(--ink);border-radius:14px;padding:18px;align-self:start}
 .lb .side h3{font-size:22px}
@@ -256,6 +257,15 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .pj .pj-meta{display:flex;align-items:center;gap:12px;padding:12px 14px 4px}
 .pj .cara{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--surface);box-shadow:0 2px 8px rgba(0,0,0,.25);margin-top:-30px}
 .pj b{display:block}.pj .ren{font-size:13px;color:var(--ink-3);cursor:pointer;padding:0 4px}.pj .ren:hover{color:var(--accent)}.pj .del{font-size:13px;cursor:pointer;padding:2px 6px;border-radius:7px;opacity:.85}.pj .del:hover,.pj .del:focus{opacity:1;background:var(--bad-soft)}.pj span{font-size:13px;color:var(--ink-3)}
+.guardados[hidden]{display:none}
+.guardados{margin:0 0 14px;display:grid;gap:8px}
+.guardados .lista{display:flex;gap:8px;flex-wrap:wrap}
+.gd{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:inherit;font:inherit;font-size:13.5px;padding:4px 12px 4px 4px;border-radius:99px;cursor:pointer}
+.gd:hover,.gd:focus-visible{border-color:var(--accent)}
+.gd img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.gd small{color:var(--ink-3)}
+.perfil select{font:inherit;font-weight:400;font-size:14.5px;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
+.pj .nuevo{margin:0 14px 14px}
 .pj p{margin:4px 14px 14px;font-size:12.5px;color:var(--ink-2);line-height:1.4}
 .gal .it .del{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
   background:rgba(20,18,16,.62);color:#fff;font-size:14px;opacity:0;transition:opacity .15s;cursor:pointer}
@@ -337,6 +347,8 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
       <div class="block">
         <h2><span class="n">1</span>Character sheet</h2>
         <p class="sub">Two photos of you: your face, close and looking at the camera, and your whole body, head to feet. We join them into your character sheet.</p>
+        <div class="guardados" id="elegido" hidden></div>
+        <div class="guardados" id="guardados" hidden><span class="hint">Someone you photographed before — no need to upload again:</span><div class="lista" id="gdLista"></div></div>
         <div class="duo" id="duo">
           <div class="slot izq" id="slotCara" data-cual="cara" tabindex="0" role="button" aria-label="Add your face photo">
             <span class="tag">FACE · close-up</span><span class="tag ej">Example</span>
@@ -352,6 +364,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
           <h3>Profile</h3>
           <label>Name <input id="pfNombre" maxlength="60" placeholder="Who is this? e.g. Kenji" autocomplete="off"></label>
           <label>Description <textarea id="pfDesc" maxlength="400" rows="3" placeholder="The subject is…"></textarea></label>
+          <div class="fila"><span class="chip" id="pfModelo" hidden></span></div>
           <div class="fila"><span class="hint" id="pfHint">Written by AI from your sheet — fix anything it got wrong. It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.</span>
             <div class="spacer"></div><button class="link" id="pfOtra" type="button">Describe again</button></div>
         </div>
@@ -526,6 +539,7 @@ function listo(){ return SES && SES.fotos && SES.fotos.hoja && nFotos() > 0; }
 
 function pintarHome(){
   pintarDuo();
+  pintarGuardados();
   pintarPerfil();
   document.querySelectorAll('#fuente .tab').forEach(b => b.classList.toggle('on', b.dataset.f===E.fuente));
   $('#panel').innerHTML = E.fuente==='libreria' ? panelLibreria() : panelPropias();
@@ -616,6 +630,42 @@ async function subirHoja(f){
   catch(err){ toast('Could not add the sheet: ' + err.message); }
 }
 
+// ---------------------------------------------------------------- saved people
+// every character made before comes back with its photos, description and LoRA
+let GUARDADOS = null;
+async function pintarGuardados(){
+  const box = $('#guardados'), el = $('#elegido');
+  const vacia = !SES || !SES.fotos || !SES.fotos.hoja;
+  // a person chosen (or photos added): always a way back to everyone else
+  el.hidden = vacia || SES.fase !== 'nueva';
+  if (!el.hidden){
+    const p = SES.perfil || {};
+    el.innerHTML = `<div class="lista"><span class="gd" style="cursor:default">${SES.fotos.cara ? `<img src="${mini(SES.fotos.cara,240)}" alt="">` : ''}<span>${esc(p.nombre || 'This person')}</span></span>
+      <button class="link" id="otraPersona" type="button">← Choose someone else</button></div>`;
+    $('#otraPersona').onclick = () => { if (history.state && history.state.capa === 'persona') history.back(); else volverALista(); };
+  }
+  if (!vacia){ box.hidden = true; return; }
+  if (GUARDADOS === null){ GUARDADOS = []; try{ GUARDADOS = await api('/api/personajes'); }catch(e){} }
+  if (SES && SES.fotos && SES.fotos.hoja) return;   // someone was chosen while the list loaded
+  box.hidden = !GUARDADOS.length;
+  $('#gdLista').innerHTML = GUARDADOS.map((p,i) => `<button class="gd" type="button" data-id="${p.id}">${p.cara ? `<img src="${mini(p.cara,240)}" alt="">` : ''}
+    <span>${esc(p.nombre || 'Character ' + (i+1))}${p.lora ? ' <small>· ✓ likeness model</small>' : ''}</span></button>`).join('');
+  document.querySelectorAll('#gdLista .gd').forEach(b => b.onclick = () => nuevaDesde(b.dataset.id));
+}
+function volverALista(){ $('#btnNueva').onclick(); window.scrollTo({top:0}); }
+async function nuevaDesde(pid){
+  try{
+    const e = await api('/api/sesion', {desde: pid});
+    SES = e; PF_SUCIO = {nombre:false, descripcion:false}; FOTO_V = Date.now(); guardarLocal();
+    $('#galeria').hidden = true; $('#studio').hidden = true; $('#home').hidden = false;
+    // a history entry (so Back returns to the list) -- pushState, not location.hash:
+    // a hash change fires popstate, which would read as Back at once
+    try{ history.pushState({capa:'persona'}, '', '#s=' + SES.id); }catch(e){}
+    pintarHome(); window.scrollTo({top:0});
+    toast(`${(SES.perfil && SES.perfil.nombre) || 'Character'} is ready — pick the scenes.`);
+  }catch(err){ toast('Could not start from this person: ' + err.message); }
+}
+
 // ---------------------------------------------------------------- profile
 // name + one-line description of the client; the description goes after every prompt
 let PF_SUCIO = {nombre:false, descripcion:false}, pfTimer = null;
@@ -634,10 +684,12 @@ function pintarPerfil(){
   if (!PF_SUCIO.descripcion && document.activeElement !== ta && est !== 'describiendo') ta.value = SES.caption_persona || p.descripcion || '';
   $('#pfHint').textContent = est === 'fallo' ? 'The description could not be written — type one, or try again.' :
     est === 'describiendo' ? 'The AI is writing it — during a running shoot that takes until the current photo is done. You can type your own instead.' :
-    'Written by AI from your sheet — fix anything it got wrong. It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.';
+    est === 'traduciendo' ? 'Translating your description to English… (the model reads English best)' :
+    'Written by AI from your sheet — fix anything it got wrong, in any language (it is put into English). It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.';
   $('#pfOtra').disabled = est === 'describiendo';
+  pintarLora(p);
   clearTimeout(pfTimer);
-  if (est === 'describiendo') pfTimer = setTimeout(async () => {
+  if (est === 'describiendo' || est === 'traduciendo') pfTimer = setTimeout(async () => {
     try{ const e = await api('/api/sesion/' + SES.id); if (!$('#home').hidden){ SES = e; guardarLocal(); pintarPerfil(); } }catch(err){ pintarPerfil(); }
   }, 3000);
 }
@@ -648,6 +700,13 @@ async function guardarPerfil(){
   if (PF_SUCIO.descripcion && $('#pfDesc').value.trim()) b.descripcion = $('#pfDesc').value;
   PF_SUCIO = {nombre:false, descripcion:false};
   try{ SES = await api(`/api/sesion/${SES.id}/perfil`, b); guardarLocal(); }catch(err){ toast('Could not save the profile: ' + err.message); }
+}
+// the likeness model is set up behind the scenes: the page only says whether it is on
+function pintarLora(p){
+  const c = $('#pfModelo');
+  c.hidden = false;
+  c.className = 'chip' + (p.lora ? ' ok' : '');
+  c.textContent = p.lora ? '✓ Personal likeness model: active' : 'Personal likeness model: not set up — photos only';
 }
 $('#pfNombre').oninput = () => PF_SUCIO.nombre = true;
 $('#pfDesc').oninput = () => PF_SUCIO.descripcion = true;
@@ -660,11 +719,11 @@ $('#pfOtra').onclick = async () => {
 
 // ---------------------------------------------------------------- package preview
 let pvIdx = -1;
-function abrirPv(i){ pvIdx = i; $('#pv').classList.add('on'); pintarPv(); }
+function abrirPv(i){ pvIdx = i; $('#pv').classList.add('on'); pintarPv(); historial('pv'); }
 function pintarPv(){
   const p = byId(CAT.paquetes, E.paquete); if (!p || pvIdx < 0) return;
   const id = p.ids[pvIdx], fuera = quitadas(p).includes(id);
-  $('#pvImg').src = mini(p.fotos[pvIdx], 960);
+  verImagen($('#pvImg'), p.fotos[pvIdx]);
   $('#pvTit').textContent = `${p.label} · ${pvIdx+1} of ${p.n}`;
   $('#pvTxt').innerHTML = (p.lecturas && p.lecturas[pvIdx] ? esc(p.lecturas[pvIdx]) + '<br><br>' : '') +
     (fuera ? '<b>Left out</b> — this one will not be generated.' : '<b>Included</b> in your shoot.');
@@ -672,7 +731,7 @@ function pintarPv(){
   $('#pvToggle').className = fuera ? 'btn primary' : 'btn';
 }
 function moverPv(d){ const p = byId(CAT.paquetes, E.paquete); pvIdx = (pvIdx + d + p.n) % p.n; pintarPv(); }
-function cerrarPv(){ $('#pv').classList.remove('on'); pvIdx = -1; pintarHome(); }
+function cerrarPv(){ $('#pv').classList.remove('on'); pvIdx = -1; pintarHome(); if (history.state && history.state.capa === 'pv') history.back(); }
 $('#pvX').onclick = cerrarPv;
 $('#pv').onclick = e => { if (e.target.id === 'pv') cerrarPv(); };
 $('#pvPrev').onclick = () => moverPv(-1);
@@ -747,7 +806,7 @@ $('#lanzar').onclick = async () => {
   }catch(err){ toast(err.message); $('#lanzar').disabled = false; }
 };
 // ---------------------------------------------------------------- studio
-const ETIQ = {pendiente:'Waiting', componiendo:'Composing…', compuesta:'Composed', buscando_cara:'Finding the face…', cola_cara:'Face pass next', reforzando:'Refining the face…', puntuando:'Checking likeness…', en_cola_mejora:'Enhance queued', mejorando:'Enhancing the face…', lista:'Ready', fallida:'Failed', cancelada:'Stopped'};
+const ETIQ = {pendiente:'Waiting', componiendo:'Composing…', cabeza:'Putting your face in…', compuesta:'Composed', buscando_cara:'Finding the face…', cola_cara:'Face pass next', reforzando:'Refining the face…', puntuando:'Checking likeness…', en_cola_mejora:'Enhance queued', mejorando:'Enhancing the face…', lista:'Ready', fallida:'Failed', cancelada:'Stopped'};
 function abrirEstudio(){
   $('#home').hidden = true; $('#studio').hidden = false; location.hash = 's=' + SES.id;
   pintarEstudio(); clearInterval(timer); timer = setInterval(sondear, 3000);
@@ -763,7 +822,7 @@ function pintarEstudio(){
   const T = SES.tomas || [], vivas = T.filter(t=>t.estado!=='borrada'), listas = vivas.filter(t=>['lista','en_cola_mejora','mejorando'].includes(t.estado)).length;
   const faltan = vivas.length - listas;
   const fase = {en_cola:(SES.cola && SES.cola.activo && SES.cola.activo!==SES.id ? 'In the queue — another shoot is running first.' : 'Starting…'), preparando:'Getting ready…', leyendo_escenas:'Reading your scenes: poses, places, light…', trabajando:'', lista:'Done. Your photos are ready.', cancelada:'Stopped.', error:'Something went wrong: '+esc(SES.error)}[SES.fase] ?? '';
-  const act = T.find(t=>['componiendo','reforzando','buscando_cara'].includes(t.estado));
+  const act = T.find(t=>['componiendo','cabeza','reforzando','buscando_cara'].includes(t.estado));
   $('#stTitulo').textContent = SES.fase==='lista' ? `Your ${vivas.length} photos` : `Shooting ${vivas.length} photos`;
   $('#stFase').innerHTML = (fase || (act ? `Photo ${act.n}: ${ETIQ[act.estado].toLowerCase()} · ` : '')) +
     (SES.fase==='trabajando' ? `${listas} of ${vivas.length} ready · about ${Math.max(1,Math.round(faltan*SEG_TOMA/60))} min left` : '');
@@ -774,7 +833,7 @@ function pintarEstudio(){
   $('#stZip').style.pointerEvents = listas ? '' : 'none'; $('#stZip').style.opacity = listas ? '' : .45;
   $('#shots').innerHTML = T.map((t,i) => { if (t.estado === 'borrada') return '';
     const src = t.final || null;
-    const working = ['componiendo','buscando_cara','reforzando','puntuando','mejorando','en_cola_mejora'].includes(t.estado);
+    const working = ['componiendo','cabeza','buscando_cara','reforzando','puntuando','mejorando','en_cola_mejora'].includes(t.estado);
     const lbl = t.estado==='lista' ? (t.mejorada ? '✨ Face enhanced' : t.reforzada ? '✓ Face refined' : 'Ready') : ETIQ[t.estado] || t.estado;
     return `<div class="shot ${t.estado==='lista'?'ready':''} ${working?'working':''}" data-i="${i}" style="aspect-ratio:${t.ratio==='2:3'?'2/3':'3/4'}">
       ${src ? `<img src="${mini(src)}${t.mejorada ? '&v=e' : ''}" alt="Photo ${t.n}" loading="lazy">` : `<div class="ghost">${t.muestra ? `<img src="${t.muestra}" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.22">` : img('/catalogo/poses/'+t.pose+'.png','')}</div>`}
@@ -791,11 +850,33 @@ async function favorita(n){
 $('#stCancel').onclick = async () => { if(await dialogo({titulo:'Stop this shoot?', texto:'The photos already made are kept.', ok:'Stop', peligro:true})){ await api(`/api/sesion/${SES.id}/cancelar`, {}); toast('Stopping now…'); } };
 
 function listasIdx(){ return SES.tomas.map((t,i)=>[t,i]).filter(([t])=>t.estado==='lista').map(([,i])=>i); }
-function abrirLb(i){ lbIdx=i; lbVer='final'; $('#lb').classList.add('on'); pintarLb(); }
+// the viewer: a 1600 px JPEG at once, the full PNG swapped in when it has loaded; the
+// same picture is never set twice (the studio repaints every 3 s while working)
+// history: an overlay or an open character is one step back (browser / mouse back button)
+function historial(capa){ try{ history.pushState({capa}, ''); }catch(e){} }
+window.addEventListener('popstate', () => {
+  if ($('#dlg') && $('#dlg').classList.contains('on')) { $('#dlgNo').click(); return; }
+  if ($('#lb').classList.contains('on')) { cerrarLb(); return; }
+  if ($('#sheet').classList.contains('on')) { $('#sheet').classList.remove('on'); return; }
+  if ($('#pv') && $('#pv').classList.contains('on')) { $('#pv').classList.remove('on'); pvIdx = -1; pintarHome(); return; }
+  if (!$('#galeria').hidden && galPers) { galPers = null; pintarGaleria(); window.scrollTo({top:0}); return; }
+  // back after choosing a saved person: the list of everyone again
+  if (!$('#home').hidden && SES && SES.fase === 'nueva' && SES.personaje) { volverALista(); return; }
+});
+function verImagen(el, src){
+  if (!src || el.dataset.src === src) return;
+  el.dataset.src = src;
+  const rapida = mini(src, 1600);
+  el.src = rapida;
+  if (rapida !== src){ const full = new Image(); full.onload = () => { if (el.dataset.src === src) el.src = src; }; full.src = src; }
+}
+function precargar(i){ const t = SES && SES.tomas[i]; if (t && t.final){ const im = new Image(); im.src = mini(t.final, 1600); } }
+function abrirLb(i){ lbIdx=i; lbVer='final'; $('#lb').classList.add('on'); pintarLb(); historial('lb'); }
 function pintarLb(){
   const t = SES.tomas[lbIdx]; if(!t) return;
   const src = lbVer==='bruto' ? t.bruto : lbVer==='muestra' ? t.muestra : t.final;
-  $('#lbImg').src = src; $('#lbDl').href = src;
+  verImagen($('#lbImg'), src); $('#lbDl').href = src;
+  const L = listasIdx(), k = L.indexOf(lbIdx); if (k >= 0){ precargar(L[(k + 1) % L.length]); precargar(L[(k - 1 + L.length) % L.length]); }
   const pose = byId(CAT.poses, t.pose) || {};
   $('#lbTit').textContent = `Photo ${t.n}`;
   $('#lbSeg').style.display = (t.reforzada || t.muestra) ? '' : 'none';
@@ -813,7 +894,8 @@ function pintarLb(){
   $('#lbMej').title = 'Redraws the whole photo with your close-up as the reference, then enlarges it to 2K. Same pose and expression. About 5 minutes.';
 }
 $('#lbSeg').querySelectorAll('button').forEach(b => b.onclick = () => { lbVer=b.dataset.v; pintarLb(); });
-$('#lbX').onclick = () => { $('#lb').classList.remove('on'); lbIdx=-1; };
+$('#lbX').onclick = () => { cerrarLb(); if (history.state && history.state.capa === 'lb') history.back(); };
+function cerrarLb(){ $('#lb').classList.remove('on'); lbIdx=-1; $('#lbImg').dataset.src = ''; }
 $('#lb').onclick = e => { if(e.target.id==='lb') $('#lbX').onclick(); };
 function mover(d){ const L = listasIdx(); if(!L.length) return; let k = L.indexOf(lbIdx); k = (k + d + L.length) % L.length; lbIdx = L[k]; lbVer='final'; pintarLb(); }
 $('#lbPrev').onclick = () => mover(-1); $('#lbNext').onclick = () => mover(1);
@@ -826,7 +908,7 @@ $('#lbMej').onclick = async () => {
   catch(err){ toast(err.message); }
 };
 document.addEventListener('keydown', e => {
-  if(!$('#lb').classList.contains('on')) return;
+  if(!$('#lb').classList.contains('on') || $('#dlg').classList.contains('on')) return;
   if(e.key==='Escape') $('#lbX').onclick(); if(e.key==='ArrowLeft') mover(-1); if(e.key==='ArrowRight') mover(1);
   if(e.key===' ' && SES.tomas[lbIdx].reforzada){ e.preventDefault(); lbVer = lbVer==='final'?'bruto':'final'; pintarLb(); }
 });
@@ -907,7 +989,10 @@ function pintarPersonajes(){
       <div class="pj-meta">${p.cara ? `<img class="cara" src="${mini(p.cara,240)}" alt="">` : ''}
         <div class="pj-n"><b>${esc(p.nombre || 'Character ' + (PERS.indexOf(p)+1))} <span class="ren" role="button" tabindex="0" data-id="${p.id}" title="Rename" aria-label="Rename">✎</span><span class="del" role="button" tabindex="0" data-id="${p.id}" title="Delete this character and all its shoots" aria-label="Delete character">🗑</span></b>
         <span>${p.fotos} photos · ${p.sesiones} shoot${p.sesiones===1?'':'s'}${p.mejoradas?` · ${p.mejoradas} enhanced`:''}</span></div></div>
-      ${p.descripcion ? `<p>${esc(p.descripcion.replace(/^The subject is /i,''))}</p>` : ''}</button>`).join('');
+      ${p.descripcion ? `<p>${esc(p.descripcion.replace(/^The subject is /i,''))}</p>` : ''}
+      <span class="btn ghost nuevo" role="button" tabindex="0" data-id="${p.id}">＋ New shoot</span></button>`).join('');
+  document.querySelectorAll('.pj .nuevo').forEach(r => { const go = e => { e.stopPropagation(); e.preventDefault(); nuevaDesde(r.dataset.id); };
+    r.onclick = go; r.onkeydown = e => { if(e.key==='Enter'||e.key===' ') go(e); }; });
   document.querySelectorAll('.pj .ren').forEach(r => { const go = async e => { e.stopPropagation(); e.preventDefault();
       const p = PERS.find(x => x.id === r.dataset.id); const n = await dialogo({titulo:'Name this character', valor:p.nombre || '', ok:'Save'});
       if (n === null) return; await api(`/api/personaje/${p.id}/nombre`, {nombre:n}); p.nombre = n.trim(); pintarPersonajes(); };
@@ -921,10 +1006,10 @@ function pintarPersonajes(){
         deshacer(`${nom} deleted.`, async () => { await api('/api/personaje/restaurar', {sesiones: r2.sesiones}); await abrirGaleria(); toast(`${nom} restored.`); });
       }catch(err){ toast('Could not delete: ' + err.message); } };
     r.onclick = go; r.onkeydown = e => { if(e.key==='Enter'||e.key===' ') go(e); }; });
-  document.querySelectorAll('.pj').forEach(b => b.onclick = () => { galPers = b.dataset.id; galFiltro='all'; $('#galGrid').className='gal'; pintarGaleria(); window.scrollTo({top:0}); });
+  document.querySelectorAll('.pj').forEach(b => b.onclick = () => { historial('pj'); galPers = b.dataset.id; galFiltro='all'; $('#galGrid').className='gal'; pintarGaleria(); window.scrollTo({top:0}); });
 }
 $('#btnGal').onclick = () => { galPers = null; abrirGaleria(); };
-$('#galVolver').onclick = () => { if (galPers){ galPers = null; pintarGaleria(); window.scrollTo({top:0}); return; } $('#galeria').hidden = true; if (SES && SES.fase !== 'nueva') abrirEstudio(); else { $('#home').hidden = false; pintarHome(); } };
+$('#galVolver').onclick = () => { if (galPers){ if (history.state && history.state.capa === 'pj') { history.back(); return; } galPers = null; pintarGaleria(); window.scrollTo({top:0}); return; } $('#galeria').hidden = true; if (SES && SES.fase !== 'nueva') abrirEstudio(); else { $('#home').hidden = false; pintarHome(); } };
 
 // ---------------------------------------------------------------- sessions
 $('#btnMis').onclick = async () => {
@@ -933,11 +1018,12 @@ $('#btnMis').onclick = async () => {
   $('#sheetList').innerHTML = L.length ? L.map(s => `<div class="srow2"><div><b>${new Date(s.creada*1000).toLocaleString()}</b><div class="hint">${nom[s.fase]||s.fase}${s.n?` · ${s.listas}/${s.n} photos`:''}</div></div>
     <button class="btn" data-id="${s.id}">Open</button></div>`).join('') : '<p class="hint">No shoots yet.</p>';
   $('#sheetList').querySelectorAll('button').forEach(b => b.onclick = () => { $('#sheet').classList.remove('on'); abrirSesion(b.dataset.id); });
-  $('#sheet').classList.add('on');
+  $('#sheet').classList.add('on'); historial('sheet');
 };
-$('#sheetX').onclick = () => $('#sheet').classList.remove('on');
+$('#sheetX').onclick = () => { $('#sheet').classList.remove('on'); if (history.state && history.state.capa === 'sheet') history.back(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#sheet').classList.contains('on') && !$('#dlg').classList.contains('on')) $('#sheetX').onclick(); });
 $('#sheet').onclick = e => { if(e.target.id==='sheet') $('#sheet').classList.remove('on'); };
-$('#btnNueva').onclick = () => { $('#galeria').hidden = true; SES=null; E={fuente:'libreria', genero:E.genero||'f', paquete:null}; clearInterval(timer);
+$('#btnNueva').onclick = () => { $('#galeria').hidden = true; SES=null; GUARDADOS=null; E={fuente:'libreria', genero:E.genero||'f', paquete:null}; clearInterval(timer);
   location.hash=''; try{localStorage.setItem('pb_last','');}catch(e){} $('#studio').hidden=true; $('#home').hidden=false; pintarHome(); };
 $('#btnTema').onclick = () => { const r=document.documentElement; const dark = r.dataset.theme === 'dark';
   r.dataset.theme = dark ? 'light' : 'dark'; try{localStorage.setItem('pb_theme', r.dataset.theme);}catch(e){} };

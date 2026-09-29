@@ -89,7 +89,8 @@ def generar(destino: str, *, prompt: str, personas=(), pose_lib: str | None = No
             pose: str | None = None, tipo_pose: str = "openpose",
             ratio: str = "3:4", megapixeles: float = 1.0, steps: int = 28,
             seed: int = 0, cfg: float = 1.0, negativo: str = "",
-            describir_escena: bool = False, escena=None) -> dict:
+            describir_escena: bool = False, escena=None, lora: str | None = None,
+            fuerza_lora: float = 1.0) -> dict:
     cuerpo = dict(BASE, prompt=prompt, ratio=ratio, megapixeles=megapixeles,
                   steps=steps, seed=seed, cfg=cfg, negativo=negativo,
                   personas=[data_url(p, 1600) for p in personas],
@@ -101,6 +102,9 @@ def generar(destino: str, *, prompt: str, personas=(), pose_lib: str | None = No
         cuerpo["pose_lib"] = pose_lib
     if escena is not None:
         cuerpo["escena"] = data_url(escena, 1600)
+    if lora:
+        # a LoRA file in QwenStudio's loras/ folder (e.g. a client's likeness LoRA)
+        cuerpo["lora"], cuerpo["fuerza_lora"] = lora, fuerza_lora
     enfriar()
     t0 = time.time()
     d = _post("/api/generar", cuerpo)
@@ -123,6 +127,43 @@ def editar(destino: str, *, imagen, prompt: str, referencias=(), steps: int = 28
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "prompt": d.get("prompt", ""),
             "segundos": round(time.time() - t0, 1)}
+
+
+# BFS head swap (Alissonerdx/BFS-Best-Face-Swap, head v1.1 for Qwen-Image 2.1), converted
+# with herramientas/convertir_lora_qwen21.py. Its prompt is the authors' own, sent verbatim:
+# the LoRA was trained on that sentence (docs/DECISIONS.md, exp48-52).
+BFS_LORA = "bfs_head_v1.1_qwen_2.1_fix.safetensors"
+BFS_PROMPT = ("head_swap: start with <image1> as the base image, keeping its lighting, environment, and "
+              "background. remove the head from <image1> completely and replace it with the head from "
+              "<image2>, strictly preserving the hair, eye color, nose structure from <image2>. copy the "
+              "direction of the eye, head rotation, micro expressions from <image1>, high quality, sharp "
+              "details, 4k")
+
+
+def _a_mp(ruta, mp: float = 0.59):
+    """The reference at ~0.59 MP, aspect kept: the authors measured that a reference as big as
+    the scene starts to override it."""
+    from PIL import Image
+    im = Image.open(ruta).convert("RGB")
+    e = (mp * 1e6 / (im.width * im.height)) ** 0.5
+    return im.resize((max(32, round(im.width * e / 32) * 32), max(32, round(im.height * e / 32) * 32)),
+                     Image.LANCZOS)
+
+
+def cambiar_cabeza(destino: str, escena: str, cara: str, *, steps: int = 40, seed: int = 1234,
+                   lora_extra: str | None = None, fuerza_extra: float = 0.25) -> dict:
+    """Put the client's head (from their close-up) on the person in `escena`, keeping the scene,
+    pose, outfit and expression. `lora_extra`: the client's likeness LoRA, mounted together."""
+    cuerpo = dict(BASE, imagen=data_url(escena), referencias=[data_url(_a_mp(cara))], prompt=BFS_PROMPT,
+                  crudo=True, lora=BFS_LORA, fuerza_lora=1.0, steps=steps, seed=seed)
+    if lora_extra:
+        cuerpo["loras_extra"] = [{"lora": lora_extra, "fuerza": fuerza_extra}]
+    enfriar()
+    t0 = time.time()
+    d = _post("/api/editar", cuerpo)
+    img = d["imagenes"][0]
+    bajar(img["archivo"], destino)
+    return {"archivo": destino, "tam": img["tam"], "segundos": round(time.time() - t0, 1)}
 
 
 def describir(imagen, pregunta: str, max_tokens: int = 160) -> str:
@@ -188,6 +229,14 @@ def reescalar(destino: str, *, imagen, objetivo: int = 1331, seed: int = 0, step
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "segundos": round(time.time() - t0, 1)}
+
+
+def loras() -> list[str]:
+    """The LoRA files QwenStudio can mount (its loras/ folder)."""
+    try:
+        return _get("/api/loras", timeout=10)
+    except Exception:
+        return []
 
 
 def cancelar() -> None:

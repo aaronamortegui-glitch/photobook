@@ -36,12 +36,19 @@ def responde(url: str) -> bool:
         return False
 
 
-def arrancar_qwen(carpeta: str) -> None:
-    if os.name == "nt":
-        bat = os.path.join(carpeta, "RUN.bat")
-        subprocess.Popen(["cmd", "/c", "start", "", bat], cwd=carpeta)
-    else:
-        subprocess.Popen(["bash", os.path.join(carpeta, "run.command")], cwd=carpeta)
+def arrancar_qwen(carpeta: str):
+    """Start QwenStudio as Photobook's engine: in the background, with no window of its
+    own and no console (the user: "Photobook should be its own thing"). Its output goes
+    to logs/qwenstudio.log. Returns the process, so it is closed with Photobook."""
+    py = os.path.join(carpeta, ".venv", "Scripts" if os.name == "nt" else "bin",
+                      "python.exe" if os.name == "nt" else "python")
+    os.makedirs(os.path.join(RAIZ, "logs"), exist_ok=True)
+    log = open(os.path.join(RAIZ, "logs", "qwenstudio.log"), "a", encoding="utf-8", errors="replace")
+    env = dict(os.environ, QWENSTUDIO_HEADLESS="1", PYTHONUTF8="1",
+               PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
+    kw = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)} if os.name == "nt" else {}
+    return subprocess.Popen([py, "-m", "qwenstudio.app"], cwd=carpeta, env=env,
+                            stdout=log, stderr=subprocess.STDOUT, **kw)
 
 
 def main() -> None:
@@ -54,8 +61,10 @@ def main() -> None:
     if not responde(url):
         carpeta = cfg.get("qwenstudio")
         if carpeta and os.path.isdir(carpeta):
-            print(f"  Starting QwenStudio ({carpeta})...", flush=True)
-            arrancar_qwen(carpeta)
+            print(f"  Starting the image engine (QwenStudio, in the background)...", flush=True)
+            proc = arrancar_qwen(carpeta)
+            import atexit      # started by us: closed with us
+            atexit.register(lambda: proc.poll() is None and proc.terminate())
             t0 = time.time()
             while not responde(url) and time.time() - t0 < 600:
                 time.sleep(3)

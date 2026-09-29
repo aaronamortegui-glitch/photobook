@@ -138,7 +138,7 @@ class Manejador(BaseHTTPRequestHandler):
         b = json.loads(self.rfile.read(n).decode() or "{}") if n else {}
         try:
             if p == "/api/sesion":
-                return self._send(200, _publico(S.nueva()))
+                return self._send(200, _publico(S.nueva(desde=b.get("desde"))))
             if p == "/api/personaje/restaurar":
                 return self._send(200, S.restaurar_personaje(b.get("sesiones", [])))
             if p.startswith("/api/personaje/") and p.endswith("/borrar"):
@@ -151,7 +151,8 @@ class Manejador(BaseHTTPRequestHandler):
                 if accion == "hoja":
                     return self._send(200, _publico(S.guardar_hoja(sid, _img(b["imagen"]))))
                 if accion == "perfil":
-                    return self._send(200, _publico(S.perfil(sid, b.get("nombre"), b.get("descripcion"))))
+                    return self._send(200, _publico(S.perfil(sid, b.get("nombre"), b.get("descripcion"),
+                                                                    lora=b.get("lora"), trigger=b.get("trigger"))))
                 if accion == "describir":
                     return self._send(200, _publico(S.pedir_descripcion(sid)))
                 if accion == "escena":

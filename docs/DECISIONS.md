@@ -283,3 +283,203 @@ still needs ComfyUI's Python via `PHOTOBOOK_COMFY_PY`.
 
 ~170 s to compose a shot at 1.5K / 40 steps, ~180 s for a face pass. A 30-photo
 shoot is roughly 2–2.5 hours depending on how many faces need the pass.
+
+---
+
+## Likeness of a real person: which input (2026-09-27, pruebas/exp40–42)
+
+The worry: avatars came out right, real people did not. Tested with a real person (a consenting
+volunteer; her photos and the results stay on this machine, never in the repository)
+on six realistic travel shots (Paris, Alps: close-up, half, full length), skeleton control,
+same seeds, one description of her. **Likeness = mean ArcFace similarity against 11 distinct
+photos of her that are never used as input.** Every row was also looked at: the comparison
+comparison sheets (kept locally in `pruebas/`, with the photos) are the
+evidence, the numbers only sort them.
+
+A trap worth remembering: her folders held the same photos twice under different names, and
+the first yardstick contained copies of two input photos -- which inflated exactly those
+inputs (0.61 for one of them). The yardstick was rebuilt from de-duplicated photos (32 files
+→ 20 distinct) and everything re-scored; no image was regenerated. **Always de-duplicate a
+client's photos before scoring against them.**
+
+### 1 · What goes in (exp40)
+
+| Input (person references) | likeness |
+|---|---|
+| **F2 — one close-up only** | **0.50** |
+| F6 — three separate references: two close-ups + full body | 0.42 (one shot came back with **two women**) |
+| F5 — a collage: four real face photos (2x2) + full body, in one image | 0.41 |
+| F1 — the app's sheet: close-up + full body (the default until now) | 0.41 |
+| F3 — the sheet with a very tight close-up | 0.34 |
+| F4 — the sheet + a second close-up as another reference | 0.34 |
+
+One clean close-up beats every combination. Each extra reference — a body photo, a second
+face — dilutes the face, and with several images of the person the model may draw her twice.
+Her build still comes through without a body photo: the description ("curvy, full-figured
+build") carries it.
+
+### 2 · What else moves it (exp41, on F2)
+
+| Variant | likeness |
+|---|---|
+| base (1.0 MP, with her description) | 0.50 |
+| without her description | 0.48 |
+| + Enhance (W2) | **0.46** |
+| "1.5 MP" | 0.50 — identical images |
+
+- The description helps a little: keep it.
+- **Enhance hurts a real person**: it re-draws the face harder and more contrasted, a step
+  away from her. A button, never automatic.
+- "1.5 MP" changed nothing because it could not: the skeleton counts as a reference, so
+  person + skeleton are two images and the engine's memory ceiling for two is 1.0 MP.
+
+### 3 · Which close-up to ask for (exp42)
+
+| The one close-up | likeness |
+|---|---|
+| **outdoors, natural daylight, little make-up** | **0.55** |
+| studio, frontal, even light | 0.50 |
+| selfie at arm's length, red lips | 0.47 |
+| very tight, the face filling the frame | 0.32 |
+
+(Without the one yardstick photo from the same outdoor session: 0.52 / 0.50 / 0.46 / 0.31 —
+the order holds.) Make-up and lighting of the reference **carry into every photo**: with the
+selfie and the tight close-up she wears red lips and eye shadow everywhere. A very tight crop
+loses the head's shape and hairline.
+
+### What this suggests (not applied yet — the user decides)
+
+1. Use **one close-up as the only person reference** instead of the 16:9 sheet, and keep the
+   description (it carries hair and build; the body photo can still feed the description).
+2. Ask the client for **a natural-light close-up, head and shoulders, not too tight, little
+   make-up**; the app already crops head-and-shoulders, which is the right framing.
+3. Keep Enhance off by default for real clients.
+
+### 4 · A likeness LoRA (exp43–44) — and a loader bug that hid it
+
+References alone keep the *type* of person (hair colour, skin, build) but not a real face:
+looking at the sheets, none of the faces was really her, whatever the number said. A LoRA of
+the person is the standard answer. The first test of an existing AI-Toolkit LoRA (rank 16,
+2000 steps) looked useless — **alone it scored 0.16** — until the engine log showed why:
+
+> *Loading adapter weights … unexpected keys: transformer_blocks.N.img_mlp.gate_up.lora_A/B*
+
+AI-Toolkit trains Qwen-Image 2.1's image MLP as one fused linear, `img_mlp.gate_up` =
+`[gate_layer; proj]`; diffusers has the two separately, so it **silently dropped every MLP
+adapter of all 32 blocks** and used the attention part only. `herramientas/convertir_lora_qwen21.py`
+splits them (A shared, B's rows halved). Same LoRA, converted:
+
+| | likeness |
+|---|---|
+| the app's sheet (today) | 0.41 |
+| natural close-up, no LoRA | 0.55 |
+| LoRA alone, no photo | 0.16 → **0.46** after the fix |
+| **LoRA + the natural close-up** | 0.51 → **0.59** (step 1000: **0.60**) |
+
+For the first time her fringe and face shape come through. LoRA and reference complement each
+other: the LoRA carries traits one photo cannot, the photo pins the face in each shot. (That
+LoRA was trained on her photos, some of which are in the yardstick: part of the rise may be
+memory — trust the sheets over the number.)
+
+**Every AI-Toolkit LoRA for Qwen-Image 2.1 must be converted before QwenStudio loads it.**
+
+Retraining (v2) with the community's advice for characters: captions that name only what
+changes (clothes, place, pose, framing, light) and never her traits — the old captions tied
+"black hair, bangs, fair skin, red lipstick" to those words instead of the trigger; face
+crops where the face was small; the heavily filtered photo out; rank 32; 3000 steps;
+`timestep_type: weighted`, content-weighted (the v2 config in AI-Toolkit, kept locally).
+
+Result, LoRA + the natural close-up (exp45–46; v2 resumed from 3000 to 4000 without restarting —
+AI-Toolkit reads the step from the file's metadata and reloads `optimizer.pt`):
+
+| v2 step | 1000 | 1500 | 2000 | 2500 | 3000 | 3500 | 4000 |
+|---|---|---|---|---|---|---|---|
+| likeness | 0.47 | 0.50 | 0.52 | 0.52 | 0.54 | **0.55** | 0.53 |
+
+v2 peaks around 3500 and never reaches v1 (0.60 at step 1000); alone it scores 0.39 against v1's
+0.46. On the sheets v2 always gets her fringe, but the face comes out rounder and softer; v1 is
+still the closest. The "best practice" retrain was worse.
+
+### 5 · Why v2 lost — read from what was run, no new tests yet
+
+What actually differed between the two runs (both adamw8bit, LR 1e-4, batch 1, alpha = rank so
+the LoRA scale is 1.0 in both — the learning rate was *not* what changed):
+
+| | v1 | v2 |
+|---|---|---|
+| rank / alpha | 16 / 16 | 32 / 32 |
+| captions | describe her traits | trait-free (trigger only) |
+| dataset | 33 originals | 32 originals + 8 upscaled face crops |
+| timesteps | shift | weighted |
+| best step | 1000 (of 2000) | 3500 (of 4000) |
+
+- **Learning rate.** 1e-4 is the published default for Qwen character LoRAs; the usual advice is
+  to drop to 5e-5 when the face "morphs" or averages out — which is what v2's rounder, softer
+  face looks like. Those guides also pair rank 32 with alpha 16 (scale 0.5), i.e. half the
+  effective step we used at rank 32. v1 peaking at 1000 and staying flat to 2000 also says 1e-4
+  is on the fast side for one person. A slower LR is the most likely single gain.
+- **Captions.** The trait-free rule is the community standard, but here the descriptive captions
+  won. Plausibly because with ~20 distinct photos the words gave the model anchors, and the
+  reference photo in the pipeline already carries the face.
+- **Face crops.** Upscaled from small faces: they teach a smoother, lower-detail face — consistent
+  with the softness.
+- **Rank 32 + weighted timesteps** make each step move more of the model: slower to converge,
+  more room to drift into an average face.
+- **Methods (Prodigy, LoKr, DOP/differential guidance).** No published side-by-side for real
+  people on Qwen-Image was found; only anecdotes. Nothing to adopt from evidence.
+- Caveat on all of it: the yardstick gallery overlaps both training sets.
+
+If a v3 is tried: v1's photos and captions (no crops), rank 16–32 with alpha half the rank,
+LR 5e-5, `timestep_type: shift`, 3000 steps saved every 500 — one variable family, compared on
+the same 6 shots.
+
+## Saved people (2026-09-28)
+
+A character is the hash of its close-up (`_personaje`); its profile in `sesiones/_personajes.json`
+now also holds `lora` and `trigger`. *New shoot* from a saved person copies the photos and sheet
+of that person's latest session into a new one — the originals are never shared between
+sessions, so deleting one shoot cannot break another. With a LoRA set, `_procesar` swaps the
+reference from the sheet to the close-up alone and adds the trigger word to the recipe and the
+description (exp43–46); without one nothing changes. A LoRA file that disappears from `loras/`
+falls back to the photos-only path instead of failing the shoot.
+
+## BFS face / body swap as a second pass (exp48, 2026-09-28) — test only, not in the app
+
+[BFS](https://huggingface.co/Alissonerdx/BFS-Best-Face-Swap) LoRAs for Qwen-Image 2.1, run over the
+app's output today (sheet, no LoRA) through QwenStudio `/api/editar` with `crudo=True` and the
+authors' exact prompts. Both files ship with the fused `img_mlp.gate_up` and need the converter.
+
+| | likeness |
+|---|---|
+| app today | 0.41 |
+| + BFS head v1.1 (scene + natural close-up) | **0.59** |
+| + BFS body v1.0 (scene + full-body photo at 0.59 MP) | 0.54 |
+| LoRA v1 + photo (needs training) | 0.60 |
+
+The head swap matches the trained LoRA with no training, and keeps the scene, outfit and pose
+exactly; the user judged it closer on sight. It swaps the whole head, so headwear goes (the
+beanie in alpes_f_04 disappeared). The body swap is not usable for us: it carries the
+reference's clothes, and in two of six it pasted the reference photo's room in whole.
+
+## BFS in every shoot; the likeness LoRA optional (2026-09-28, the user's call)
+
+After exp48–52 the user decided: **the BFS head swap always runs**, right after each photo is
+composed (`CALIDAD["bfs"]`, `servicio._procesar` → `motor_qwen.cambiar_cabeza`), with the client's
+close-up as `<image2>` at ~0.59 MP and the authors' prompt verbatim. The composed photo stays as
+"Before"; Enhance starts from the swapped one. If the BFS file is missing from QwenStudio's
+`loras/`, shoots run as before. A likeness LoRA stays optional, per profile, and is used while
+composing at **0.25** (`lora_escena`; exp50: 0.25–0.5 all reach ~0.60 alone and ~0.65 with BFS, and
+the lower weight keeps the scene closest to the no-LoRA one).
+
+Two LoRAs at once works (QwenStudio `loras_extra`, exp52: BFS 1.0 + the likeness LoRA in the same
+swap) but did not beat BFS alone — café 0.65→0.67, 80s 0.45→0.42/0.44, comic 0.66→0.64/0.62. The user judged on sight that it
+helps, so `lora_en_bfs` is 0.25 for characters with a likeness LoRA.
+
+A body that came out too full was the description's doing: the AI one said "curvy, full-figured",
+and the profile's "1.61, 65 kg" reads the same way — with a LoRA the reference is the close-up only,
+so the build comes from the words. Describe the build in words ("petite and slim"), not numbers.
+
+Six galleries (exp51, LoRA 0.25 + BFS): comic 0.22→0.66 and 3D animated 0.12→0.52 keep their style;
+80s 0.31→0.45, sci-fi 0.53→0.60. Two failures to watch: the abstract-light portrait (BFS dropped
+the rainbow light and pasted the reference photo, straps included — the number rose to 0.73 all
+the same), and far shots (Amalfi, a tiny face: nothing for BFS to work on).

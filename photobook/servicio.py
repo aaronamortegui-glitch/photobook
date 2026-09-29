@@ -19,6 +19,7 @@ from __future__ import annotations
 import json
 import os
 import queue
+import re as _re_mod
 import shutil
 import threading
 import time
@@ -85,6 +86,15 @@ CALIDAD = {
     "pasada_banda": True,
     # Test switch: send every shot through the face pass, not only the weak ones.
     "forzar_cara": False,
+    # 2026-09-28, the user's call after exp48-51: every photo gets the BFS head swap right after
+    # it is composed (the app's shot 0.41 -> 0.59 with no training; comic and 3D keep their
+    # style). The "Before" view keeps the composed one. Skipped only if the LoRA file is missing.
+    "bfs": True,
+    # a character with a likeness LoRA: its strength while composing (the user picked 0.25 on
+    # sight, exp50: lower keeps the scene natural, BFS then does the face) and inside the swap
+    # (0 = BFS alone; both at once is possible, exp52)
+    "lora_escena": 0.35,
+    "lora_en_bfs": 0.4,
 }
 
 # A rest between blocks on top of the per-photo cool-down in motor_qwen.enfriar().
@@ -125,12 +135,28 @@ def mutar(sid: str, f) -> dict:
         return est
 
 
-def nueva() -> dict:
+def nueva(desde: str | None = None) -> dict:
+    """A new session. `desde` = a saved character: its photos, sheet, description and LoRA
+    come along, so a returning client uploads nothing (the user, 2026-09-28)."""
     sid = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
     os.makedirs(_ruta(sid, "entrada"))
     os.makedirs(_ruta(sid, "fotos"))
     est = {"id": sid, "creada": time.time(), "fotos": {}, "chequeo": {},
            "eleccion": None, "fase": "nueva", "tomas": [], "error": ""}
+    if desde:
+        origen = next((s for s in reversed(sesiones_de(desde))
+                       if leer(s).get("fotos", {}).get("hoja")), None)
+        if not origen:
+            raise ValueError("no saved photos for this character")
+        o = leer(origen)
+        for k, f in o["fotos"].items():
+            if os.path.exists(_ruta(origen, f)):
+                shutil.copy2(_ruta(origen, f), _ruta(sid, f))
+                est["fotos"][k] = f
+        p = perfil_de(desde)
+        est.update({"chequeo": o.get("chequeo", {}), "personaje": desde, "perfil": p,
+                    "caption_persona": _pulir(p["descripcion"]) if p["descripcion"] else o.get("caption_persona"),
+                    "perfil_estado": "listo"})
     escribir(sid, est)
     return est
 
@@ -423,7 +449,8 @@ def _nombres() -> dict:
 
 def perfil_de(pid: str) -> dict:
     v = _nombres().get(pid) or {}
-    return {"nombre": v, "descripcion": ""} if isinstance(v, str) else {"nombre": "", "descripcion": ""} | v
+    base = {"nombre": "", "descripcion": "", "lora": "", "trigger": ""}
+    return base | {"nombre": v} if isinstance(v, str) else base | v
 
 
 def guardar_perfil(pid: str, **campos) -> dict:
@@ -432,7 +459,7 @@ def guardar_perfil(pid: str, **campos) -> dict:
         p = perfil_de(pid)
         for k, v in campos.items():
             if v is not None:
-                p[k] = v.strip()[:60 if k == "nombre" else 400]
+                p[k] = v.strip()[:{"nombre": 60, "trigger": 40}.get(k, 400)]
         d[pid] = p
         json.dump(d, open(os.path.join(SESIONES, "_personajes.json"), "w", encoding="utf-8"),
                   indent=1, ensure_ascii=False)
@@ -444,15 +471,49 @@ def nombrar_personaje(pid: str, nombre: str) -> dict:
     return {"ok": True}
 
 
-def perfil(sid: str, nombre: str | None = None, descripcion: str | None = None) -> dict:
+def perfil(sid: str, nombre: str | None = None, descripcion: str | None = None,
+           lora: str | None = None, trigger: str | None = None) -> dict:
     """The client's profile for this session: a name and the one-line description that
     goes after every prompt. Kept per character, so the same sheet comes back filled in.
-    An edited description replaces the LLM's for this session."""
+    An edited description replaces the LLM's for this session. A likeness LoRA (and its
+    trigger word) is set here once and used by every shoot of the character."""
     pid = _personaje(sid, leer(sid))
-    p = guardar_perfil(pid, nombre=nombre, descripcion=descripcion)
+    p = guardar_perfil(pid, nombre=nombre, descripcion=descripcion, lora=lora, trigger=trigger)
     if descripcion is not None:
         mutar(sid, lambda e: e.update({"caption_persona": _pulir(descripcion), "perfil_estado": "listo"}))
+        if descripcion.strip() and not _parece_ingles(descripcion):
+            # written in another language (the user: "whatever language I write it in, put
+            # it in English"): translated locally by Qwen, between two photos if one is running
+            mutar(sid, lambda e: e.update({"perfil_estado": "traduciendo"}))
+            _urgentes.put(("traducir", sid, descripcion))
+            _cola.put(("despertar",))
     return mutar(sid, lambda e: e.update({"perfil": p}))
+
+
+_NO_INGLES = _re_mod.compile(r"[áéíóúñüàèìòùâêîôûãõçäöß¿¡]|\b(el|la|los|las|una|un|con|pelo|cabello|es|y|de|del|"
+                             r"que|muy|cara|ojos|piel|ella|cheveux|avec|une|cabelo|olhos|pele|haar|und|mit)\b", _re_mod.I)
+
+
+def _parece_ingles(txt: str) -> bool:
+    return not _NO_INGLES.search(txt)
+
+
+PREGUNTA_TRADUCIR = ("Translate this description of a person into natural English for an image generator. "
+                     "Keep every detail (hair, face, skin, body, age). Reply with the English text only, as "
+                     "one sentence starting with 'The subject is'.\n\nText: {texto}")
+
+
+def _traducir(sid: str, texto: str) -> None:
+    est = leer(sid)
+    img = _ruta(sid, est["fotos"].get("hoja") or est["fotos"]["cara"])   # the model needs an image
+    en = " ".join(Q.describir(img, PREGUNTA_TRADUCIR.format(texto=texto), max_tokens=200).split())
+    Q.liberar_vision()
+    en = _pulir(en.strip('"'))
+    if leer(sid).get("caption_persona") != _pulir(texto):
+        return                         # the client edited it again meanwhile: theirs wins
+    guardar_perfil(_personaje(sid, est), descripcion=en)
+    mutar(sid, lambda e: e.update({"caption_persona": en, "perfil_estado": "listo",
+                                   "perfil": perfil_de(_personaje(sid, e)), "traducido_de": texto}))
 
 
 def pedir_descripcion(sid: str) -> dict:
@@ -469,6 +530,13 @@ def _atender_urgentes() -> None:
             sid = _urgentes.get_nowait()
         except queue.Empty:
             return
+        if isinstance(sid, tuple):         # ("traducir", sid, text)
+            try:
+                _traducir(sid[1], sid[2])
+            except Exception as ex:
+                print("[photobook] translate failed:", ex, flush=True)
+                _mutar_seguro(sid[1], {"perfil_estado": "listo"})
+            continue
         try:
             txt = _caption_persona(sid)
             guardar_perfil(_personaje(sid, leer(sid)), descripcion=txt)
@@ -549,6 +617,7 @@ def personajes() -> list[dict]:
         c["sesiones"] = len(c["sesiones"])
         c["nombre"] = perfil_de(c["id"])["nombre"]
         c["descripcion"] = perfil_de(c["id"])["descripcion"] or c["descripcion"]
+        c["lora"] = perfil_de(c["id"])["lora"]
         out.append(c)
     return sorted(out, key=lambda c: -c["fecha"])
 
@@ -746,7 +815,35 @@ def _procesar(sid: str) -> None:
         mutar(sid, f)
 
     caption = _caption_persona(sid) if CALIDAD["caption_persona"] else ""
-    mutar(sid, lambda e: e.update({"fase": "trabajando"}))
+    # a character with a likeness LoRA: the LoRA + the natural close-up alone + its trigger
+    # word, the best formula measured (docs/DECISIONS.md, exp43-46: 0.60 against the
+    # sheet's 0.41). Without one, the sheet as before.
+    pf = perfil_de(_personaje(sid, leer(sid)))
+    lora = pf["lora"] if pf["lora"] in Q.loras() else None
+    trig = pf["trigger"] if lora else ""
+    refs = [cara] if lora else [hoja]
+    if trig and caption:
+        caption = caption.replace("The subject is", f"The subject is {trig},", 1)
+    usar_bfs = CALIDAD["bfs"] and Q.BFS_LORA in Q.loras()
+
+    def cabeza(n, seed):
+        """The BFS head swap over the composed shot. A failure keeps the composed photo."""
+        if sid in _cancelar:
+            raise InterruptedError
+        mutar(sid, lambda e: _toma(e, n).update({"estado": "cabeza"}))
+        try:
+            rb = Q.cambiar_cabeza(_ruta(sid, "fotos", f"{n:02d}_bfs.png"), _ruta(sid, "fotos", f"{n:02d}_raw.png"),
+                                  cara, seed=seed, lora_extra=lora if CALIDAD["lora_en_bfs"] else None,
+                                  fuerza_extra=CALIDAD["lora_en_bfs"])
+            mutar(sid, lambda e: _toma(e, n).update({
+                "estado": "compuesta", "final": f"fotos/{n:02d}_bfs.png", "cabeza": True,
+                "s_cabeza": rb["segundos"], "tam": rb["tam"]}))
+        except Exception as ex:
+            if sid in _cancelar:
+                raise InterruptedError
+            mutar(sid, lambda e: _toma(e, n).update({"estado": "compuesta",
+                                                      "nota": f"head swap failed: {str(ex)[:200]}"}))
+    mutar(sid, lambda e: e.update({"fase": "trabajando", "lora_usado": lora, "bfs": usar_bfs}))
     ns = [t["n"] for t in leer(sid)["tomas"] if t["estado"] not in ("lista", "borrada")]
     # the first block is short so the client sees finished photos in minutes
     bloques = [ns[:2]] + [ns[i:i + BLOQUE] for i in range(2, len(ns), BLOQUE)] if ns else []
@@ -763,6 +860,8 @@ def _procesar(sid: str) -> None:
             if t.get("bruto") and os.path.exists(_ruta(sid, t["bruto"])):
                 # resumed after a restart: composed already, redo what follows
                 mutar(sid, lambda e: _toma(e, n).update({"estado": "compuesta"}))
+                if usar_bfs and not t.get("cabeza"):
+                    cabeza(n, t["seed"])
                 continue
             mutar(sid, lambda e: _toma(e, n).update({"estado": "componiendo", "t0": time.time()}))
             dest = _ruta(sid, "fotos", f"{n:02d}_raw.png")
@@ -774,7 +873,10 @@ def _procesar(sid: str) -> None:
                     esq = os.path.join(T.CATALOGO, "poses", t["pose"] + ".png")
                 else:
                     esq = None
-                prompt = (_sin_pelo(t["prompt"]).rstrip() + " " + caption).strip()
+                receta = _sin_pelo(t["prompt"]).rstrip()
+                if trig:
+                    receta = f"{trig}. " + receta.replace("the subject", f"{trig}, the subject", 1)
+                prompt = (receta + " " + caption).strip()
                 if t.get("esqueleto"):
                     # the sheet shows the client twice (close-up + full body); a package shot
                     # once came back with both (manga, pruebas/exp29)
@@ -784,7 +886,8 @@ def _procesar(sid: str) -> None:
                     # hair and the body are the client's own (a client got the sample's bob)
                     prompt += (" She keeps her own hair exactly -- its colour, length and style -- and her "
                                "own face, figure and build; nothing of the sample model's hair or body.")
-                r = Q.generar(dest, prompt=prompt, personas=[hoja], pose=esq,
+                r = Q.generar(dest, prompt=prompt, personas=refs, pose=esq, lora=lora,
+                              fuerza_lora=CALIDAD["lora_escena"],
                               tipo_pose=t.get("tipo_control", "openpose") if esq else "openpose",
                               ratio=t["ratio"], steps=CALIDAD["pasos"], seed=t["seed"],
                               megapixeles=CALIDAD["mp_esqueleto"] if esq else CALIDAD["mp_texto"])
@@ -792,6 +895,8 @@ def _procesar(sid: str) -> None:
                     "estado": "compuesta", "bruto": f"fotos/{n:02d}_raw.png",
                     "final": f"fotos/{n:02d}_raw.png", "s_componer": r["segundos"],
                     "tam": r["tam"]}))
+                if usar_bfs:
+                    cabeza(n, t["seed"])
             except Exception as ex:
                 # aborted by Stop: not a failure
                 est_ = "cancelada" if sid in _cancelar else "fallida"
@@ -802,7 +907,7 @@ def _procesar(sid: str) -> None:
         if not hechas:
             continue
         try:
-            sc0 = C.identidad([cara], [_ruta(sid, x["bruto"]) for x in hechas])
+            sc0 = C.identidad([cara], sorted({_ruta(sid, x[c]) for x in hechas for c in ("bruto", "final")}))
         except Exception:
             sc0 = {}
 
@@ -810,7 +915,11 @@ def _procesar(sid: str) -> None:
             for x in hechas:
                 t = _toma(e, x["n"])
                 t["id_bruto"] = sc0.get(os.path.normcase(os.path.abspath(_ruta(sid, x["bruto"]))))
-                if not CALIDAD["cara_auto"] and not CALIDAD["forzar_cara"]:
+                if t.get("cabeza"):
+                    # the head swap is the face pass: finished
+                    t.update({"estado": "lista", "t1": time.time(),
+                              "id_final": sc0.get(os.path.normcase(os.path.abspath(_ruta(sid, x["final"]))))})
+                elif not CALIDAD["cara_auto"] and not CALIDAD["forzar_cara"]:
                     t.update({"estado": "lista", "id_final": t["id_bruto"], "t1": time.time()})
                 elif (not CALIDAD["forzar_cara"] and t["id_bruto"] is not None
                         and t["id_bruto"] >= YA_PARECIDO):
@@ -916,7 +1025,7 @@ def _mejorar(sid: str, n: int) -> None:
     est = leer(sid)
     t = _toma(est, n)
     cara = _ruta(sid, est["fotos"]["cara"])
-    src = _ruta(sid, t["bruto"])
+    src = _ruta(sid, f"fotos/{n:02d}_bfs.png" if t.get("cabeza") else t["bruto"])
     mutar(sid, lambda e: _toma(e, n).update({"estado": "mejorando"}))
     t0 = time.time()
     paso1 = _ruta(sid, "fotos", f"{n:02d}_id.png")
@@ -936,7 +1045,7 @@ def _parar_pendientes(sid):
     """After Stop, the shots never started read "Stopped", not "Waiting"."""
     def f(e):
         for t in e.get("tomas", []):
-            if t.get("estado") in ("pendiente", "componiendo", "compuesta"):
+            if t.get("estado") in ("pendiente", "componiendo", "cabeza", "compuesta"):
                 t["estado"] = "cancelada"
     try:
         mutar(sid, f)

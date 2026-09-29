@@ -19,7 +19,7 @@ import os
 from PIL import Image, ImageOps
 
 LADO_MAX = 2048
-ANCHOS = (240, 480, 960)          # the only thumbnail widths served: bounded cache
+ANCHOS = (240, 480, 960, 1600)   # 1600: the photo viewer, shown before the full PNG
 
 
 def normalizar(img: Image.Image, lado_max: int = LADO_MAX) -> Image.Image:

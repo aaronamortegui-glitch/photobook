@@ -8,6 +8,8 @@ created (.venv, Python 3.12 fetched by uv -- nothing on the system is touched).
   3. downloads the models: ArcFace buffalo_l (likeness score, face landmarks) and the
      two DWPose .onnx files (skeletons of your own scene photos)
   4. finds QwenStudio and writes config.json
+  5. puts the BFS head-swap LoRA in QwenStudio's loras/ (downloaded once, converted so
+     diffusers loads all of it) -- every photo's face goes through it
 """
 from __future__ import annotations
 
@@ -23,6 +25,30 @@ APP = os.path.dirname(os.path.abspath(__file__))
 UV = os.path.join(APP, ".uv", "uv.exe" if os.name == "nt" else "uv")
 BUFFALO = "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_l.zip"
 BUFFALO_ARCHIVOS = ("det_10g.onnx", "w600k_r50.onnx")
+
+
+BFS_URL = ("https://huggingface.co/Alissonerdx/BFS-Best-Face-Swap/resolve/main/"
+           "bfs_head_v1.1_qwen_2.1.safetensors")
+
+
+def bfs(q: str) -> None:
+    """Download BFS head v1.1 (MIT, Alissonerdx) into QwenStudio and convert it with
+    QwenStudio's own Python (the converter needs torch, which Photobook does not install)."""
+    d = os.path.join(q, "loras")
+    dst = os.path.join(d, "bfs_head_v1.1_qwen_2.1_fix.safetensors")
+    if os.path.exists(dst):
+        print("  BFS head swap: already here", flush=True)
+        return
+    os.makedirs(d, exist_ok=True)
+    src = os.path.join(d, "bfs_head_v1.1_qwen_2.1.safetensors")
+    if not os.path.exists(src):
+        print("  downloading BFS head swap (~260 MB)...", flush=True)
+        urllib.request.urlretrieve(BFS_URL, src + ".part")
+        os.replace(src + ".part", src)
+    py = os.path.join(q, ".venv", "Scripts" if os.name == "nt" else "bin",
+                      "python.exe" if os.name == "nt" else "python")
+    subprocess.run([py, os.path.join(APP, "herramientas", "convertir_lora_qwen21.py"), src, dst], check=True)
+    print("  BFS head swap: ready", flush=True)
 
 
 def pip(*args: str) -> None:
@@ -70,14 +96,14 @@ def buscar_qwenstudio() -> str | None:
 
 
 def main() -> None:
-    print("\n[1/4] Dependencies", flush=True)
+    print("\n[1/5] Dependencies", flush=True)
     pip("-r", os.path.join(APP, "requirements.txt"))
-    print("\n[2/4] DWPose (without torch)", flush=True)
+    print("\n[2/5] DWPose (without torch)", flush=True)
     pip("--no-deps", "easy-dwpose==1.0.2")
-    print("\n[3/4] Models", flush=True)
+    print("\n[3/5] Models", flush=True)
     buffalo()
     dwpose()
-    print("\n[4/4] QwenStudio", flush=True)
+    print("\n[4/5] QwenStudio", flush=True)
     f = os.path.join(APP, "config.json")
     cfg = json.load(open(f, encoding="utf-8")) if os.path.exists(f) else {}
     q = cfg.get("qwenstudio") or buscar_qwenstudio()
@@ -93,6 +119,12 @@ def main() -> None:
                 "puerto": cfg.get("puerto", 7870)})
     json.dump(cfg, open(f, "w", encoding="utf-8"), indent=1)
     print(f"  QwenStudio: {q or 'not found -- start it yourself before Photobook'}", flush=True)
+    if q:
+        print("\n[5/5] Face swap", flush=True)
+        try:
+            bfs(q)
+        except Exception as ex:
+            print(f"  BFS could not be set up ({ex}) -- photos come out without the face swap.", flush=True)
     print("\n  Photobook is installed. Start it with RUN.bat (Windows) or run.command (Mac).", flush=True)
 
 
