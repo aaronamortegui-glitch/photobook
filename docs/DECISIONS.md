@@ -210,9 +210,7 @@ One screen, three things:
    left half when there is no face (a mannequin). "Build the sheet from two photos"
    composes it in the browser.
 2. **Scenes** -- the **Experience library**, split into Women / Men (`genero` in each
-   paquete.json), or **My own images**: drop a folder or photos (up to 30). Own photos are
-   uploaded one by one (`/escena`), then the worker turns them into a private package
-   (`u_<session>`: DWPose skeleton + Qwen3-VL recipe per photo) before composing.
+   paquete.json).
 3. **Generate** -- ~100 s per photo (R3). **Enhance** (W2: identity pass at 1 MP + 2K
    upscale of the whole photo, ~5 min) is per photo, from the viewer.
 

@@ -22,11 +22,7 @@ same place, same light, same moment, your face and your build.</p>
    *Alpine adventure*; conceptual ones — *Abstract art portraits*, *Sci-fi 2089*, *Back to the
    80s*; or illustrated ones — *Comic book hero*, *Manga summer*, *Pixel quest*, *3D animated day*.
    Each comes in a women's and a men's version.
-   A package can be marked 18+ (`"adulto": true`): the page then asks the client to confirm the
-   photos are of themselves and that they are 18 or older (the server refuses without it), and
-   its photos show blurred in the gallery until opened. Preview every photo and
-   leave out the ones you don't want. Or **bring your own photos** of any situation: drop a
-   folder and you are put in each one.
+   Preview every photo and leave out the ones you don't want.
 4. **Generate.** Every photo is regenerated with you in it (not a face swap): the sample's
    pose and moment, the place and light, your identity. Finished photos appear as they land.
 5. **Enhance** any photo you love (a second identity pass + 2K upscale), mark favourites,
@@ -114,7 +110,7 @@ engine it started. The pill at the top says *Studio ready* when the engine answe
 | Two photos | *1 · Character sheet* | Face: even light, eyes visible, nothing covering it. Body: head to feet, fitted clothes. Any size or distance — they are cropped and scaled to the same layout. |
 | Profile | under the sheet | The description is written for you — fix anything wrong, **in any language**: it is translated to English locally (the model reads English best). Describe the person, never the clothes. You can type while the AI one is still being written. |
 | Likeness model | the profile | Shown only as *active* or *not set up*: it is set up behind the scenes (`herramientas/asignar_lora.py`), never chosen by the client. When active, every shoot of that person uses it with the face photo (`docs/DECISIONS.md`). |
-| Scenes | *2 · Scenes* | *Experience library* (Women / Men) or *My own images* (drop a folder, up to 30). Click a sample to preview; the ✓ leaves it out. |
+| Scenes | *2 · Scenes* | *Experience library* (Women / Men). Click a sample to preview; the ✓ leaves it out. |
 | Generate | bottom bar | About 100 s per photo on an RTX 5090. The first two arrive within minutes. |
 | Stop | the shoot's page | Stops **now**: the photo in progress is aborted within seconds, and a restart never resumes a stopped shoot. |
 | Enhance · Favourite · Save · Delete | click a photo | The photo opens at once (a light version first, the full one right after); Esc, × or the back button close it. Enhance is best on full and half-body shots. Deleting goes to a trash with **Undo**. |

@@ -108,6 +108,8 @@ def generar(destino: str, *, prompt: str, personas=(), pose_lib: str | None = No
     enfriar()
     t0 = time.time()
     d = _post("/api/generar", cuerpo)
+    if d.get("cancelado") or not d.get("imagenes"):
+        raise ErrorMotor("stopped")        # Stop was pressed: QwenStudio aborted the photo
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "seed": img["seed"], "tam": img["tam"],
@@ -123,6 +125,8 @@ def editar(destino: str, *, imagen, prompt: str, referencias=(), steps: int = 28
     enfriar()
     t0 = time.time()
     d = _post("/api/editar", cuerpo)
+    if d.get("cancelado") or not d.get("imagenes"):
+        raise ErrorMotor("stopped")        # Stop was pressed: QwenStudio aborted the photo
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "prompt": d.get("prompt", ""),
@@ -161,6 +165,8 @@ def cambiar_cabeza(destino: str, escena: str, cara: str, *, steps: int = 40, see
     enfriar()
     t0 = time.time()
     d = _post("/api/editar", cuerpo)
+    if d.get("cancelado") or not d.get("imagenes"):
+        raise ErrorMotor("stopped")        # Stop was pressed: QwenStudio aborted the photo
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "segundos": round(time.time() - t0, 1)}
@@ -226,6 +232,8 @@ def reescalar(destino: str, *, imagen, objetivo: int = 1331, seed: int = 0, step
     enfriar()
     t0 = time.time()
     d = _post("/api/reescalar", cuerpo)
+    if d.get("cancelado") or not d.get("imagenes"):
+        raise ErrorMotor("stopped")        # Stop was pressed: QwenStudio aborted the photo
     img = d["imagenes"][0]
     bajar(img["archivo"], destino)
     return {"archivo": destino, "tam": img["tam"], "segundos": round(time.time() - t0, 1)}

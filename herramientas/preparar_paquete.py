@@ -61,7 +61,7 @@ def main(pid):
             base = t["prompt"].rstrip(".")
             t["receta"] = base if lec.get("expression", "") in base else f"{base}, {lec['expression']}."
         else:
-            # a real photo, read: the package's own style when it has one (a boudoir set is not
+            # a real photo, read: the package's own style when it has one (a studio portrait set is not
             # "a candid travel photograph"), and its closing line
             t["receta"] = L.prompt_regenerar(lec, estilo=pk.get("estilo") or "A candid travel photograph")
             if pk.get("estilo_cierre"):

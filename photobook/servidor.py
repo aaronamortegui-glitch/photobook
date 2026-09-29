@@ -46,7 +46,6 @@ def _publico(est: dict) -> dict:
             t[k] = u(t.get(k))
         tomas.append(t)
     out["tomas"] = tomas
-    out["escenas"] = [dict(e, archivo=u(e["archivo"])) for e in est.get("escenas", [])]
     out["cola"] = S.cola_info()
     return out
 
@@ -152,13 +151,10 @@ class Manejador(BaseHTTPRequestHandler):
                     return self._send(200, _publico(S.guardar_hoja(sid, _img(b["imagen"]))))
                 if accion == "perfil":
                     return self._send(200, _publico(S.perfil(sid, b.get("nombre"), b.get("descripcion"),
-                                                                    lora=b.get("lora"), trigger=b.get("trigger"))))
+                                                                    lora=b.get("lora"), trigger=b.get("trigger"),
+                                                                    cuerpo=b.get("cuerpo"))))
                 if accion == "describir":
                     return self._send(200, _publico(S.pedir_descripcion(sid)))
-                if accion == "escena":
-                    return self._send(200, _publico(S.guardar_escena(sid, _img(b["imagen"]), b.get("nombre", ""))))
-                if accion == "escenas_borrar":
-                    return self._send(200, _publico(S.borrar_escenas(sid)))
                 if accion == "foto":
                     est = S.guardar_foto(sid, b["cual"], _img(b["imagen"]))
                     return self._send(200, _publico(est))
@@ -171,6 +167,8 @@ class Manejador(BaseHTTPRequestHandler):
                 if accion == "cancelar":
                     S.cancelar(sid)
                     return self._send(200, {"ok": True})
+                if accion == "version":
+                    return self._send(200, _publico(S.elegir_version(sid, int(b["n"]), b.get("cual", ""))))
                 if accion == "borrar":
                     return self._send(200, _publico(S.borrar_foto(sid, int(b["n"]))))
                 if accion == "restaurar":

@@ -100,7 +100,6 @@ CALIDAD = {
 # A rest between blocks on top of the per-photo cool-down in motor_qwen.enfriar().
 DESCANSO_S = 60
 
-MAX_ESCENAS = 30
 
 _lock = threading.RLock()
 _cola: "queue.Queue[str]" = queue.Queue()
@@ -135,6 +134,29 @@ def mutar(sid: str, f) -> dict:
         return est
 
 
+def _guardado(pid: str, *p) -> str:
+    """A saved person's own copy of their photos: sesiones/_personajes/<id>/ (the user,
+    2026-09-28: deleting the photos in the gallery must not delete the person)."""
+    return os.path.join(SESIONES, "_personajes", pid, *p)
+
+
+def guardar_entradas(sid: str) -> None:
+    """Keep the person's photos, sheet and checks with their profile, apart from any shoot."""
+    e = leer(sid)
+    if not e.get("fotos", {}).get("hoja"):
+        return
+    pid = _personaje(sid, e)
+    if pid.startswith("sin-"):
+        return
+    for k, f in e["fotos"].items():
+        if os.path.exists(_ruta(sid, f)):
+            os.makedirs(os.path.dirname(_guardado(pid, f)), exist_ok=True)
+            shutil.copy2(_ruta(sid, f), _guardado(pid, f))
+    json.dump({"fotos": e["fotos"], "chequeo": e.get("chequeo", {}), "fecha": time.time(),
+               "caption_persona": e.get("caption_persona")},
+              open(_guardado(pid, "persona.json"), "w", encoding="utf-8"), indent=1)
+
+
 def nueva(desde: str | None = None) -> dict:
     """A new session. `desde` = a saved character: its photos, sheet, description and LoRA
     come along, so a returning client uploads nothing (the user, 2026-09-28)."""
@@ -144,14 +166,20 @@ def nueva(desde: str | None = None) -> dict:
     est = {"id": sid, "creada": time.time(), "fotos": {}, "chequeo": {},
            "eleccion": None, "fase": "nueva", "tomas": [], "error": ""}
     if desde:
-        origen = next((s for s in reversed(sesiones_de(desde))
-                       if leer(s).get("fotos", {}).get("hoja")), None)
-        if not origen:
-            raise ValueError("no saved photos for this character")
-        o = leer(origen)
+        # the person's own saved copy first; an older person may only have it in a shoot
+        if os.path.exists(_guardado(desde, "persona.json")):
+            o = json.load(open(_guardado(desde, "persona.json"), encoding="utf-8"))
+            leer_de = lambda f: _guardado(desde, f)
+        else:
+            origen = next((s for s in reversed(sesiones_de(desde))
+                           if leer(s).get("fotos", {}).get("hoja")), None)
+            if not origen:
+                raise ValueError("no saved photos for this character")
+            o = leer(origen)
+            leer_de = lambda f: _ruta(origen, f)
         for k, f in o["fotos"].items():
-            if os.path.exists(_ruta(origen, f)):
-                shutil.copy2(_ruta(origen, f), _ruta(sid, f))
+            if os.path.exists(leer_de(f)):
+                shutil.copy2(leer_de(f), _ruta(sid, f))
                 est["fotos"][k] = f
         p = perfil_de(desde)
         est.update({"chequeo": o.get("chequeo", {}), "personaje": desde, "perfil": p,
@@ -329,46 +357,6 @@ def guardar_hoja(sid: str, img: Image.Image) -> dict:
     return pedir_descripcion(sid)
 
 
-def guardar_escena(sid: str, img: Image.Image, nombre: str = "") -> dict:
-    """One of the client's own scene photos (the "Upload my images" path)."""
-    from . import optimizar as OP
-    d = _ruta(sid, "escenas")
-    os.makedirs(d, exist_ok=True)
-    n = len([x for x in os.listdir(d) if x.endswith(".png")]) + 1
-    if n > MAX_ESCENAS:
-        raise ValueError(f"up to {MAX_ESCENAS} scene photos per shoot")
-    OP.normalizar(img).save(os.path.join(d, f"{n:02d}.png"))
-
-    def f(est):
-        est.setdefault("escenas", []).append({"n": n, "nombre": nombre, "archivo": f"escenas/{n:02d}.png"})
-    return mutar(sid, f)
-
-
-def borrar_escenas(sid: str) -> dict:
-    import shutil
-    shutil.rmtree(_ruta(sid, "escenas"), ignore_errors=True)
-    return mutar(sid, lambda e: e.update({"escenas": []}))
-
-
-def _importar_escenas(sid: str) -> str:
-    """The client's own photos become a private package, exactly like a library one:
-    DWPose skeleton + Qwen3-VL recipe per photo. Hidden from the library (id u_...)."""
-    import shutil, subprocess, sys as _sys
-    pid = "u_" + sid.replace("-", "_")
-    D = os.path.join(T.CATALOGO, "paquetes", pid)
-    os.makedirs(D, exist_ok=True)
-    tomas = []
-    for e in leer(sid).get("escenas", []):
-        tid = f"{e['n']:02d}"
-        shutil.copy(_ruta(sid, e["archivo"]), os.path.join(D, tid + ".png"))
-        tomas.append({"id": tid, "origen": e.get("nombre", "")})
-    json.dump({"id": pid, "label": "My scenes", "privado": True, "tomas": tomas},
-              open(os.path.join(D, "paquete.json"), "w", encoding="utf-8"), indent=1)
-    her = os.path.join(RAIZ, "herramientas")
-    subprocess.run([_sys.executable,os.path.join(her, "esqueletos_paquete.py"), pid], capture_output=True, timeout=1800)
-    subprocess.run([_sys.executable, os.path.join(her, "preparar_paquete.py"), pid], capture_output=True,
-                   timeout=3600, env=dict(os.environ, PYTHONIOENCODING="utf-8"))
-    return pid
 
 
 def borrar_foto(sid: str, n: int) -> dict:
@@ -420,8 +408,7 @@ def galeria(limite: int = 400) -> list[dict]:
         except Exception:
             continue
         el = e.get("eleccion") or {}
-        origen = (paquetes.get(el.get("paquete"), el.get("paquete")) if el.get("paquete")
-                  else "Own scenes" if el.get("escenas_propias") else "Custom shoot")
+        origen = paquetes.get(el.get("paquete"), el.get("paquete")) if el.get("paquete") else "Custom shoot"
         for t in e.get("tomas", []):
             if t.get("estado") != "lista" or not t.get("final"):
                 continue
@@ -431,8 +418,6 @@ def galeria(limite: int = 400) -> list[dict]:
                          "personaje": _personaje(sid, e), "descripcion": e.get("caption_persona") or "",
                          "mejorada": bool(t.get("mejorada")), "favorita": bool(t.get("favorita")),
                          "origen": origen, "fecha": e.get("fin") or e.get("creada"),
-                         # boudoir: shown blurred in the gallery until opened (a shared computer)
-                         "adulto": bool((info.get(el.get("paquete")) or {}).get("adulto")),
                          "cliente": f"/sesiones/{sid}/{e['fotos'].get('cara')}" if e.get("fotos", {}).get("cara") else None})
             if len(out) >= limite:
                 return out
@@ -449,7 +434,7 @@ def _nombres() -> dict:
 
 def perfil_de(pid: str) -> dict:
     v = _nombres().get(pid) or {}
-    base = {"nombre": "", "descripcion": "", "lora": "", "trigger": ""}
+    base = {"nombre": "", "descripcion": "", "lora": "", "trigger": "", "cuerpo": ""}
     return base | {"nombre": v} if isinstance(v, str) else base | v
 
 
@@ -471,14 +456,77 @@ def nombrar_personaje(pid: str, nombre: str) -> dict:
     return {"ok": True}
 
 
+# Body build, chosen per profile (the user, 2026-09-28): "" = the AI decides from the photos
+# and the description; any other level overrides whatever build the description names.
+# Words, never numbers: "1.61 m, 65 kg" and "curvy" both made a slim client full-figured,
+# and "flat stomach" bared her midriff -- name the build, not a body part.
+CUERPOS = {
+    "slim": "Body build: slim and slender, healthy and natural, never skinny.",
+    "soft": "Body build: slim but not skinny, with soft, natural curves and a defined waist.",
+    "average": "Body build: average, natural, everyday build.",
+    "athletic": "Body build: athletic and toned, fit, with visible but natural muscle definition.",
+    "curvy": "Body build: curvy, with fuller hips and bust and a defined waist.",
+    "full": "Body build: full-figured and heavier-set, soft and rounded.",
+}
+_PALABRAS_CUERPO = _re_mod.compile(
+    r"\b(slim|slender|skinny|thin|petite|lean|curvy|curves?|full[- ]figured|plus[- ]size|heavy|heavier|"
+    r"heavyset|stocky|chubby|athletic|toned|muscular|build|average|soft|gentle|figure|waist|hips|bust|torso|stomach|belly|"
+    r"weight|kg|lbs?)\b", _re_mod.I)
+
+
+
+
+def _con_cuerpo(caption: str, nivel: str) -> str:
+    """The description with the chosen build: clauses that name a build are dropped and one
+    sentence saying the level goes last (in this model what comes last weighs most)."""
+    if not nivel or nivel not in CUERPOS:
+        return caption
+    # clauses = the text between commas, semicolons and sentence stops ("1.61" is not a stop)
+    trozos = _re_mod.split(r"([,;]|\.(?=\s|$))", caption.strip())
+    # who it is is never dropped: "The subject is a slim young woman" -> "... a young woman"
+    quien = _re_mod.compile(r"\s*The subject is (?:an? )?(?:[\w-]+ ){0,4}?(?:woman|man|girl|boy|person|"
+                            r"child|teenager|mannequin)\b", _re_mod.I)
+    txt = ""
+    for i in range(0, len(trozos), 2):
+        clausula, sep = trozos[i], (trozos[i + 1] if i + 1 < len(trozos) else "")
+        # "a trimmed beard and a stocky build": keep the beard, drop the build
+        sub = _re_mod.split(r"(\s+(?:and|with)\s+)", clausula)
+        keep = []
+        for j in range(0, len(sub), 2):
+            frag = sub[j]
+            m = quien.match(frag) if not txt and j == 0 else None
+            if m:
+                frag = _re_mod.sub(r"\s+", " ", _PALABRAS_CUERPO.sub("", m.group(0))).replace(" ,", ",")
+                frag = _re_mod.sub(r"\b(of|an?)\s*$", "", frag).rstrip()
+                resto = sub[j][m.end():]
+                if not _PALABRAS_CUERPO.search(resto):
+                    frag += resto          # "... a bald man in his 40s"
+            elif _PALABRAS_CUERPO.search(frag):
+                continue
+            keep += ([sub[j - 1]] if keep and j else ([" "] if j else [])) + [frag]
+        if keep:
+            txt += "".join(keep) + sep
+        elif sep == "." and txt:
+            txt = txt.rstrip(" ,;") + "."
+    txt = _re_mod.sub(r"(\s*,)+\s*(\.|$)", r"\2", txt)
+    txt = _re_mod.sub(r"(\s*,){2,}", ",", txt)
+    txt = _re_mod.sub(r"\s{2,}", " ", txt).strip()
+    txt = _re_mod.sub(r",\s*and\s*\.", ".", txt).rstrip(" ,;")
+    if txt and not txt.endswith("."):
+        txt += "."
+    return (txt + " " + CUERPOS[nivel]).strip()
+
+
 def perfil(sid: str, nombre: str | None = None, descripcion: str | None = None,
-           lora: str | None = None, trigger: str | None = None) -> dict:
+           lora: str | None = None, trigger: str | None = None, cuerpo: str | None = None) -> dict:
     """The client's profile for this session: a name and the one-line description that
     goes after every prompt. Kept per character, so the same sheet comes back filled in.
     An edited description replaces the LLM's for this session. A likeness LoRA (and its
     trigger word) is set here once and used by every shoot of the character."""
     pid = _personaje(sid, leer(sid))
-    p = guardar_perfil(pid, nombre=nombre, descripcion=descripcion, lora=lora, trigger=trigger)
+    if cuerpo is not None and cuerpo not in CUERPOS:
+        cuerpo = ""
+    p = guardar_perfil(pid, nombre=nombre, descripcion=descripcion, lora=lora, trigger=trigger, cuerpo=cuerpo)
     if descripcion is not None:
         mutar(sid, lambda e: e.update({"caption_persona": _pulir(descripcion), "perfil_estado": "listo"}))
         if descripcion.strip() and not _parece_ingles(descripcion):
@@ -487,7 +535,12 @@ def perfil(sid: str, nombre: str | None = None, descripcion: str | None = None,
             mutar(sid, lambda e: e.update({"perfil_estado": "traduciendo"}))
             _urgentes.put(("traducir", sid, descripcion))
             _cola.put(("despertar",))
-    return mutar(sid, lambda e: e.update({"perfil": p}))
+    est = mutar(sid, lambda e: e.update({"perfil": p}))
+    try:
+        guardar_entradas(sid)
+    except Exception as ex:
+        print("[photobook] could not save the person's photos:", ex, flush=True)
+    return est
 
 
 _NO_INGLES = _re_mod.compile(r"[áéíóúñüàèìòùâêîôûãõçäöß¿¡]|\b(el|la|los|las|una|un|con|pelo|cabello|es|y|de|del|"
@@ -567,8 +620,9 @@ def sesiones_de(pid: str) -> list[str]:
 
 
 def borrar_personaje(pid: str) -> dict:
-    """Delete a character: every shoot made with it moves to sesiones/_papelera/, whole
-    (sheet, photos, enhanced versions). Nothing is erased -- Undo moves them back.
+    """Delete a character's shoots: every shoot made with it moves to sesiones/_papelera/,
+    whole (sheet, photos, enhanced versions). Nothing is erased -- Undo moves them back.
+    The person stays saved (profile, photos, likeness model, body build) for a new shoot.
     Refused while one of its shoots is still running."""
     sids = sesiones_de(pid)
     ocupadas = [s for s in sids if s == _activo["id"] or leer(s).get("fase") in ACTIVAS]
@@ -610,7 +664,19 @@ def personajes() -> list[dict]:
         c["descripcion"] = c["descripcion"] or g["descripcion"]
         if len(c["portadas"]) < 4:
             c["portadas"].append(g["archivo"])
-            c.setdefault("portadas_adulto", []).append(g["adulto"])
+    # people saved with their own photos stay listed with no shoots left (deleted in the gallery)
+    carpeta = os.path.join(SESIONES, "_personajes")
+    for pid in (os.listdir(carpeta) if os.path.isdir(carpeta) else []):
+        if pid in grupos or not os.path.exists(_guardado(pid, "persona.json")):
+            continue
+        try:
+            m = json.load(open(_guardado(pid, "persona.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        cara = m["fotos"].get("cara")
+        grupos[pid] = {"id": pid, "cara": f"/sesiones/_personajes/{pid}/{cara}" if cara else None,
+                       "fotos": 0, "sesiones": set(), "portadas": [], "fecha": m.get("fecha", 0),
+                       "descripcion": m.get("caption_persona") or "", "mejoradas": 0}
     out = []
     nombres = _nombres()
     for c in grupos.values():
@@ -628,18 +694,10 @@ def estimar(n: int) -> int:
 
 def encolar(sid: str, eleccion: dict, total: int = 30) -> dict:
     cat = T.catalogo()
-    if eleccion.get("escenas_propias"):
-        tomas = []                    # planned by the worker once the photos are read
-        if not leer(sid).get("escenas"):
-            raise ValueError("add your scene photos first")
+    tomas = None
+    if tomas is not None:
+        pass
     elif eleccion.get("paquete"):
-        pk_info = next((p for p in T.paquetes() if p["id"] == eleccion["paquete"]), {})
-        if pk_info.get("adulto"):
-            # boudoir: only for photos of yourself, 18 or older -- the page asks, the
-            # server insists, and the session keeps when it was confirmed
-            if not eleccion.get("consentimiento"):
-                raise ValueError("this experience needs your confirmation: photos of yourself, 18 or older")
-            eleccion = dict(eleccion, consentimiento=time.time())
         tomas = T.planificar_paquete(eleccion["paquete"])
         if eleccion.get("tomas"):
             # the client left some photos out in the preview
@@ -664,6 +722,10 @@ def encolar(sid: str, eleccion: dict, total: int = 30) -> dict:
                     "encolada": time.time(),
                     "estimado_s": estimar(len(tomas) or len(est.get("escenas", [])))})
     est = mutar(sid, f)
+    try:
+        guardar_entradas(sid)
+    except Exception as ex:
+        print("[photobook] could not save the person's photos:", ex, flush=True)
     _cola.put(sid)
     return est
 
@@ -780,15 +842,6 @@ def _procesar(sid: str) -> None:
         C.hoja_identidad(cara, cuerpo, hoja)
 
     mutar(sid, lambda e: e.update({"fase": "preparando", "inicio": e.get("inicio") or time.time()}))
-    if el.get("escenas_propias") and not leer(sid)["tomas"]:
-        mutar(sid, lambda e: e.update({"fase": "leyendo_escenas"}))
-        pid = _importar_escenas(sid)
-        nuevas = T.planificar_paquete(pid)
-        for t in nuevas:
-            t.update({"estado": "pendiente", "bruto": None, "final": None,
-                      "id_bruto": None, "id_final": None, "reforzada": False})
-        mutar(sid, lambda e: e.update({"tomas": nuevas, "paquete_privado": pid, "fase": "preparando",
-                                        "estimado_s": estimar(len(nuevas))}))
     # the client's identity as a written checklist, once per session, for the fal
     # face pass -- the face's equivalent of the SUNBURST prompt's SKU inventory
     ficha = leer(sid).get("ficha_identidad")
@@ -822,6 +875,7 @@ def _procesar(sid: str) -> None:
     lora = pf["lora"] if pf["lora"] in Q.loras() else None
     trig = pf["trigger"] if lora else ""
     refs = [cara] if lora else [hoja]
+    caption = _con_cuerpo(caption, pf["cuerpo"])
     if trig and caption:
         caption = caption.replace("The subject is", f"The subject is {trig},", 1)
     usar_bfs = CALIDAD["bfs"] and Q.BFS_LORA in Q.loras()
@@ -917,8 +971,9 @@ def _procesar(sid: str) -> None:
                 t["id_bruto"] = sc0.get(os.path.normcase(os.path.abspath(_ruta(sid, x["bruto"]))))
                 if t.get("cabeza"):
                     # the head swap is the face pass: finished
-                    t.update({"estado": "lista", "t1": time.time(),
-                              "id_final": sc0.get(os.path.normcase(os.path.abspath(_ruta(sid, x["final"]))))})
+                    idc = sc0.get(os.path.normcase(os.path.abspath(_ruta(sid, x["final"]))))
+                    t.update({"estado": "lista", "t1": time.time(), "id_final": idc, "id_cabeza": idc,
+                              "version": "cabeza"})
                 elif not CALIDAD["cara_auto"] and not CALIDAD["forzar_cara"]:
                     t.update({"estado": "lista", "id_final": t["id_bruto"], "t1": time.time()})
                 elif (not CALIDAD["forzar_cara"] and t["id_bruto"] is not None
@@ -1025,7 +1080,7 @@ def _mejorar(sid: str, n: int) -> None:
     est = leer(sid)
     t = _toma(est, n)
     cara = _ruta(sid, est["fotos"]["cara"])
-    src = _ruta(sid, f"fotos/{n:02d}_bfs.png" if t.get("cabeza") else t["bruto"])
+    src = _ruta(sid, f"fotos/{n:02d}_bfs.png" if t.get("cabeza") and t.get("version") != "original" else t["bruto"])
     mutar(sid, lambda e: _toma(e, n).update({"estado": "mejorando"}))
     t0 = time.time()
     paso1 = _ruta(sid, "fotos", f"{n:02d}_id.png")
@@ -1039,6 +1094,22 @@ def _mejorar(sid: str, n: int) -> None:
         "estado": "lista", "final": f"fotos/{n:02d}_enh.png", "reforzada": True, "mejorada": True,
         "id_paso1": k(paso1), "id_reforzada": k(dest), "id_final": k(dest), "tam": r.get("tam"),
         "s_reforzar": round(time.time() - t0, 1), "metodo_mejora": "W2"}))
+
+
+def elegir_version(sid: str, n: int, cual: str) -> dict:
+    """The client keeps the photo they like (the user, 2026-09-28): with the face swap or the
+    original as composed. It becomes the final -- gallery, download, Enhance start from it."""
+    def f(e):
+        t = _toma(e, n)
+        bfs = f"fotos/{n:02d}_bfs.png"
+        if cual == "original" and t.get("bruto"):
+            t.update({"final": t["bruto"], "id_final": t.get("id_bruto"), "version": "original", "mejorada": False})
+        elif cual == "cabeza" and os.path.exists(_ruta(sid, bfs)):
+            t.update({"final": bfs, "id_final": t.get("id_cabeza", t.get("id_final")), "version": "cabeza",
+                      "mejorada": False})
+        else:
+            raise ValueError("that version is not there")
+    return mutar(sid, f)
 
 
 def _parar_pendientes(sid):

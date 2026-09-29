@@ -40,9 +40,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .brand{font-family:var(--serif);font-size:22px;letter-spacing:-.02em}
 .brand b{color:var(--accent);font-weight:500}
 .spacer{flex:1}
-.discreta img,img.discreta{filter:blur(18px) saturate(.6);transition:filter .25s}
-.it.discreta:hover img,.it.discreta:focus img{filter:none}
-.exp .badge.b18{left:auto;right:8px;background:#d9304f;color:#fff}
 a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .volver{margin:0 0 10px -8px;font-weight:600}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12.5px;background:var(--surface-2);color:var(--ink-2)}
@@ -110,7 +107,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .perfil[hidden]{display:none}
 .perfil{margin-top:16px;padding:16px;border-radius:12px;background:var(--surface-2);display:grid;gap:12px}
 .perfil label{display:grid;gap:6px;font-weight:600;font-size:13.5px}
-.perfil input,.perfil textarea{font:inherit;font-weight:400;font-size:14.5px;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.perfil select,.perfil input,.perfil textarea{font:inherit;font-weight:400;font-size:14.5px;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
 .perfil textarea{resize:vertical;min-height:74px;line-height:1.45}
 .perfil input:focus,.perfil textarea:focus{outline:none;border-color:var(--accent)}
 .perfil textarea.cargando{color:var(--ink-3);font-style:italic}
@@ -129,6 +126,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .drop p{color:var(--ink-3);margin:4px 0 0;font-size:13.5px}
 .drop .chips{position:absolute;left:10px;right:10px;bottom:10px;display:flex;gap:6px;flex-wrap:wrap}
 .drop .change{position:absolute;top:10px;right:10px}
+.version{display:grid;gap:6px;margin:0 0 12px}
 .chip{display:inline-flex;gap:6px;align-items:center;padding:5px 10px;border-radius:99px;font-size:12.5px;background:var(--surface);box-shadow:var(--shadow)}
 .chip.ok{background:var(--ok-soft);color:var(--ok)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)}
 .tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
@@ -364,6 +362,14 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
           <h3>Profile</h3>
           <label>Name <input id="pfNombre" maxlength="60" placeholder="Who is this? e.g. Kenji" autocomplete="off"></label>
           <label>Description <textarea id="pfDesc" maxlength="400" rows="3" placeholder="The subject is…"></textarea></label>
+          <label>Body build <select id="pfCuerpo">
+            <option value="">Auto — the AI decides from the photos</option>
+            <option value="slim">Slim</option>
+            <option value="soft">Slim with soft curves</option>
+            <option value="average">Average</option>
+            <option value="athletic">Athletic</option>
+            <option value="curvy">Curvy</option>
+            <option value="full">Full-figured</option></select></label>
           <div class="fila"><span class="chip" id="pfModelo" hidden></span></div>
           <div class="fila"><span class="hint" id="pfHint">Written by AI from your sheet — fix anything it got wrong. It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.</span>
             <div class="spacer"></div><button class="link" id="pfOtra" type="button">Describe again</button></div>
@@ -372,10 +378,9 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
       </div>
       <div class="block">
         <h2><span class="n">2</span>Scenes</h2>
-        <p class="sub">Choose an experience from the library, or bring your own photos of any situation — we put you in each one.</p>
+        <p class="sub">Choose an experience from the library — we put you in each one of its photos.</p>
         <div class="tabs" id="fuente">
           <button class="tab" data-f="libreria">Experience library</button>
-          <button class="tab" data-f="propias">My own images</button>
         </div>
         <div id="panel"></div>
       </div>
@@ -421,6 +426,8 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
       <div class="seg" style="margin:12px 0" id="lbSeg">
         <button data-v="final" class="on">Final</button><button data-v="bruto">Before face pass</button><button data-v="muestra">Sample</button>
       </div>
+      <div id="lbVersion" class="version" hidden><span class="hint">Keep this photo</span>
+        <div class="seg"><button data-c="cabeza">With your face</button><button data-c="original">As composed</button></div></div>
       <div id="lbKv"></div>
       <div class="lb-acc">
         <button class="btn primary" id="lbMej">✨ Enhance face</button>
@@ -457,7 +464,6 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <input type="file" id="file" accept="image/*" hidden>
-<input type="file" id="multi" accept="image/*" multiple hidden>
 
 <script>
 
@@ -537,12 +543,16 @@ function elegidas(p){ const q = quitadas(p); return (p.ids || []).filter(i => !q
 function alternar(p, id){ const q = quitadas(p); E.quitadas[p.id] = q.includes(id) ? q.filter(x => x !== id) : [...q, id]; guardarLocal(); }
 function listo(){ return SES && SES.fotos && SES.fotos.hoja && nFotos() > 0; }
 
+// what this build has: the 18+ marks and one's own scene photos exist only in the local build
+function marca18(){ return ''; }
+function discreta(){ return ''; }
 function pintarHome(){
+  if (!document.querySelector('#fuente [data-f="propias"]')) E.fuente = 'libreria';
   pintarDuo();
   pintarGuardados();
   pintarPerfil();
   document.querySelectorAll('#fuente .tab').forEach(b => b.classList.toggle('on', b.dataset.f===E.fuente));
-  $('#panel').innerHTML = E.fuente==='libreria' ? panelLibreria() : panelPropias();
+  $('#panel').innerHTML = E.fuente==='propias' ? panelPropias() : panelLibreria();
   enlazarPanel();
   const n = nFotos();
   const p = byId(CAT.paquetes, E.paquete);
@@ -556,7 +566,7 @@ function panelLibreria(){
   const L = libreria();
   return `<div class="tabs" id="genero">${g}</div>` + (L.length ? `<div class="exps">${L.map(p => `
     <button class="exp ${E.paquete===p.id?'sel':''}" data-p="${p.id}" aria-pressed="${E.paquete===p.id}">
-      <div class="ph">${img(mini(p.portada), p.label)}<span class="badge">${p.n} photos</span>${p.adulto ? '<span class="badge b18">18+</span>' : ''}
+      <div class="ph">${img(mini(p.portada), p.label)}<span class="badge">${p.n} photos</span>${marca18(p)}
         <div class="strip">${p.fotos.slice(1,5).map(f => `<img src="${mini(f,240)}" alt="">`).join('')}</div></div>
       <div class="meta"><b>${esc(p.label)}</b><span>${esc(p.hint||'')}</span></div></button>`).join('')}</div>` + panelPick()
     : '<p class="hint">No experiences here yet.</p>');
@@ -570,14 +580,6 @@ function panelPick(){
       <img src="${mini(p.fotos[i],240)}" alt="" loading="lazy"><span class="num">${i+1}</span>
       <span class="chk" role="checkbox" aria-checked="${!q.includes(id)}" tabindex="0" data-id="${id}" title="${q.includes(id)?'Include':'Leave out'}">✓</span></div>`).join('')}</div></div>`;
 }
-function panelPropias(){
-  const L = (SES && SES.escenas) || [];
-  return `<div class="folder" id="folder" tabindex="0" role="button"><div class="big">📁</div>
-      <b>Drop a folder or photos here</b><p>Any situation, any angle — we read the pose, the place and the light of each one. Up to 30.</p>
-      <p><button class="btn ghost" id="bFolder" type="button">Choose a folder</button> <button class="btn ghost" id="bFiles" type="button">Choose photos</button></p></div>
-    ${L.length ? `<div style="display:flex;align-items:center;margin-top:12px"><b>${L.length} photos</b><div class="spacer"></div><button class="link" id="limpiarEsc">Remove all</button></div>
-      <div class="mine">${L.map(e => img(mini(e.archivo,240), e.nombre)).join('')}</div>` : ''}`;
-}
 function enlazarPanel(){
   document.querySelectorAll('#genero .tab').forEach(b => b.onclick = () => { E.genero=b.dataset.g; if(!libreria().some(p=>p.id===E.paquete)) E.paquete=null; pintarHome(); guardarLocal(); });
   document.querySelectorAll('.exp').forEach(b => b.onclick = () => { const nuevo = E.paquete !== b.dataset.p; E.paquete=b.dataset.p; pintarHome(); guardarLocal();
@@ -588,39 +590,6 @@ function enlazarPanel(){
     c.onclick = go; c.onkeydown = e => { if(e.key===' '||e.key==='Enter') go(e); }; });
   if ($('#pkTodas')) $('#pkTodas').onclick = () => { E.quitadas[pk.id] = []; guardarLocal(); pintarHome(); };
   if ($('#pkNinguna')) $('#pkNinguna').onclick = () => { E.quitadas[pk.id] = [...pk.ids]; guardarLocal(); pintarHome(); };
-  const fo = $('#folder'); if(!fo) return;
-  const pick = dir => { const i = $('#multi'); i.value=''; if(dir) i.setAttribute('webkitdirectory',''); else i.removeAttribute('webkitdirectory'); i.click(); };
-  $('#bFolder').onclick = e => { e.stopPropagation(); pick(true); };
-  $('#bFiles').onclick = e => { e.stopPropagation(); pick(false); };
-  fo.onclick = () => pick(false);
-  fo.ondragover = e => { e.preventDefault(); fo.classList.add('over'); };
-  fo.ondragleave = () => fo.classList.remove('over');
-  fo.ondrop = async e => { e.preventDefault(); fo.classList.remove('over'); subirEscenas(await archivosDe(e.dataTransfer)); };
-  const lim = $('#limpiarEsc'); if(lim) lim.onclick = async () => { SES = await api(`/api/sesion/${SES.id}/escenas_borrar`, {}); pintarHome(); };
-}
-// a dropped folder arrives as directory entries: walk them
-async function archivosDe(dt){
-  const out = [];
-  const leer = ent => new Promise(res => {
-    if (ent.isFile) ent.file(f => { out.push(f); res(); }, () => res());
-    else if (ent.isDirectory){ const r = ent.createReader(); const todo = []; const lote = () => r.readEntries(async es => { if(!es.length){ await Promise.all(todo.map(leer)); res(); } else { todo.push(...es); lote(); } }); lote(); }
-    else res();
-  });
-  const ents = [...dt.items].map(i => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean);
-  if (ents.length) await Promise.all(ents.map(leer)); else out.push(...dt.files);
-  return out;
-}
-async function subirEscenas(files){
-  files = [...files].filter(f => /^image\//.test(f.type) || /\.(jpe?g|png|webp)$/i.test(f.name)).sort((a,b) => a.name.localeCompare(b.name));
-  if(!files.length) return toast('No photos found there.');
-  await sesion();
-  let k = 0;
-  for (const f of files){
-    k++; toast(`Adding photo ${k} of ${files.length}…`);
-    try{ SES = await api(`/api/sesion/${SES.id}/escena`, {imagen: await reducir(f, 2048), nombre: f.name}); }
-    catch(err){ toast(err.message); break; }
-  }
-  pintarHome(); toast(`${(SES.escenas||[]).length} scene photos ready.`);
 }
 async function subirHoja(f){
   if(!f || !/^image\//.test(f.type)) return toast('That file is not an image.');
@@ -688,6 +657,7 @@ function pintarPerfil(){
     'Written by AI from your sheet — fix anything it got wrong, in any language (it is put into English). It is added to every photo, so describe the person (age, hair, beard, build), not the clothes.';
   $('#pfOtra').disabled = est === 'describiendo';
   pintarLora(p);
+  if (document.activeElement !== $('#pfCuerpo')) $('#pfCuerpo').value = p.cuerpo || '';
   clearTimeout(pfTimer);
   if (est === 'describiendo' || est === 'traduciendo') pfTimer = setTimeout(async () => {
     try{ const e = await api('/api/sesion/' + SES.id); if (!$('#home').hidden){ SES = e; guardarLocal(); pintarPerfil(); } }catch(err){ pintarPerfil(); }
@@ -708,6 +678,8 @@ function pintarLora(p){
   c.className = 'chip' + (p.lora ? ' ok' : '');
   c.textContent = p.lora ? '✓ Personal likeness model: active' : 'Personal likeness model: not set up — photos only';
 }
+// body build: Auto keeps whatever the description says; a level overrides it for every shoot
+$('#pfCuerpo').onchange = async () => { try{ SES = await api(`/api/sesion/${SES.id}/perfil`, {cuerpo: $('#pfCuerpo').value}); guardarLocal(); }catch(err){ toast('Could not save the body build: ' + err.message); } };
 $('#pfNombre').oninput = () => PF_SUCIO.nombre = true;
 $('#pfDesc').oninput = () => PF_SUCIO.descripcion = true;
 $('#pfNombre').onchange = guardarPerfil;
@@ -787,7 +759,6 @@ document.querySelectorAll('#duo .slot').forEach(el => {
 });
 $('#file').onchange = e => { const f = e.target.files[0]; if ($('#file').dataset.modo === 'hoja') subirHoja(f); else subirFoto(DUO_CUAL, f); };
 $('#subirHojaLink').onclick = e => { e.preventDefault(); $('#file').dataset.modo = 'hoja'; $('#file').value=''; $('#file').click(); };
-$('#multi').onchange = e => subirEscenas(e.target.files);
 document.querySelectorAll('#fuente .tab').forEach(b => b.onclick = () => { E.fuente=b.dataset.f; pintarHome(); guardarLocal(); });
 $('#lanzar').onclick = async () => {
   if(!listo()) return;
@@ -795,13 +766,7 @@ $('#lanzar').onclick = async () => {
   try{
     await guardarPerfil();
     const pk = byId(CAT.paquetes, E.paquete);
-    const eleccion = E.fuente==='propias' ? {escenas_propias:true} : {paquete:E.paquete, tomas: elegidas(pk)};
-    if (E.fuente !== 'propias' && pk && pk.adulto){
-      const ok = await dialogo({titulo:'Your boudoir session', ok:'Yes, these are me',
-        texto:'Intimate photos of you — for yourself, or to share with your partner. They are made and kept only on this computer.\n\nPlease confirm:\n• the two photos you added are of yourself\n• you are 18 or older'});
-      if (!ok){ $('#lanzar').disabled = false; return; }
-      eleccion.consentimiento = true;
-    }
+    let eleccion = {paquete:E.paquete, tomas: elegidas(pk)};
     SES = await api(`/api/sesion/${SES.id}/generar`, {eleccion}); guardarLocal(); VOLVER = null; pintarVolver(); abrirEstudio();
   }catch(err){ toast(err.message); $('#lanzar').disabled = false; }
 };
@@ -879,12 +844,17 @@ function pintarLb(){
   const L = listasIdx(), k = L.indexOf(lbIdx); if (k >= 0){ precargar(L[(k + 1) % L.length]); precargar(L[(k - 1 + L.length) % L.length]); }
   const pose = byId(CAT.poses, t.pose) || {};
   $('#lbTit').textContent = `Photo ${t.n}`;
-  $('#lbSeg').style.display = (t.reforzada || t.muestra) ? '' : 'none';
-  $('#lbSeg').querySelector('[data-v="bruto"]').textContent = t.mejorada ? 'Before enhance' : 'Before face pass';
+  const antes = t.reforzada || (t.cabeza && t.final !== t.bruto);
+  $('#lbSeg').style.display = (antes || t.muestra) ? '' : 'none';
+  $('#lbSeg').querySelector('[data-v="bruto"]').textContent = t.mejorada ? 'Before enhance' : t.cabeza ? 'As composed' : 'Before face pass';
   $('#lbSeg').querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.v===lbVer);
-    b.style.display = (b.dataset.v==='bruto' && !t.reforzada) || (b.dataset.v==='muestra' && !t.muestra) ? 'none' : ''; });
+    b.style.display = (b.dataset.v==='bruto' && !antes) || (b.dataset.v==='muestra' && !t.muestra) ? 'none' : ''; });
+  // with a face swap the client picks which one to keep
+  $('#lbVersion').hidden = !(t.cabeza && t.estado === 'lista');
+  const ver = t.final === t.bruto ? 'original' : 'cabeza';
+  $('#lbVersion').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.c === ver));
   const kv = (k,v) => v==null||v==='' ? '' : `<div class="kv"><span>${k}</span><b>${esc(v)}</b></div>`;
-  $('#lbKv').innerHTML = kv('Pose', pose.label || (t.muestra ? 'From the package' : '')) + kv('Face pass', t.reforzada ? 'Applied' : (t.nota || 'Kept the original')) +
+  $('#lbKv').innerHTML = kv('Pose', pose.label || (t.muestra ? 'From the package' : '')) + kv('Face', t.cabeza ? (t.final === t.bruto ? 'As composed (your pick)' : 'Your face put in') : t.reforzada ? 'Applied' : (t.nota || 'Kept the original')) +
     kv('Likeness', t.ilustrado ? 'Stylised — not measured' : t.id_final!=null ? `${likeness(t.id_final)} · ${t.id_final.toFixed(2)}` : '') +
     (t.reforzada && t.id_bruto!=null ? kv('Before face pass', t.id_bruto.toFixed(2)) : '') + kv('Size', t.tam);
   $('#lbFav').textContent = t.favorita ? '♥ Favourite' : '♡ Favourite';
@@ -894,6 +864,12 @@ function pintarLb(){
   $('#lbMej').title = 'Redraws the whole photo with your close-up as the reference, then enlarges it to 2K. Same pose and expression. About 5 minutes.';
 }
 $('#lbSeg').querySelectorAll('button').forEach(b => b.onclick = () => { lbVer=b.dataset.v; pintarLb(); });
+$('#lbVersion').querySelectorAll('button').forEach(b => b.onclick = async () => {
+  const t = SES.tomas[lbIdx]; if (!t || b.classList.contains('on')) return;
+  try{ SES = await api(`/api/sesion/${SES.id}/version`, {n:t.n, cual:b.dataset.c}); lbVer = 'final'; pintarEstudio(); pintarLb();
+       toast(b.dataset.c === 'original' ? 'Keeping the photo as composed.' : 'Keeping the photo with your face.'); }
+  catch(err){ toast('Could not change it: ' + err.message); }
+});
 $('#lbX').onclick = () => { cerrarLb(); if (history.state && history.state.capa === 'lb') history.back(); };
 function cerrarLb(){ $('#lb').classList.remove('on'); lbIdx=-1; $('#lbImg').dataset.src = ''; }
 $('#lb').onclick = e => { if(e.target.id==='lb') $('#lbX').onclick(); };
@@ -910,7 +886,7 @@ $('#lbMej').onclick = async () => {
 document.addEventListener('keydown', e => {
   if(!$('#lb').classList.contains('on') || $('#dlg').classList.contains('on')) return;
   if(e.key==='Escape') $('#lbX').onclick(); if(e.key==='ArrowLeft') mover(-1); if(e.key==='ArrowRight') mover(1);
-  if(e.key===' ' && SES.tomas[lbIdx].reforzada){ e.preventDefault(); lbVer = lbVer==='final'?'bruto':'final'; pintarLb(); }
+  if(e.key===' ' && (SES.tomas[lbIdx].reforzada || SES.tomas[lbIdx].cabeza)){ e.preventDefault(); lbVer = lbVer==='final'?'bruto':'final'; pintarLb(); }
 });
 
 // ---------------------------------------------------------------- gallery
@@ -934,7 +910,7 @@ function pintarGaleria(){
   $('#galInfo').innerHTML = `<button class="link" id="galTodos">← All characters</button> · <b>${esc((P && P.nombre) || 'Character ' + (PERS.indexOf(P)+1))}</b> · ${L.length} photos from ${ses} shoot${ses===1?'':'s'}` +
     (P && P.descripcion ? `<br><span class="hint">${esc(P.descripcion)}</span>` : '');
   $('#galTodos').onclick = () => { galPers = null; galFiltro = 'all'; pintarGaleria(); };
-  $('#galGrid').innerHTML = L.length ? L.map((g,i) => `<button class="it${g.adulto?' discreta':''}" data-i="${GAL.indexOf(g)}">
+  $('#galGrid').innerHTML = L.length ? L.map((g,i) => `<button class="it${discreta(g)}" data-i="${GAL.indexOf(g)}">
       <img src="${mini(g.archivo, 480)}" alt="" loading="lazy">
       ${g.cliente ? `<span class="quien"><img src="${mini(g.cliente, 240)}" alt=""></span>` : ''}
       <span class="pie"><span>${esc(g.origen)}</span>${g.mejorada?'<span>✨ Enhanced</span>':''}${g.favorita?'<span>♥</span>':''}</span>
@@ -985,7 +961,7 @@ function pintarPersonajes(){
   $('#galInfo').textContent = PERS.length ? `${PERS.length} characters · ${n} photos, made on this computer.` : 'Nothing here yet.';
   $('#galGrid').className = 'personajes';
   $('#galGrid').innerHTML = PERS.map(p => `<button class="pj" data-id="${p.id}">
-      <div class="mosaico">${p.portadas.map((f,k) => `<img src="${mini(f,240)}" alt=""${(p.portadas_adulto||[])[k]?' class="discreta"':''}>`).join('')}</div>
+      <div class="mosaico">${p.portadas.map((f,k) => `<img src="${mini(f,240)}" alt=""${discreta(p, k)}>`).join('')}</div>
       <div class="pj-meta">${p.cara ? `<img class="cara" src="${mini(p.cara,240)}" alt="">` : ''}
         <div class="pj-n"><b>${esc(p.nombre || 'Character ' + (PERS.indexOf(p)+1))} <span class="ren" role="button" tabindex="0" data-id="${p.id}" title="Rename" aria-label="Rename">✎</span><span class="del" role="button" tabindex="0" data-id="${p.id}" title="Delete this character and all its shoots" aria-label="Delete character">🗑</span></b>
         <span>${p.fotos} photos · ${p.sesiones} shoot${p.sesiones===1?'':'s'}${p.mejoradas?` · ${p.mejoradas} enhanced`:''}</span></div></div>
@@ -999,7 +975,7 @@ function pintarPersonajes(){
     r.onclick = go; r.onkeydown = e => { if(e.key==='Enter'||e.key===' ') go(e); }; });
   document.querySelectorAll('.pj .del').forEach(r => { const go = async e => { e.stopPropagation(); e.preventDefault();
       const p = PERS.find(x => x.id === r.dataset.id), nom = p.nombre || 'Character ' + (PERS.indexOf(p)+1);
-      if (!await dialogo({titulo:`Delete ${nom}?`, texto:`${p.fotos} photos from ${p.sesiones} shoot${p.sesiones===1?'':'s'} will be removed from the gallery. You can undo right after.`, ok:'Delete', peligro:true})) return;
+      if (!await dialogo({titulo:`Delete ${nom}’s photos?`, texto:`${p.fotos} photos from ${p.sesiones} shoot${p.sesiones===1?'':'s'} will be removed from the gallery. ${nom} stays saved — photos, profile and settings — for a new shoot. You can undo right after.`, ok:'Delete', peligro:true})) return;
       try{
         const r2 = await api(`/api/personaje/${p.id}/borrar`, {});
         PERS = PERS.filter(x => x.id !== p.id); GAL = GAL.filter(g => g.personaje !== p.id); pintarPersonajes();

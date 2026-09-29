@@ -58,6 +58,8 @@ def paquetes() -> list[dict]:
         # so old shoots still show their samples) never reach the library
         if pk.get("privado") or pk.get("retirado") or pid.startswith("u_"):
             continue
+        if pk.get("adulto"):
+            continue
         # curating a package = deleting a sample's NN.jpg: a shot whose photo is gone is not offered
         tomas = [t for t in pk.get("tomas", []) if t.get("receta") and t.get("foto")
                  and os.path.exists(os.path.join(raiz, pid, t["foto"]))]
@@ -68,12 +70,9 @@ def paquetes() -> list[dict]:
                     "genero": pk.get("genero") or ("f" if pk.get("corte") == "f" else "m" if pk.get("corte") == "m" else "u"),
                     "n": len(tomas), "portada": url + pk.get("portada", tomas[0]["foto"]),
                     "fotos": [url + t["foto"] for t in tomas], "ids": [t["id"] for t in tomas],
-                    "adulto": bool(pk.get("adulto")),
                     "lecturas": [(t.get("lectura") or {}).get("place", "") for t in tomas]})
     # the photographic stories first, then the illustrated ones, in the story order
-    orden = ["paris", "amalfi", "alpes", "arte_abstracto", "scifi", "ochentas", "comic", "manga", "pixel", "animado3d",
-             "boudoir_noir", "boudoir_velvet", "boudoir_blush", "boudoir_soft",
-             "boudoir_classic", "boudoir_dark", "boudoir_bridal", "boudoir_playful"]
+    orden = ["paris", "amalfi", "alpes", "arte_abstracto", "scifi", "ochentas", "comic", "manga", "pixel", "animado3d"]
     out.sort(key=lambda p: (orden.index(p["id"].rsplit("_", 1)[0]) if p["id"].rsplit("_", 1)[0] in orden else 99, p["id"]))
     return out
 
